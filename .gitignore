@@ -4,3 +4,9 @@
 
 # Ignorer la configuration personnelle de QT
 *.pro.user
+
+# Ignorer les fichiers de compilations de QT
+Makefile
+*.o
+moc_*
+ui_*
