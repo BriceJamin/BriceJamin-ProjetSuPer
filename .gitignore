@@ -1,3 +1,6 @@
 # Ignorer les fichiers inutiles de bouml
 *.session
 *.lock
+
+# Ignorer la configuration personnelle de QT
+*.pro.user
