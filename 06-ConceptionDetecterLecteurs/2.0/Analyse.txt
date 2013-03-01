@@ -1,0 +1,41 @@
+* Où, comment, quand détecter un lecteur ?
+- Sur le réseau
+- Via le protocole TCP
+- Lorsqu'il est connecté au serveur
+
+Il faut concevoir un programme, connecté au réseau par TCP, pour détecter un lecteur.
+
+* Comment intéragit il avec le reste ?
+
+Le programme est lancé par un un système d'exploitation, lui même
+présent sur une machine appellée serveur.
+Pour communiquer avec l'extérieur (les lecteurs), cette machine possède une ou plusieurs interfaces réseaux, 
+chacune ayant une adresse IP différente.
+Pour que le programme puisse communiquer avec l'extérieur, il lui faut un numéro de port.
+Les lecteurs peuvent donc se connecter au programme uniquement s'ils sont munis 
+de l'adresse IP du serveur et du numéro de port du programme.
+
+* Comment ce programme détecte il les connexions ?
+Il écoute sur son numéro de port, en attente d'un client.
+
+* Comment différencie t'il un client d'un lecteur ?
+Il peut avoir accès à des informations du client, telles que son adresse IP (?) et son adresse MAC. (?)
+Les informations propres aux lecteurs sont stockées dans une base de donnée.
+Le programme consulte cette BDD, et en comparant avec les informations du client il peut alors
+savoir si le client est un lecteur ou non.
+
+* Comment gere t'il la communication avec plusieurs clients ?
+Le serveur crée pour chaque nouveau client un thread chargé de communiquer avec lui
+
+Conclusion :
+
+Il faut concevoir un programme capable :
+ - d'écouter sur un port
+ - de detecter la connexion d'un client
+ - X d'attribuer un trhread à chaque client
+ - X d'obtenir l'ip (?) de ce client
+ - X interroger la BDD pour savoir si cette IP correspond à un lecteur
+ - deconnecter le client si ce n'est pas le cas
+ - sinon recevoir les messages de ce lecteur
+X : ordre peut être à revoir
+
