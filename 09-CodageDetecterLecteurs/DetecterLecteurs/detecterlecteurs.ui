@@ -6,38 +6,38 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>151</width>
-    <height>130</height>
+    <width>137</width>
+    <height>107</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DetecterLecteurs</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pbConnecter">
+   <widget class="QPushButton" name="pbOn">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>10</y>
+      <y>0</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Connecter</string>
+     <string>On</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbDeconnecter">
+   <widget class="QPushButton" name="pbOff">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>40</y>
+      <y>30</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Déconnecter</string>
+     <string>Off</string>
     </property>
    </widget>
   </widget>
@@ -46,8 +46,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>151</width>
-     <height>17</height>
+     <width>137</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>

@@ -18,6 +18,12 @@ protected:
 
 private:
     Ui::DetecterLecteurs *ui;
+
+private slots:
+    void on_pbOff_clicked();
+    void on_pbOn_clicked();
+    void on_pbDeconnecter_clicked();
+    void on_pbConnecter_clicked();
 };
 
 #endif // DETECTERLECTEURS_H
