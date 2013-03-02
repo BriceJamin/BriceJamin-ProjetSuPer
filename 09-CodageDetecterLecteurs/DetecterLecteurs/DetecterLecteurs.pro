@@ -7,7 +7,9 @@ TARGET = DetecterLecteurs
 TEMPLATE = app
 SOURCES += main.cpp \
     detecterlecteurs.cpp \
-    tcpserver.cpp
+    tcpserver.cpp \
+    tcpserverthread.cpp
 HEADERS += detecterlecteurs.h \
-    tcpserver.h
+    tcpserver.h \
+    tcpserverthread.h
 FORMS += detecterlecteurs.ui
