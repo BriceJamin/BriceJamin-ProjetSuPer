@@ -1,0 +1,39 @@
+format 74
+
+classcanvas 129410 class_ref 135042 // DetecteurDeLecteurs
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 10 6 2000
+end
+classcanvas 129666 class_ref 134914 // Fenetre
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 206.5 79.5 2000
+end
+classcanvas 129922 class_ref 135426 // Bdd
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 169 211 2000
+end
+classcanvas 130562 class_ref 135682 // InterfaceBDD
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 29 139 2000
+end
+relationcanvas 129794 relation_ref 134914 // <association>
+  geometry VH
+  from ref 129666 z 2001 to point 254 39
+  line 130434 z 2001 to ref 129410
+  no_role_a no_role_b
+  multiplicity_a_pos 156 49 3000 multiplicity_b_pos 241 57 3000
+end
+relationcanvas 130690 relation_ref 135042 // <association>
+  decenter_begin 554
+  from ref 129410 z 2001 to ref 130562
+  no_role_a no_role_b
+  multiplicity_a_pos 68 117 3000 multiplicity_b_pos 70 84 3000
+end
+relationcanvas 130818 relation_ref 135170 // <association>
+  geometry VHr
+  from ref 129922 z 2001 to point 83 247
+  line 130946 z 2001 to ref 130562
+  no_role_a no_role_b
+  multiplicity_a_pos 68 199 3000 multiplicity_b_pos 151 257 3000
+end
+end

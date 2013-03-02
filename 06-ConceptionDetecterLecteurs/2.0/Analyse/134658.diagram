@@ -1,0 +1,102 @@
+format 74
+
+classcanvas 128258 class_ref 135298 // User
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 220 13 2000
+end
+usecasecanvas 128386 usecase_ref 128002 // Saisir adresse
+  xyzwh 164 86 3005 64 32 label_xy 154 66
+end
+usecasecanvas 128514 usecase_ref 128130 // Saisir Port
+  xyzwh 86 148 3005 64 32 label_xy 80 133
+end
+classcanvas 129666 class_ref 134914 // Fenetre
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 219 212 2000
+end
+classcanvas 130178 class_ref 135042 // DetecteurDeLecteurs
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 274 342 2000
+end
+usecasecanvas 132098 usecase_ref 128514 // Cliquer ON
+  xyzwh 257 96 3005 64 32 label_xy 270 74
+end
+usecasecanvas 135938 usecase_ref 128642 // Cliquer OFF
+  xyzwh 328 151 3005 64 32 label_xy 323 133
+end
+usecasecanvas 136706 usecase_ref 128770 // Ecouter sur port et adresse
+  xyzwh 111 294 3005 64 32 label_xy 63 275
+end
+usecasecanvas 136834 usecase_ref 128898 // Arrêter l'écoute
+  xyzwh 303 290 3005 64 32 label_xy 291 269
+end
+usecasecanvas 138882 usecase_ref 129026 // Detecter
+  xyzwh 111 397 3005 64 32 label_xy 117 427
+end
+usecasecanvas 139010 usecase_ref 129154 // Obtenir adresse IP
+  xyzwh 181 429 3005 64 32 label_xy 163 461
+end
+usecasecanvas 139138 usecase_ref 129282 // Demander lecteur par IP
+  xyzwh 304 424 3005 64 32 label_xy 270 456
+end
+classcanvas 139650 class_ref 135554 // Client
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 158 492 2000
+end
+classcanvas 141314 class_ref 135426 // Bdd
+  class_drawing_mode default show_context_mode default show_stereotype_properties default
+  xyz 315 497 2000
+end
+line 128898 ---- geometry HV
+  from ref 128258 z 3006 to point 193 42
+  line 131330 z 3006 to ref 128386
+line 129026 ---- geometry VHr
+  from ref 128258 z 3006 to point 114 42
+  line 138498 z 3006 to ref 128514
+line 129794 ---- geometry HVr
+  from ref 128386 z 3006 to point 193 241
+  line 130690 z 3006 to ref 129666
+line 129922 ---- geometry VH
+  from ref 128514 z 3006 to point 114 241
+  line 131586 z 3006 to ref 129666
+line 132738 ---- geometry HV decenter_end 500
+  from ref 129666 z 3006 to point 287 241
+  line 135426 z 3006 to ref 132098
+line 135554 ---- geometry HV decenter_end 578
+  from ref 128258 z 3006 to point 291 42
+  line 135810 z 3006 to ref 132098
+line 136066 ---- geometry HV
+  from ref 128258 z 3006 to point 356 42
+  line 136450 z 3006 to ref 135938
+line 136194 ---- geometry HV
+  from ref 129666 z 3006 to point 356 241
+  line 136578 z 3006 to ref 135938
+line 136962 ---- geometry HV
+  from ref 129666 z 3006 to point 332 241
+  line 137730 z 3006 to ref 136834
+line 137090 ---- geometry VHr
+  from ref 129666 z 3006 to point 140 241
+  line 137986 z 3006 to ref 136706
+line 137346 ---- geometry VH
+  from ref 136706 z 3006 to point 140 371
+  line 138242 z 3006 to ref 130178
+line 137474 ---- geometry HVr
+  from ref 136834 z 3006 to point 332 339
+  line 138114 z 3006 to ref 130178
+line 139266 ---- geometry VHr
+  from ref 130178 z 3006 to point 140 371
+  line 140674 z 3006 to ref 138882
+line 139394 ---- geometry VHr
+  from ref 130178 z 3006 to point 209 371
+  line 140930 z 3006 to ref 139010
+line 139522 ----
+  from ref 130178 z 3006 to ref 139138
+line 139778 ---- geometry HV
+  from ref 139650 z 3006 to point 140 520
+  line 141058 z 3006 to ref 138882
+line 139906 ---- geometry HV
+  from ref 139650 z 3006 to point 209 520
+  line 141186 z 3006 to ref 139010
+line 141442 ----
+  from ref 139138 z 3006 to ref 141314
+end
