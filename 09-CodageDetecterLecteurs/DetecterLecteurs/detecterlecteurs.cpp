@@ -24,3 +24,13 @@ void DetecterLecteurs::changeEvent(QEvent *e)
         break;
     }
 }
+
+void DetecterLecteurs::on_pbConnecter_clicked()
+{
+    /* TODO : Connecter le serveur */
+}
+
+void DetecterLecteurs::on_pbDeconnecter_clicked()
+{
+    /* TODO : Déconnecter le serveur */
+}
