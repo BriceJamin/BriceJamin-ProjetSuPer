@@ -16,6 +16,8 @@ public:
 
 signals:
     void sig_occuredSignal(QString signal);
+    void sig_switchOn_readerDetector(QString address, unsigned int port);
+    void sig_switchOff_readerDetector();
 
 public slots:
     void readerDetector_switchedOn();
@@ -35,6 +37,9 @@ private slots:
     void occuredSignal(QString signal);
 
 private:
+    void connectReaderDetector();
+    void disconnectReaderDetector();
+
     Ui::DetecterLecteurs *ui;
     ReaderDetector* readerDetector;
 };

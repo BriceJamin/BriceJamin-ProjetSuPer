@@ -9,13 +9,22 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // this' signals to this' slots connection
     connect(this, SIGNAL(sig_occuredSignal(QString)), this, SLOT(occuredSignal(QString)));
+
+    // this' signals to ReaderDetector's slots connection
+    connect(this, SIGNAL(sig_switchOn_readerDetector()), readerDetector, SLOT(switchOn()));
+    connect(this, SIGNAL(sig_switchOff_readerDetector()), readerDetector, SLOT(switchOff()));
+
+    // ReaderDetector's signals to this' slots connection
     connect(readerDetector, SIGNAL(sig_switchedOn()), this, SLOT(readerDetector_switchedOn()));
     connect(readerDetector, SIGNAL(sig_errorOccurred(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
     connect(readerDetector, SIGNAL(sig_clientDetected()), this, SLOT(readerDetector_clientDetected()));
     connect(readerDetector, SIGNAL(sig_intruderDetected()), this, SLOT(readerDetector_intruderDetected()));
     connect(readerDetector, SIGNAL(sig_readerDetected()), this, SLOT(readerDetector_readerDetected()));
+    connect(readerDetector, SIGNAL(destroyed()), this, SLOT(readerDetector_destroyed()));
+
 }
 
 DetecterLecteurs::~DetecterLecteurs()
@@ -63,8 +72,6 @@ void DetecterLecteurs::readerDetector_destroyed()
     emit sig_occuredSignal("readerDetector_destroyed");
 }
 
-
-
 void DetecterLecteurs::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
@@ -82,13 +89,13 @@ void DetecterLecteurs::on_onPushButton_clicked()
     // Switch on readerDetector
     QString address = DetecterLecteurs::ui->addressLineEdit->text();
     unsigned int port = DetecterLecteurs::ui->portSpinBox->value();
-    readerDetector->switchOn(address, port);
+    emit sig_switchOn_readerDetector(address, port);
 }
 
 void DetecterLecteurs::on_offPushButton_clicked()
 {
     // Switch off readerDetector
-    readerDetector->switchOff();
+    emit sig_switchOff_readerDetector();
 }
 
 void DetecterLecteurs::occuredSignal(QString signal)
