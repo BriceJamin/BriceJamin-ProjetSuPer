@@ -20,8 +20,6 @@ private:
     Ui::DetecterLecteurs *ui;
 
 private slots:
-
-private slots:
     void on_offPushButton_clicked();
     void on_onPushButton_clicked();
 };
