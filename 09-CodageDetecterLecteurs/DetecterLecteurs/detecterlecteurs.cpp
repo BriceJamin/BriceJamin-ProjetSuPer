@@ -87,6 +87,14 @@ void DetecterLecteurs::changeEvent(QEvent *e)
     }
 }
 
+void DetecterLecteurs::closeEvent(QCloseEvent *event)
+{
+    // TODO : Est-ce une fermeture propre ?
+    // Switch off ReaderDetector betwen close
+    emit sig_switchOff_readerDetector();
+    event->accept();
+}
+
 void DetecterLecteurs::on_onPushButton_clicked()
 {
     // Switch on readerDetector

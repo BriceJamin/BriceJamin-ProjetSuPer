@@ -2,6 +2,8 @@
 #define DETECTERLECTEURS_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
+
 #include "readerdetector.h"
 
 namespace Ui {
@@ -30,6 +32,7 @@ public slots:
 
 protected:
     void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_offPushButton_clicked();
