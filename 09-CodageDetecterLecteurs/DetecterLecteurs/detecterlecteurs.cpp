@@ -106,6 +106,6 @@ void DetecterLecteurs::occuredSignal(QString signal)
     qDebug() << "DEBUG : " << endl
             << "occuredSignal :" << signal << endl
             << "readerDetector value : "
-            << QString().sprintf("%08p", readerDetector)
+            << QString().sprintf("%8p", readerDetector)
             << endl << endl;
 }
