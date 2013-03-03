@@ -13,7 +13,7 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
     connect(this, SIGNAL(sig_occuredSignal(QString)), this, SLOT(occuredSignal(QString)));
 
     // this' signals to ReaderDetector's slots connection
-    connect(this, SIGNAL(sig_switchOn_readerDetector()), readerDetector, SLOT(switchOn()));
+    connect(this, SIGNAL(sig_switchOn_readerDetector(QString, unsigned int)), readerDetector, SLOT(switchOn(QString, unsigned int)));
     connect(this, SIGNAL(sig_switchOff_readerDetector()), readerDetector, SLOT(switchOff()));
 
     // ReaderDetector's signals to this' slots connection
@@ -69,6 +69,9 @@ void DetecterLecteurs::readerDetector_readerDetected()
 
 void DetecterLecteurs::readerDetector_destroyed()
 {
+    /*qulonglong readerDetectorQll = (qulonglong) readerDetector;
+    QString readerDetectorString = QString("0x%1").arg(readerDetectorQll, 8, '0');
+    emit sig_occuredSignal("readerDetector_destroyed, readerDetector :" + readerDetectorString);*/
     emit sig_occuredSignal("readerDetector_destroyed");
 }
 
@@ -100,5 +103,9 @@ void DetecterLecteurs::on_offPushButton_clicked()
 
 void DetecterLecteurs::occuredSignal(QString signal)
 {
-    DetecterLecteurs::ui->messagesPlainTextEdit->appendPlainText(signal);
+    qDebug() << "DEBUG : " << endl
+            << "occuredSignal :" << signal << endl
+            << "readerDetector value : "
+            << QString().sprintf("%08p", readerDetector)
+            << endl << endl;
 }
