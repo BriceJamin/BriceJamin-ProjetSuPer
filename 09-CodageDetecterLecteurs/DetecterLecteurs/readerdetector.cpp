@@ -25,5 +25,4 @@ void ReaderDetector::switchOff()
         tcpServer.close();
         emit sig_switchedOff();
     }
-
 }
