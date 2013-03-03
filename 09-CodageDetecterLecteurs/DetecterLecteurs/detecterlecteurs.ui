@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>137</width>
-    <height>107</height>
+    <width>219</width>
+    <height>127</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DetecterLecteurs</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pbOn">
+   <widget class="QPushButton" name="onPushButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>0</y>
+      <x>130</x>
+      <y>20</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -27,11 +27,11 @@
      <string>On</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbOff">
+   <widget class="QPushButton" name="offPushButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
+      <x>130</x>
+      <y>50</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -40,13 +40,77 @@
      <string>Off</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="addressLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true">127.0.0.1</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="addressLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Address :</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="portLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Port :</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="portSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>50</y>
+      <width>61</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>65535</number>
+    </property>
+    <property name="value">
+     <number>43210</number>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>137</width>
+     <width>219</width>
      <height>20</height>
     </rect>
    </property>
