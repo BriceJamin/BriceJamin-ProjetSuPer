@@ -25,12 +25,12 @@ void DetecterLecteurs::changeEvent(QEvent *e)
     }
 }
 
-void DetecterLecteurs::on_pbOn_clicked()
+void DetecterLecteurs::on_onPushButton_clicked()
 {
-    /* TODO : Connecter le serveur */
+    // TODO : Connecter le serveur
 }
 
-void DetecterLecteurs::on_pbOff_clicked()
+void DetecterLecteurs::on_offPushButton_clicked()
 {
-    /* TODO : Déconnecter le serveur */
+    // TODO : Déconnecter le serveur
 }
