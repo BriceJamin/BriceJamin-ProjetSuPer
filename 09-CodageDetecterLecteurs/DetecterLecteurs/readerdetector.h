@@ -11,18 +11,16 @@ public:
     explicit ReaderDetector(QObject *parent = 0);
 
 signals:
-    void sig_on();
-    void sig_error();
-    void sig_addressChanged();
-    void sig_portChanged();
-    void sig_off();
+    void sig_switchedOn();
+    void sig_errorOccurred(QString error);
+    void sig_switchedOff();
     void sig_clientDetected();
     void sig_intruderDetected();
     void sig_readerDetected();
 
 public slots:
-    void on(QString address, unsigned int port);
-    void off();
+    void switchOn(QString address, unsigned int port);
+    void switchOff();
 
 private:
     TcpServer tcpServer;

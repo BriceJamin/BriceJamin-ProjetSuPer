@@ -4,7 +4,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    DetecterLecteurs w;
+    ReaderDetector rd;
+    DetecterLecteurs w(&rd);
     w.show();
     return a.exec();
 }

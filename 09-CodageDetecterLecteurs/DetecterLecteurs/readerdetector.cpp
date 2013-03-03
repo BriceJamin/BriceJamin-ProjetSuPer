@@ -5,7 +5,25 @@ ReaderDetector::ReaderDetector(QObject *parent) :
 {
 }
 
-void ReaderDetector::on(QString address, unsigned int port){}
-void ReaderDetector::off(){}
+void ReaderDetector::switchOn(QString address, unsigned int port)
+{
+    if(! tcpServer.isListening())
+    {
+        bool noErrorOccured = tcpServer.listen(QHostAddress(address), port);
 
+        if(noErrorOccured && tcpServer.isListening())
+            emit sig_switchedOn();
+        else
+            emit sig_errorOccurred(tcpServer.errorString());
+    }
+}
 
+void ReaderDetector::switchOff()
+{
+    if(tcpServer.isListening())
+    {
+        tcpServer.close();
+        emit sig_switchedOff();
+    }
+
+}
