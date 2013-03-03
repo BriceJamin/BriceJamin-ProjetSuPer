@@ -8,8 +8,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     detecterlecteurs.cpp \
     tcpserver.cpp \
-    tcpserverthread.cpp
+    tcpserverthread.cpp \
+    readerdetector.cpp
 HEADERS += detecterlecteurs.h \
     tcpserver.h \
-    tcpserverthread.h
+    tcpserverthread.h \
+    readerdetector.h
 FORMS += detecterlecteurs.ui
