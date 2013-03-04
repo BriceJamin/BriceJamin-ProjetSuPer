@@ -7,10 +7,15 @@ TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
 
 void TcpServerThread::run()
 {
-    /* S'exécute dans le nouveau thread. */
+    /* S'exécute dans un nouveau thread. */
 
-    /* TODO : Récupérer le socket du thread principal et
-        en cas d'erreur émettre le signal error. */
+    /* Récupère le socket du thread principal et
+        en cas d'erreur émet le signal error. */
+    QTcpSocket tcpSocket;
+     if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
+         emit sig_error(tcpSocket.error());
+         return;
+     }
 
     /* TODO : Récupérer l'adresse du client. */
 
