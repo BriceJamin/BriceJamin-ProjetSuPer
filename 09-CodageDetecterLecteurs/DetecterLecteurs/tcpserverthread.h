@@ -13,7 +13,9 @@ public:
     void run();
 
 signals:
-    void error(QTcpSocket::SocketError socketError);
+    void sig_error(QTcpSocket::SocketError socketError);
+    void sig_intruderDetected();
+    void sig_readerDetected();
 
 public slots:
 
