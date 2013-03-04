@@ -7,7 +7,6 @@ TcpServer::TcpServer(QObject *parent) :
 
 void TcpServer::incomingConnection(int socketDescriptor)
  {
-    /* Les clients arrivent ici. */
     emit sig_clientDetected();
 
     TcpServerThread *thread = new TcpServerThread(socketDescriptor, this);
@@ -17,5 +16,5 @@ void TcpServer::incomingConnection(int socketDescriptor)
     connect(thread, SIGNAL(sig_intruderDetected()), this, SIGNAL(sig_intruderDetected()));
     connect(thread, SIGNAL(sig_readerDetected()), this, SIGNAL(sig_readerDetected()));
 
-    /* TODO: Servir un thread à chaque client. */
+    thread->start();
  }
