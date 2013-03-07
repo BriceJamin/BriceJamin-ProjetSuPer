@@ -1,4 +1,5 @@
 #include "tcpserverthread.h"
+#include <QHostAddress>
 
 TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
@@ -18,6 +19,7 @@ void TcpServerThread::run()
      }
 
     /* TODO : Récupérer l'adresse du client. */
+    QHostAddress addressQHost = tcpSocket.peerAddress();
 
     /* TODO : Demander à la BDD si c'est un lecteur. */
 
