@@ -19,10 +19,10 @@ void TcpServerThread::run()
          return;
      }
 
-    /* TODO : Récupérer l'adresse du client. */
+    /* Récupère l'adresse du client. */
     QHostAddress addressQHost = tcpSocket.peerAddress();
 
-    /* TODO : Demander à la BDD si c'est un lecteur. */
+    /* Demande à la BDD si c'est un lecteur. */
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setDatabaseName("bdd_super");
@@ -32,6 +32,8 @@ void TcpServerThread::run()
         qDebug() << "Impossible d'établir une connexion avec la Bdd.";
     else
         qDebug() << "Connexion à la bdd réussie.";
+
+
 
     /* TODO : Si c'est non, se déconnecter */
 
