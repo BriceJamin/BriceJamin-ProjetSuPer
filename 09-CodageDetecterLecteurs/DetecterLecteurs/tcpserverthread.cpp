@@ -66,6 +66,7 @@ void TcpServerThread::run()
         qDebug() << "  d'ip " + query.value(2).toString() + ",";
         qDebug() << "  et de estConnecte " + QString::number(query.value(3).toInt()) + ".";
 
+        /* TODO : Modéliser l'héritage ClientLecteur ----> Lecteur dans Bouml. /*
         /* TODO : Créer une classe Lecteur */
         /* TODO : Instancier un objet de la classe Lecteur */
         /* TODO : Emettre un signal "lecteur connecté" avec ce lecteur en paramètre */
