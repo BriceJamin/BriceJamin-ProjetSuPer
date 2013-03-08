@@ -21,7 +21,7 @@ void TcpServerThread::run()
      }
 
     /* Récupère l'adresse du client. */
-    QString peerAddress = tcpSocket.peerAddress().toString();
+    QString clientAddress = tcpSocket.peerAddress().toString();
 
     /* Demande à la BDD si c'est un lecteur. */
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -39,7 +39,7 @@ void TcpServerThread::run()
         qDebug() << "Connexion a la bdd reussie.";
 
     QSqlQuery query(db);
-    query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + peerAddress + "\"");
+    query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
     if(!query.isActive())
     {
         qDebug() << "Requete (Ce lecteur d'ip X existe t'il ?) erronnée.";
@@ -49,7 +49,7 @@ void TcpServerThread::run()
     }
     else if(query.size() == 0)
     {
-        qDebug() << "Le client n'est pas un lecteur.";
+        qDebug() << "TcpServerThread : Le client " + clientAddress + "n'est pas un lecteur.";
 
         /* TODO : Emettre un signal "intrus detecte" */
         /* TODO : Déconnecter le client */
