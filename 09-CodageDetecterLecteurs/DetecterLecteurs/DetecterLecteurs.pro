@@ -9,9 +9,11 @@ SOURCES += main.cpp \
     detecterlecteurs.cpp \
     tcpserver.cpp \
     tcpserverthread.cpp \
-    readerdetector.cpp
+    readerdetector.cpp \
+    readerclient.cpp
 HEADERS += detecterlecteurs.h \
     tcpserver.h \
     tcpserverthread.h \
-    readerdetector.h
+    readerdetector.h \
+    readerclient.h
 FORMS += detecterlecteurs.ui
