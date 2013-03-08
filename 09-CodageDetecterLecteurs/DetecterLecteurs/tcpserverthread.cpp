@@ -32,8 +32,8 @@ void TcpServerThread::run()
     if (!db.open())
     {
         qDebug() << "Impossible d'etablir une connexion avec la Bdd.";
-
-        /* TODO : Sortir du thread */
+        /* Termine l'exécution du thread */
+        return;
     }
     else
         qDebug() << "Connexion a la bdd reussie.";
@@ -44,7 +44,8 @@ void TcpServerThread::run()
     {
         qDebug() << "Requete (Ce lecteur d'ip X existe t'il ?) erronnée.";
 
-        /* TODO : Tuer le thread */
+        /*  Termine l'exécution du thread */
+        return;
     }
     else if(query.size() == 0)
     {
@@ -52,7 +53,8 @@ void TcpServerThread::run()
 
         /* TODO : Emettre un signal "intrus detecte" */
         /* TODO : Déconnecter le client */
-        /* TODO : Tuer le thread */
+        /* Termine l'exécution du thread */
+        return;
     }
     else
     {
@@ -69,4 +71,7 @@ void TcpServerThread::run()
         /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
         /* TODO : Tuer le thread */
     }
+
+    /* TODO (?) : Terminer l'exécution du thread lors d'une déconnexion ?
+    connect(&tcpSocket, SIGNAL(disconnected()), this, ;*/
 }
