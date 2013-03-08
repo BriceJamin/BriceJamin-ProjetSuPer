@@ -36,13 +36,13 @@ void TcpServerThread::run()
         return;
     }
     else
-        qDebug() << "Connexion a la bdd reussie.";
+        qDebug() << "TcpServerThread : Connexion a la bdd reussie.";
 
     QSqlQuery query(db);
     query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
     if(!query.isActive())
     {
-        qDebug() << "Requete (Ce lecteur d'ip X existe t'il ?) erronnée.";
+        qDebug() << "TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnée.";
 
         /*  Termine l'exécution du thread */
         return;
@@ -59,10 +59,10 @@ void TcpServerThread::run()
     else
     {
         query.next();
-        qDebug() << "Le client est le lecteur de numero " + QString::number(query.value(0).toInt()) + ",";
-        qDebug() << "de lieu numero " + QString::number(query.value(1).toInt()) + ",";
-        qDebug() << "d'ip " + query.value(2).toString() + ",";
-        qDebug() << "et de estConnecte " + QString::number(query.value(3).toInt()) + ".";
+        qDebug() << "TcpServerThread : Le client est le lecteur de numero " + QString::number(query.value(0).toInt()) + ",";
+        qDebug() << "  de lieu numero " + QString::number(query.value(1).toInt()) + ",";
+        qDebug() << "  d'ip " + query.value(2).toString() + ",";
+        qDebug() << "  et de estConnecte " + QString::number(query.value(3).toInt()) + ".";
 
         /* TODO : Créer une classe Lecteur */
         /* TODO : Instancier un objet de la classe Lecteur */
