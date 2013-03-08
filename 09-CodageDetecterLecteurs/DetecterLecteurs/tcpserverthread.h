@@ -14,7 +14,7 @@ public:
 
 signals:
     void sig_error(QTcpSocket::SocketError socketError);
-    void sig_intruderDetected();
+    void sig_intruderDetected(QString clientAddress);
     void sig_readerDetected();
 
 public slots:

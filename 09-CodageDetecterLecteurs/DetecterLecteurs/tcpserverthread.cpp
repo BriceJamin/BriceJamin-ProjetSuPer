@@ -51,7 +51,9 @@ void TcpServerThread::run()
     {
         qDebug() << "TcpServerThread : Le client " + clientAddress + "n'est pas un lecteur.";
 
-        /* TODO : Emettre un signal "intrus detecte" */
+        /* Signale la detection d'un intrus */
+        emit sig_intruderDetected(clientAddress);
+
         /* TODO : Déconnecter le client */
         /* Termine l'exécution du thread */
         return;
