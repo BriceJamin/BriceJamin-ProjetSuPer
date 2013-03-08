@@ -16,6 +16,7 @@ void TcpServerThread::run()
     QTcpSocket tcpSocket;
      if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
          emit sig_error(tcpSocket.error());
+         /* Termine l'exécution du thread */
          return;
      }
 
