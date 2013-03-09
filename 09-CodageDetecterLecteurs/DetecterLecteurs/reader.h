@@ -7,6 +7,7 @@ class Reader
 {
 public:
     Reader(int, int, QString, bool);
+    Reader(const Reader&);
 
     unsigned int number() const;
     unsigned int placeId() const;

@@ -8,6 +8,14 @@ Reader::Reader(int number, int placeId, QString address, bool isConnected)
     _isConnected = isConnected;
 }
 
+Reader::Reader(const Reader& reader)
+{
+    _number = reader._number;
+    _placeId = reader._placeId;
+    _address = reader._address;
+    _isConnected = reader._isConnected;
+}
+
 unsigned int Reader::number() const
 {
     return _number;
