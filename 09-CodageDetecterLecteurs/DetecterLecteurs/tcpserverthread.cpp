@@ -1,6 +1,7 @@
 #include "tcpserverthread.h"
 #include <QHostAddress>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 
 TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
