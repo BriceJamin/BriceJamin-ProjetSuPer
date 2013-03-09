@@ -10,10 +10,10 @@ SOURCES += main.cpp \
     tcpserver.cpp \
     tcpserverthread.cpp \
     readerdetector.cpp \
-    readerclient.cpp
+    reader.cpp
 HEADERS += detecterlecteurs.h \
     tcpserver.h \
     tcpserverthread.h \
     readerdetector.h \
-    readerclient.h
+    reader.h
 FORMS += detecterlecteurs.ui
