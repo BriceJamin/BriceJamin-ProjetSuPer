@@ -74,10 +74,10 @@ void TcpServerThread::run()
         ReaderClient readerClient(reader);
 
         qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
-            << "  Le client est le lecteur de numero " + readerClient.reader().number() + "," << endl
-            << "  de lieu numero " + readerClient.reader().placeId() + "," << endl
-            << "  d'ip " + readerClient.reader().address() + "," << endl
-            << "  et de estConnecte " + readerClient.reader().isConnected() + ".";
+            << "  Le client est le lecteur de numero " << readerClient.reader().number() << "," << endl
+            << "  de lieu numero " << readerClient.reader().placeId() << "," << endl
+            << "  d'ip " << readerClient.reader().address() << "," << endl
+            << "  et de estConnecte " << readerClient.reader().isConnected() << ".";
 
         /* Signale la détection d'un lecteur */
         emit sig_readerDetected(readerClient);
