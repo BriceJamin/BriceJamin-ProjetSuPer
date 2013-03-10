@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QTcpSocket>
+#include "readerclient.h"
 
 class TcpServerThread : public QThread
 {
@@ -15,7 +16,9 @@ public:
 signals:
     void sig_error(QTcpSocket::SocketError socketError);
     void sig_intruderDetected(QString clientAddress);
-    void sig_readerDetected();
+    /* (?) Si un reader est detecte, un reader devrait etre envoye, pas un readerClient */
+    /* TODO (?) : Renommer Reader en ReaderData et ReaderClient en Reader */
+    void sig_readerDetected(const ReaderClient& readerClient);
 
 public slots:
 
