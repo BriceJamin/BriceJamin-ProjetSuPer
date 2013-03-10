@@ -39,7 +39,7 @@ void DetecterLecteurs::readerDetector_switchedOn()
 
 void DetecterLecteurs::readerDetector_errorOccurred(QString error)
 {
-    emit sig_occuredSignal("readerDetector_errorOccurred");
+    emit sig_occuredSignal("readerDetector_errorOccurred :" + error);
 }
 
 
