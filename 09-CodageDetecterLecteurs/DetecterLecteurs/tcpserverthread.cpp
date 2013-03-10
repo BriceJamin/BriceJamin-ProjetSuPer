@@ -2,6 +2,7 @@
 #include <QHostAddress>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include "reader.h"
 
 TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
@@ -25,6 +26,8 @@ void TcpServerThread::run()
     QString clientAddress = tcpSocket.peerAddress().toString();
 
     /* Demande à la BDD si c'est un lecteur. */
+    /* TODO : Créer une classe servant d'interface à la BDD */
+    /* TODO : Se renseigner sur l'accès à une BDD via des threads */
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setDatabaseName("bdd_super");
@@ -52,7 +55,7 @@ void TcpServerThread::run()
     {
         qDebug() << "TcpServerThread : Le client " + clientAddress + "n'est pas un lecteur.";
 
-        /* Signale la detection d'un intrus */
+        /* Signale la détection d'un intrus */
         emit sig_intruderDetected(clientAddress);
 
         /* TODO : Déconnecter le client */
@@ -62,14 +65,22 @@ void TcpServerThread::run()
     else
     {
         query.next();
-        qDebug() << "TcpServerThread : Le client est le lecteur de numero " + QString::number(query.value(0).toInt()) + ",";
-        qDebug() << "  de lieu numero " + QString::number(query.value(1).toInt()) + ",";
-        qDebug() << "  d'ip " + query.value(2).toString() + ",";
-        qDebug() << "  et de estConnecte " + QString::number(query.value(3).toInt()) + ".";
+        unsigned int number = query.value(0).toInt();
+        unsigned int placeId = query.value(1).toInt();
+        QString address = query.value(2).toString();
+        bool isConnected = query.value(3).toBool();
 
-        /* TODO : Créer une classe Lecteur */
-        /* TODO : Instancier un objet de la classe Lecteur */
-        /* TODO : Emettre un signal "lecteur connecté" avec ce lecteur en paramètre */
+        Reader reader(number, placeId, address, isConnected);
+        ReaderClient readerClient(reader);
+
+        qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
+            << "  Le client est le lecteur de numero " + readerClient.reader().number() + "," << endl
+            << "  de lieu numero " + readerClient.reader().placeId() + "," << endl
+            << "  d'ip " + readerClient.reader().address() + "," << endl
+            << "  et de estConnecte " + readerClient.reader().isConnected() + ".";
+
+        /* Signale la détection d'un lecteur */
+        emit sig_readerDetected(readerClient);
 
         /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
         /* TODO : Tuer le thread */
