@@ -25,7 +25,7 @@ private slots:
     void onLireData();
     void displayError(QAbstractSocket::SocketError);
     void on_pbEnvoyer_clicked();
-    void on_pb0Mouv_clicked();
+    //void on_pb0Mouv_clicked();
 
     void on_pbAuto_clicked();
 

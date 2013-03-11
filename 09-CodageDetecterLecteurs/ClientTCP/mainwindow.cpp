@@ -72,10 +72,10 @@ void MainWindow::on_pbEnvoyer_clicked()
 
 }
 
-void MainWindow::on_pb0Mouv_clicked()
+/*void MainWindow::on_pb0Mouv_clicked()
 {
     cl->write("[8980000002]");
-}
+}*/
 
 void MainWindow::on_pbAuto_clicked()
 {
