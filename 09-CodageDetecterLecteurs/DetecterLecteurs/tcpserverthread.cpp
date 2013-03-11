@@ -88,4 +88,6 @@ void TcpServerThread::run()
 
     /* TODO (?) : Terminer l'exécution du thread lors d'une déconnexion ?
     connect(&tcpSocket, SIGNAL(disconnected()), this, ;*/
+
+    exec();
 }
