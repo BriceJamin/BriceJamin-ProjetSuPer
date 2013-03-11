@@ -14,7 +14,7 @@ public:
     void run();
 
 signals:
-    void  sig_errorOccured(QString);
+    void sig_errorOccurred(QString);
     void sig_intruderDetected(QString clientAddress);
     void sig_readerDetected(const Reader& reader);
 
