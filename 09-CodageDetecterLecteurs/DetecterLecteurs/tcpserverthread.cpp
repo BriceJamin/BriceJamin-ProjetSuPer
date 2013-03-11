@@ -39,8 +39,8 @@ void TcpServerThread::run()
         /* Termine l'exécution du thread */
         return;
     }
-    else
-        qDebug() << "TcpServerThread : Connexion a la bdd reussie.";
+
+    qDebug() << "TcpServerThread : Connexion a la bdd reussie.";
 
     QSqlQuery query(db);
     query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
@@ -51,7 +51,8 @@ void TcpServerThread::run()
         /*  Termine l'exécution du thread */
         return;
     }
-    else if(query.size() == 0)
+
+    if(query.size() == 0)
     {
         qDebug() << "TcpServerThread : Le client " + clientAddress + "n'est pas un lecteur.";
 
@@ -62,29 +63,27 @@ void TcpServerThread::run()
         /* Termine l'exécution du thread */
         return;
     }
-    else
-    {
-        query.next();
-        unsigned int number = query.value(0).toInt();
-        unsigned int placeId = query.value(1).toInt();
-        QString address = query.value(2).toString();
-        bool isConnected = query.value(3).toBool();
 
-        Reader reader(number, placeId, address, isConnected);
-        ReaderClient readerClient(reader);
+    query.next();
+    unsigned int number = query.value(0).toInt();
+    unsigned int placeId = query.value(1).toInt();
+    QString address = query.value(2).toString();
+    bool isConnected = query.value(3).toBool();
 
-        qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
-            << "  Le client est le lecteur de numero " << readerClient.reader().number() << "," << endl
-            << "  de lieu numero " << readerClient.reader().placeId() << "," << endl
-            << "  d'ip " << readerClient.reader().address() << "," << endl
-            << "  et de estConnecte " << readerClient.reader().isConnected() << ".";
+    Reader reader(number, placeId, address, isConnected);
+    ReaderClient readerClient(reader);
 
-        /* Signale la détection d'un lecteur */
-        emit sig_readerDetected(readerClient);
+    qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
+        << "  Le client est le lecteur de numero " << readerClient.reader().number() << "," << endl
+        << "  de lieu numero " << readerClient.reader().placeId() << "," << endl
+        << "  d'ip " << readerClient.reader().address() << "," << endl
+        << "  et de estConnecte " << readerClient.reader().isConnected() << ".";
 
-        /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
-        /* TODO : Tuer le thread */
-    }
+    /* Signale la détection d'un lecteur */
+    emit sig_readerDetected(readerClient);
+
+    /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
+    /* TODO : Tuer le thread */
 
     /* TODO (?) : Terminer l'exécution du thread lors d'une déconnexion ?
     connect(&tcpSocket, SIGNAL(disconnected()), this, ;*/
