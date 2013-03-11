@@ -54,9 +54,9 @@ void DetecterLecteurs::readerDetector_clientDetected()
 }
 
 
-void DetecterLecteurs::readerDetector_intruderDetected()
+void DetecterLecteurs::readerDetector_intruderDetected(QString address)
 {
-    emit sig_occuredSignal("readerDetector_intruderDetected");
+    emit sig_occuredSignal("readerDetector_intruderDetected : " + address);
 }
 
 
