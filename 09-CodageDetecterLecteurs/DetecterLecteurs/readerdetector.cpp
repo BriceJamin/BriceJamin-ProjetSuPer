@@ -33,8 +33,8 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
 
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     connect(thread, SIGNAL(sig_errorOccurred(QString)), this, SIGNAL(sig_errorOccurred(QString)));
-    connect(thread, SIGNAL(sig_intruderDetected()), this, SIGNAL(sig_intruderDetected()));
-    connect(thread, SIGNAL(sig_readerDetected()), this, SIGNAL(sig_readerDetected()));
+    connect(thread, SIGNAL(sig_intruderDetected(QString)), this, SIGNAL(sig_intruderDetected(QString)));
+    connect(thread, SIGNAL(sig_readerDetected(const Reader&)), this, SIGNAL(sig_readerDetected(const Reader&)));
 
     thread->start();
  }

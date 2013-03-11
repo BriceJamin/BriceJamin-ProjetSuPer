@@ -2,6 +2,7 @@
 #define READERDETECTOR_H
 
 #include <QTcpServer>
+#include "reader.h"
 
 class ReaderDetector : public QTcpServer
 {
@@ -12,8 +13,8 @@ signals:
     void sig_switchedOff();
 
     void sig_errorOccurred(QString error);
-    void sig_intruderDetected();
-    void sig_readerDetected();
+    void sig_intruderDetected(QString);
+    void sig_readerDetected(const Reader&);
 
 public slots:
     void switchOn(QString address, unsigned int port);
