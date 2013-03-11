@@ -32,7 +32,7 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
     TcpServerThread *thread = new TcpServerThread(socketDescriptor, this);
 
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-    connect(thread, SIGNAL(sig_error(QString)), this, SIGNAL(sig_error(QString)));
+    connect(thread, SIGNAL(sig_errorOccured(QString)), this, SIGNAL(sig_errorOccured(QString)));
     connect(thread, SIGNAL(sig_intruderDetected()), this, SIGNAL(sig_intruderDetected()));
     connect(thread, SIGNAL(sig_readerDetected()), this, SIGNAL(sig_readerDetected()));
 
