@@ -8,12 +8,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     detecterlecteurs.cpp \
     tcpserverthread.cpp \
-    readerclient.cpp \
-    reader.cpp \
-    readerdetector.cpp
+    readerdetector.cpp \
+    readerdata.cpp \
+    reader.cpp
 HEADERS += detecterlecteurs.h \
     tcpserverthread.h \
-    readerclient.h \
-    reader.h \
-    readerdetector.h
+    readerdetector.h \
+    readerdata.h \
+    reader.h
 FORMS += detecterlecteurs.ui
