@@ -50,7 +50,7 @@
      </rect>
     </property>
     <property name="text">
-     <string notr="true">127.0.0.1</string>
+     <string notr="true">127.0.0.254</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
