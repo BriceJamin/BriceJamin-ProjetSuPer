@@ -110,9 +110,8 @@ void DetecterLecteurs::on_offPushButton_clicked()
 
 void DetecterLecteurs::occuredSignal(QString signal)
 {
-    qDebug() << "DEBUG : " << endl
-            << "occuredSignal :" << signal << endl
-            << "readerDetector value : "
-            << QString().sprintf("%8p", readerDetector)
-            << endl << endl;
+    qDebug() << "Fenetre : occuredSignal :" << signal << endl
+            //<< "readerDetector value : "
+            //<< QString().sprintf("%8p", readerDetector)
+            << endl;
 }
