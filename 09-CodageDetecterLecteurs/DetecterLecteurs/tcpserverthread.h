@@ -14,7 +14,7 @@ public:
     void run();
 
 signals:
-    void sig_error(QTcpSocket::SocketError socketError);
+    void  sig_errorOccured(QString);
     void sig_intruderDetected(QString clientAddress);
     /* (?) Si un reader est detecte, un reader devrait etre envoye, pas un readerClient */
     /* TODO (?) : Renommer Reader en ReaderData et ReaderClient en Reader */

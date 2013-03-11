@@ -17,7 +17,7 @@ void TcpServerThread::run()
         en cas d'erreur émet le signal error. */
     QTcpSocket tcpSocket;
      if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
-         emit sig_error(tcpSocket.error());
+         emit sig_errorOccured(tcpSocket.errorString());
          /* Termine l'exécution du thread */
          return;
      }
