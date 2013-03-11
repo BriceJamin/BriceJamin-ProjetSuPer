@@ -27,7 +27,7 @@ void ReaderDetector::switchOff()
     }
 }
 
-void ReaderDetector2::incomingConnection(int socketDescriptor)
+void ReaderDetector::incomingConnection(int socketDescriptor)
  {
     TcpServerThread *thread = new TcpServerThread(socketDescriptor, this);
 
