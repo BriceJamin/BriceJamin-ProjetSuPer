@@ -7,17 +7,13 @@ TARGET = DetecterLecteurs
 TEMPLATE = app
 SOURCES += main.cpp \
     detecterlecteurs.cpp \
-    tcpserver.cpp \
     tcpserverthread.cpp \
-    readerdetector.cpp \
     readerclient.cpp \
     reader.cpp \
-    readerdetector2.cpp
+    readerdetector.cpp
 HEADERS += detecterlecteurs.h \
-    tcpserver.h \
     tcpserverthread.h \
-    readerdetector.h \
     readerclient.h \
     reader.h \
-    readerdetector2.h
+    readerdetector.h
 FORMS += detecterlecteurs.ui

@@ -1,31 +1,40 @@
-#include "readerdetector.h"
-
-ReaderDetector::ReaderDetector(QObject *parent) :
-    QObject(parent)
+#include "readerdetector2.h"
+#include "tcpserverthread.h"
+ReaderDetector2::ReaderDetector2(QObject *parent) :
+    QTcpServer(parent)
 {
-    connect(&tcpServer, SIGNAL(sig_clientDetected()), this, SIGNAL(sig_clientDetected()));
-    connect(&tcpServer, SIGNAL(sig_intruderDetected()), this, SIGNAL(sig_intruderDetected()));
-    connect(&tcpServer, SIGNAL(sig_readerDetected()), this, SIGNAL(sig_readerDetected()));
 }
 
-void ReaderDetector::switchOn(QString address, unsigned int port)
+void ReaderDetector2::switchOn(QString address, unsigned int port)
 {
-    if(! tcpServer.isListening())
+    if(! isListening())
     {
-        bool noErrorOccured = tcpServer.listen(QHostAddress(address), port);
+        tcpServer.listen(QHostAddress(address), port);
 
-        if(noErrorOccured && tcpServer.isListening())
+        if(isListening())
             emit sig_switchedOn();
         else
-            emit sig_errorOccurred(tcpServer.errorString());
+            emit sig_errorOccurred(errorString());
     }
 }
 
-void ReaderDetector::switchOff()
+void ReaderDetector2::switchOff()
 {
-    if(tcpServer.isListening())
+    if(isListening())
     {
-        tcpServer.close();
+        close();
         emit sig_switchedOff();
     }
 }
+
+void ReaderDetector2::incomingConnection(int socketDescriptor)
+ {
+    TcpServerThread *thread = new TcpServerThread(socketDescriptor, this);
+
+    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    connect(thread, SIGNAL(sig_error(QString)), this, SIGNAL(sig_error(QString)));
+    connect(thread, SIGNAL(sig_intruderDetected()), this, SIGNAL(sig_intruderDetected()));
+    connect(thread, SIGNAL(sig_readerDetected()), this, SIGNAL(sig_readerDetected()));
+
+    thread->start();
+ }
