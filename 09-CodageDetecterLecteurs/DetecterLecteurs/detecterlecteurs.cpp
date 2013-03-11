@@ -20,7 +20,6 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
     connect(readerDetector, SIGNAL(sig_switchedOn()), this, SLOT(readerDetector_switchedOn()));
     connect(readerDetector, SIGNAL(sig_errorOccurred(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
-    connect(readerDetector, SIGNAL(sig_clientDetected()), this, SLOT(readerDetector_clientDetected()));
     connect(readerDetector, SIGNAL(sig_intruderDetected()), this, SLOT(readerDetector_intruderDetected()));
     connect(readerDetector, SIGNAL(sig_readerDetected()), this, SLOT(readerDetector_readerDetected()));
     connect(readerDetector, SIGNAL(destroyed()), this, SLOT(readerDetector_destroyed()));
