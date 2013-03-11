@@ -1,11 +1,11 @@
-#include "readerdetector2.h"
+#include "readerdetector.h"
 #include "tcpserverthread.h"
-ReaderDetector2::ReaderDetector2(QObject *parent) :
+ReaderDetector::ReaderDetector(QObject *parent) :
     QTcpServer(parent)
 {
 }
 
-void ReaderDetector2::switchOn(QString address, unsigned int port)
+void ReaderDetector::switchOn(QString address, unsigned int port)
 {
     if(! isListening())
     {
@@ -18,7 +18,7 @@ void ReaderDetector2::switchOn(QString address, unsigned int port)
     }
 }
 
-void ReaderDetector2::switchOff()
+void ReaderDetector::switchOff()
 {
     if(isListening())
     {

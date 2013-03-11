@@ -1,9 +1,9 @@
-#ifndef READERDETECTOR2_H
-#define READERDETECTOR2_H
+#ifndef READERDETECTOR_H
+#define READERDETECTOR_H
 
 #include <QTcpServer>
 
-class ReaderDetector2 : protected QTcpServer
+class ReaderDetector : public QTcpServer
 {
 Q_OBJECT
 
@@ -20,10 +20,10 @@ public slots:
     void switchOff();
 
 public:
-    explicit ReaderDetector2(QObject *parent = 0);
+    explicit ReaderDetector(QObject *parent = 0);
 
 protected:
      void incomingConnection(int socketDescriptor);
 };
 
-#endif // READERDETECTOR2_H
+#endif // READERDETECTOR_H
