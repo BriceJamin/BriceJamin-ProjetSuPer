@@ -54,7 +54,7 @@ void TcpServerThread::run()
 
     if(query.size() == 0)
     {
-        qDebug() << "TcpServerThread : Le client " + clientAddress + "n'est pas un lecteur.";
+        qDebug() << "TcpServerThread : Le client " + clientAddress + " n'est pas un lecteur.";
 
         /* Signale la détection d'un intrus */
         emit sig_intruderDetected(clientAddress);
