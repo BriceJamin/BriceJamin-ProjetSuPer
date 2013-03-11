@@ -59,7 +59,8 @@ void TcpServerThread::run()
         /* Signale la détection d'un intrus */
         emit sig_intruderDetected(clientAddress);
 
-        /* TODO : Déconnecter le client */
+        /* TODO : Déconnecter le client proprement */
+
         /* Termine l'exécution du thread */
         return;
     }
