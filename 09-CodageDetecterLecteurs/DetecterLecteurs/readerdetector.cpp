@@ -9,7 +9,7 @@ void ReaderDetector::switchOn(QString address, unsigned int port)
 {
     if(! isListening())
     {
-        tcpServer.listen(QHostAddress(address), port);
+        listen(QHostAddress(address), port);
 
         if(isListening())
             emit sig_switchedOn();
