@@ -35,7 +35,7 @@ void TcpServerThread::run()
     db.setPassword("mdp_super");
     if (!db.open())
     {
-        qDebug() << "Impossible d'etablir une connexion avec la Bdd.";
+        qFatal("Impossible d'etablir une connexion avec la Bdd.");
         /* Termine l'exécution du thread */
         return;
     }
@@ -46,7 +46,7 @@ void TcpServerThread::run()
     query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
     if(!query.isActive())
     {
-        qDebug() << "TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnée.";
+        qFatal("TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnée.");
 
         /*  Termine l'exécution du thread */
         return;
