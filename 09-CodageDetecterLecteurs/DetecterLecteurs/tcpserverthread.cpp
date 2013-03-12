@@ -24,6 +24,10 @@ void TcpServerThread::run()
 
     /* Récupère l'adresse du client. */
     QString clientAddress = tcpSocket.peerAddress().toString();
+    qDebug() << "Connexion du client d'origine' " << clientAddress
+            << ", port " << tcpSocket.peerPort()
+            << " vers " << tcpSocket.localAddress()
+            << ", port " << tcpSocket.localPort();
 
     /* Demande à la BDD si c'est un lecteur. */
     /* TODO : Créer une classe servant d'interface à la BDD */

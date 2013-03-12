@@ -1,6 +1,8 @@
 #include "clienttcpwindow.h"
 #include "ui_clienttcpwindow.h"
 
+#include <QHostAddress>
+
 ClientTcpWindow::ClientTcpWindow(QString serverAddress, QString serverPort, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ClientTcpWindow)
@@ -46,7 +48,13 @@ void ClientTcpWindow::on_connectPushButton_clicked()
 
 void ClientTcpWindow::clientTcp_connected()
 {
-    ui->plainTextEdit->appendPlainText("***** Connected.");
+    QString message;
+    message += "***** Connected";
+    message += " (" + clientTcp->peerAddress().toString();
+    message += ", " + QString::number(clientTcp->peerPort());
+    message += ", " + clientTcp->localAddress().toString();
+    message += ", " + QString::number(clientTcp->localPort()) + ")";
+    ui->plainTextEdit->appendPlainText(message);
 }
 
 void ClientTcpWindow::clientTcp_disconnected()
