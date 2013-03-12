@@ -21,10 +21,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_connectPushButton_clicked()
 {
+/*
     ui->connectPushButton->setEnabled(false);
     tcpSocket->abort();
     tcpSocket->setPeerAddress(QHostAddress(ui->clientAddressLineEdit->text()));
     tcpSocket->connectToHost(ui->serverAddressLineEdit->text(), ui->serverPortLineEdit->text().toInt());
+*/
 }
 
 void MainWindow::displayError(QAbstractSocket::SocketError socketError)
