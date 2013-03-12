@@ -6,17 +6,17 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    clientTcp(0)
+    clientTcpWindow(0)
 {
     ui->setupUi(this);
-    clientTcp = new ClientTcp(this);
+    clientTcpWindow = new clientTcpWindow(this);
 
-    ui->clientAddressLineEdit->setText(clientTcp->getPeerAddress());
+    ui->clientAddressLineEdit->setText(clientTcpWindow->getPeerAddress());
 
-    connect(clientTcp, SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(clientTcp_error(QAbstractSocket::SocketError)));
-    connect(clientTcp, SIGNAL(connected()), this, SLOT(clientTcp_connected()));
-    connect(clientTcp, SIGNAL(disconnected()), this, SLOT(clientTcp_disconnected()));
+    connect(clientTcpWindow, SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(clientTcpWindow_error(QAbstractSocket::SocketError)));
+    connect(clientTcpWindow, SIGNAL(connected()), this, SLOT(clientTcpWindow_connected()));
+    connect(clientTcpWindow, SIGNAL(disconnected()), this, SLOT(clientTcpWindow_disconnected()));
 }
 
 MainWindow::~MainWindow()
@@ -27,23 +27,23 @@ MainWindow::~MainWindow()
 void MainWindow::on_connectPushButton_clicked()
 {
     ui->connectPushButton->setEnabled(false);
-    clientTcp->abort();
-    clientTcp->setPeerAddress(ui->clientAddressLineEdit->text());
-    clientTcp->connectToHost(ui->serverAddressLineEdit->text(), ui->serverPortLineEdit->text().toInt());
+    clientTcpWindow->abort();
+    clientTcpWindow->setPeerAddress(ui->clientAddressLineEdit->text());
+    clientTcpWindow->connectToHost(ui->serverAddressLineEdit->text(), ui->serverPortLineEdit->text().toInt());
 }
 
 
-void MainWindow::clientTcp_connected()
+void MainWindow::clientTcpWindow_connected()
 {
     ui->plainTextEdit->appendPlainText("***** Connected.");
 }
 
-void MainWindow::clientTcp_disconnected()
+void MainWindow::clientTcpWindow_disconnected()
 {
     ui->plainTextEdit->appendPlainText("***** Disconnected.");
 }
 
-void MainWindow::clientTcp_error(QAbstractSocket::SocketError socketError)
+void MainWindow::clientTcpWindow_error(QAbstractSocket::SocketError socketError)
 {
     switch (socketError) {
     case QAbstractSocket::RemoteHostClosedError:
@@ -55,7 +55,7 @@ void MainWindow::clientTcp_error(QAbstractSocket::SocketError socketError)
         ui->plainTextEdit->appendPlainText("***** Connection refused.");
         break;
     default:
-        ui->plainTextEdit->appendPlainText("***** Error occurred: " + clientTcp->errorString());
+        ui->plainTextEdit->appendPlainText("***** Error occurred: " + clientTcpWindow->errorString());
     }
     ui->connectPushButton->setEnabled(true);
 }
