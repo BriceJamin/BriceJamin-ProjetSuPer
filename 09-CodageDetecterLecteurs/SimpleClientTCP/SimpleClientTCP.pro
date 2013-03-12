@@ -7,10 +7,15 @@ QT += core \
 greaterThan(QT_MAJOR_VERSION, 4):QT += widgets
 TARGET = SimpleClientTCP
 TEMPLATE = app
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     mainwindow.cpp \
+    clienttcpwindow.cpp \
     clienttcp.cpp
-HEADERS += mainwindow.h \
+HEADERS += \
+    mainwindow.h \
+    clienttcpwindow.h \
     clienttcp.h
-FORMS += mainwindow.ui \
+FORMS += \
+    mainwindow.ui \
     clienttcpwindow.ui
