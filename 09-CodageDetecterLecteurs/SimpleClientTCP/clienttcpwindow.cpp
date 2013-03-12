@@ -1,7 +1,7 @@
 #include "clienttcpwindow.h"
 #include "ui_clienttcpwindow.h"
 
-ClientTcpWindow::ClientTcpWindow(QWidget *parent) :
+ClientTcpWindow::ClientTcpWindow(QString serverAddress, QString serverPort, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ClientTcpWindow)
 {
@@ -9,6 +9,8 @@ ClientTcpWindow::ClientTcpWindow(QWidget *parent) :
 
     clientTcp = new ClientTcp(this);
     ui->clientAddressLineEdit->setText(clientTcp->getPeerAddress());
+    ui->serverAddressLineEdit->setText(serverAddress);
+    ui->serverPortLineEdit->setText(serverPort);
 
     connect(clientTcp, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(clientTcp_error(QAbstractSocket::SocketError)));

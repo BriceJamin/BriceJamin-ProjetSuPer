@@ -17,7 +17,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newClientPushButton_clicked()
 {
-    ClientTcpWindow* clientTcpWindow = new ClientTcpWindow(this);
+    QString serverAddress = ui->serverAddressLineEdit->text();
+    QString serverPort = ui->serverPortLineEdit->text();
+    ClientTcpWindow* clientTcpWindow = new ClientTcpWindow(serverAddress, serverPort, this);
     clientTcpWindowList << clientTcpWindow;
     clientTcpWindow->setWindowFlags(Qt::Window);
     clientTcpWindow->show();

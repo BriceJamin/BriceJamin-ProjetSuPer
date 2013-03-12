@@ -12,7 +12,7 @@ namespace Ui {
 class ClientTcpWindow : public QWidget {
     Q_OBJECT
 public:
-    ClientTcpWindow(QWidget *parent = 0);
+    ClientTcpWindow(QString serverAddress, QString serverPort, QWidget *parent = 0);
     ~ClientTcpWindow();
 
 protected:
