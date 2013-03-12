@@ -2,7 +2,7 @@
 -- Utilisateur de la bdd : user_super
 -- Mot de passe de l'utilisateur : mdp_super
 
--- DROP DATABASE IF EXISTS bdd_super;
+DROP DATABASE IF EXISTS bdd_super;
 
 CREATE DATABASE IF NOT EXISTS bdd_super CHARACTER SET 'utf8' COLLATE utf8_bin;
 
