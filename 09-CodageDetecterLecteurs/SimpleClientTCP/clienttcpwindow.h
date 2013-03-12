@@ -21,8 +21,8 @@ protected:
 private slots:
     void on_connectPushButton_clicked();
 
-    void clientTcpWindow_connected();
-    void clientTcpWindow_disconnected();
+    void clientTcp_connected();
+    void clientTcp_disconnected();
     void clientTcp_error(QAbstractSocket::SocketError socketError);
 
 private:

@@ -42,12 +42,12 @@ void ClientTcpWindow::on_connectPushButton_clicked()
     clientTcp->connectToHost(ui->serverAddressLineEdit->text(), ui->serverPortLineEdit->text().toInt());
 }
 
-void ClientTcpWindow::clientTcpWindow_connected()
+void ClientTcpWindow::clientTcp_connected()
 {
     ui->plainTextEdit->appendPlainText("***** Connected.");
 }
 
-void ClientTcpWindow::clientTcpWindow_disconnected()
+void ClientTcpWindow::clientTcp_disconnected()
 {
     ui->plainTextEdit->appendPlainText("***** Disconnected.");
     ui->connectPushButton->setEnabled(true);
