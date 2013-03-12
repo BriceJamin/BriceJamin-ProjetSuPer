@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 
-#include "clienttcp.h"
-
 namespace Ui {
 class MainWindow;
 }
@@ -19,15 +17,13 @@ public:
     ~MainWindow();
 
 private slots:
+    //void onClientConnected();
     void on_connectPushButton_clicked();
-
-    void clientTcp_connected();
-    void clientTcp_disconnected();
-    void clientTcp_error(QAbstractSocket::SocketError socketError);
+    void displayError(QAbstractSocket::SocketError socketError);
 
 private:
     Ui::MainWindow *ui;
-    ClientTcpWindow *clientTcpWindow;
+    QTcpSocket *tcpSocket;
 };
 
 #endif // MAINWINDOW_H

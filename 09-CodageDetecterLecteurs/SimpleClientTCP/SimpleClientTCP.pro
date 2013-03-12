@@ -14,17 +14,9 @@ TARGET = SimpleClientTCP
 TEMPLATE = app
 
 
-SOURCES += \
-    clienttcp.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    clienttcpwindow.cpp
+SOURCES += main.cpp\
+        mainwindow.cpp
 
-HEADERS  += \
-    clienttcp.h \
-    mainwindow.h \
-    clienttcpwindow.h
+HEADERS  += mainwindow.h
 
-FORMS    += \
-    clienttcpwindow.ui \
-    mainwindow.ui
+FORMS    += mainwindow.ui
