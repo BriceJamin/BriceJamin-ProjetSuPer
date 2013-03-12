@@ -50,6 +50,7 @@ void ClientTcpWindow::clientTcpWindow_connected()
 void ClientTcpWindow::clientTcpWindow_disconnected()
 {
     ui->plainTextEdit->appendPlainText("***** Disconnected.");
+    ui->connectPushButton->setEnabled(true);
 }
 
 void ClientTcpWindow::clientTcp_error(QAbstractSocket::SocketError socketError)

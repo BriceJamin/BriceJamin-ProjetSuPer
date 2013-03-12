@@ -1,7 +1,7 @@
 #ifndef CLIENTTCPWINDOW_H
 #define CLIENTTCPWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QAbstractSocket>
 #include "clienttcp.h"
 

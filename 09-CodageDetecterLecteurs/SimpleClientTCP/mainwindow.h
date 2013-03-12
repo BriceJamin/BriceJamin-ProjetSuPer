@@ -16,9 +16,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_newClientPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QTcpSocket *tcpSocket;
+    QList<ClientTcpWindow*> clientTcpWindowList;
 };
 
 #endif // MAINWINDOW_H

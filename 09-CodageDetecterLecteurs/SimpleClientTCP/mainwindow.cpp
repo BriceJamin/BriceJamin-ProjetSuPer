@@ -14,3 +14,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_newClientPushButton_clicked()
+{
+    ClientTcpWindow* clientTcpWindow = new ClientTcpWindow(this);
+    clientTcpWindowList << clientTcpWindow;
+    clientTcpWindow->setWindowFlags(Qt::Window);
+    clientTcpWindow->show();
+}
