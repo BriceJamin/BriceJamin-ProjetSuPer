@@ -32,7 +32,7 @@ void TcpServerThread::run()
     /* Demande à la BDD si c'est un lecteur. */
     /* TODO : Créer une classe servant d'interface à la BDD */
     /* TODO : Se renseigner sur l'accès à une BDD via des threads */
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", QString::number(QThread::currentThreadId()));
     db.setHostName("localhost");
     db.setDatabaseName("bdd_super");
     db.setUserName("user_super");
