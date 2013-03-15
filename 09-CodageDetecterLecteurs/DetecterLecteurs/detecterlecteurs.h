@@ -27,7 +27,7 @@ public slots:
     void readerDetector_switchedOff();
     void readerDetector_clientDetected();
     void readerDetector_intruderDetected(QString address);
-    void readerDetector_readerDetected();
+    void readerDetector_readerDetected(Reader*);
     void readerDetector_destroyed();
 
 protected:

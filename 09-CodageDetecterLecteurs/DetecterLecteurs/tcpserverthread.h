@@ -16,7 +16,7 @@ public:
 signals:
     void sig_errorOccurred(QString);
     void sig_intruderDetected(QString clientAddress);
-    void sig_readerDetected(const Reader& reader);
+    void sig_readerDetected(Reader* reader);
 
 public slots:
 

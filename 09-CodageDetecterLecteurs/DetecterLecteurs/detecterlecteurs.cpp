@@ -21,7 +21,7 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
     connect(readerDetector, SIGNAL(sig_errorOccurred(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
     connect(readerDetector, SIGNAL(sig_intruderDetected(QString)), this, SLOT(readerDetector_intruderDetected(QString)));
-    connect(readerDetector, SIGNAL(sig_readerDetected(const Reader&)), this, SLOT(readerDetector_readerDetected()));
+    connect(readerDetector, SIGNAL(sig_readerDetected(Reader*)), this, SLOT(readerDetector_readerDetected(Reader*)));
     connect(readerDetector, SIGNAL(destroyed()), this, SLOT(readerDetector_destroyed()));
 
 }
@@ -60,7 +60,7 @@ void DetecterLecteurs::readerDetector_intruderDetected(QString address)
 }
 
 
-void DetecterLecteurs::readerDetector_readerDetected()
+void DetecterLecteurs::readerDetector_readerDetected(Reader *)
 {
     emit sig_occuredSignal("readerDetector_readerDetected");
 }

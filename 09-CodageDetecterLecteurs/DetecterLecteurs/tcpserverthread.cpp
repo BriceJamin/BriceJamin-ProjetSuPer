@@ -85,7 +85,7 @@ void TcpServerThread::run()
         << "  et de estConnecte " << reader.data().isConnected() << ".";
 
     /* Signale la détection d'un lecteur */
-    emit sig_readerDetected(reader);
+    emit sig_readerDetected(&reader);
 
     /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
     /* TODO : Tuer le thread */

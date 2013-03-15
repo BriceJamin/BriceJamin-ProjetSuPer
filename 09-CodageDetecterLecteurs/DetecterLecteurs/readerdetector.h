@@ -14,7 +14,7 @@ signals:
 
     void sig_errorOccurred(QString error);
     void sig_intruderDetected(QString);
-    void sig_readerDetected(const Reader&);
+    void sig_readerDetected(Reader*);
 
 public slots:
     void switchOn(QString address, unsigned int port);
