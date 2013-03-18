@@ -1,22 +1,29 @@
 #ifndef READER_H
 #define READER_H
 
-#include <QObject>
-#include "readerdata.h"
+#include <QString>
 
-class Reader : public QObject
+class Reader
 {
-    Q_OBJECT
-
-signals:
-    void sig_disconnected();
-
 public:
-    explicit Reader(const ReaderData&, QObject *parent = 0);
-    const ReaderData& data() const;
+    Reader(int=0, int=0, QString="", bool=false);
+    Reader(const Reader&);
+
+    unsigned int number() const;
+    unsigned int placeId() const;
+    QString address() const;
+    bool isConnected() const;
+
+    void number(unsigned int);
+    void placeId(unsigned int);
+    void address(QString);
+    void isConnected(bool);
 
 private:
-    ReaderData _data;
+    unsigned int _number;
+    unsigned int _placeId;
+    QString _address;
+    bool _isConnected;
 };
 
-#endif // READERCLIENT_H
+#endif // READER_H

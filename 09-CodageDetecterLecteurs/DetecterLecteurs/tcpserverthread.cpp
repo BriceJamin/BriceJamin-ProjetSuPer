@@ -39,10 +39,8 @@ void TcpServerThread::run()
     /* Demande à la BDD si c'est un lecteur. */
     /* TODO : Créer une classe servant d'interface à la BDD */
     QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
-    unsigned int number;
-    unsigned int placeId;
-    QString address;
-    bool isConnected;
+    Reader reader;
+
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
         db.setHostName("localhost");
@@ -82,31 +80,27 @@ void TcpServerThread::run()
         }
 
         query.next();
-        number = query.value(0).toInt();
-        placeId = query.value(1).toInt();
-        address = query.value(2).toString();
-        isConnected = query.value(3).toBool();
+        //query.finish();
+        reader.number(query.value(0).toInt());
+        reader.placeId(query.value(1).toInt());
+        reader.address(query.value(2).toString());
+        reader.isConnected(query.value(3).toBool());
         db.close();
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
 
-    /* TODO : Faire un constructeur par défaut pour ReaderData */
-    /* TODO : L'utiliser pour éviter de trimbaler les attributs en dehors */
-    ReaderData readerData(number, placeId, address, isConnected);
-    Reader reader(readerData);
-
     qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
-        << "  Le client est le lecteur de numero " << reader.data().number() << "," << endl
-        << "  de lieu numero " << reader.data().placeId() << "," << endl
-        << "  d'ip " << reader.data().address() << "," << endl
-        << "  et de estConnecte " << reader.data().isConnected() << ".";
+        << "  Le client est le lecteur de numero " << reader.number() << "," << endl
+        << "  de lieu numero " << reader.placeId() << "," << endl
+        << "  d'ip " << reader.address() << "," << endl
+        << "  et de estConnecte " << reader.isConnected() << ".";
 
     /* Signale la détection d'un lecteur */
     emit sig_readerDetected(&reader);
 
-    /* TODO : Signaler la déconnexion d'un lecteur
-    connect(&tcpSocket, SIGNAL(disconnected()), this, ??? );*/
+    /* Signalera la déconnexion du lecteur */
+    //connect(&tcpSocket, SIGNAL(disconnected()), &reader, SLOT(slot_disconnected()));
 
     /* TODO : Tuer le thread lorsqu'un lecteur se déconnecte.*/
 
