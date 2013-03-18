@@ -40,10 +40,17 @@ void ClientTcpWindow::changeEvent(QEvent *e)
 
 void ClientTcpWindow::on_connectPushButton_clicked()
 {
-    ui->connectPushButton->setEnabled(false);
     clientTcp->abort();
+    ui->connectPushButton->setEnabled(false);
+    ui->disconnectPushButton->setEnabled(true);
     clientTcp->setPeerAddress(ui->clientAddressLineEdit->text());
     clientTcp->connectToHost(ui->serverAddressLineEdit->text(), ui->serverPortLineEdit->text().toInt());
+}
+
+void ClientTcpWindow::on_disconnectPushButton_clicked()
+{
+    ui->connectPushButton->setEnabled(true);
+    clientTcp->abort();
 }
 
 void ClientTcpWindow::clientTcp_connected()

@@ -25,6 +25,8 @@ private slots:
     void clientTcp_disconnected();
     void clientTcp_error(QAbstractSocket::SocketError socketError);
 
+    void on_disconnectPushButton_clicked();
+
 private:
     Ui::ClientTcpWindow *ui;
     ClientTcp *clientTcp;
