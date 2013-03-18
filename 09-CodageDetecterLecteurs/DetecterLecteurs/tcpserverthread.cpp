@@ -91,6 +91,8 @@ void TcpServerThread::run()
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
 
+    /* TODO : Faire un constructeur par défaut pour ReaderData */
+    /* TODO : L'utiliser pour éviter de trimbaler les attributs en dehors */
     ReaderData readerData(number, placeId, address, isConnected);
     Reader reader(readerData);
 
@@ -103,11 +105,12 @@ void TcpServerThread::run()
     /* Signale la détection d'un lecteur */
     emit sig_readerDetected(&reader);
 
-    /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
-    /* TODO : Tuer le thread */
+    /* TODO : Signaler la déconnexion d'un lecteur
+    connect(&tcpSocket, SIGNAL(disconnected()), this, ??? );*/
 
-    /* TODO (?) : Terminer l'exécution du thread lors d'une déconnexion ?
-    connect(&tcpSocket, SIGNAL(disconnected()), this, ;*/
+    /* TODO : Tuer le thread lorsqu'un lecteur se déconnecte.*/
+
+    /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
 
     exec();
 }
