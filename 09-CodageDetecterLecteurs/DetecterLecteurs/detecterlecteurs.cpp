@@ -20,8 +20,9 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
     connect(readerDetector, SIGNAL(sig_switchedOn()), this, SLOT(readerDetector_switchedOn()));
     connect(readerDetector, SIGNAL(sig_errorOccurred(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
-    connect(readerDetector, SIGNAL(sig_intruderDetected(QString)), this, SLOT(readerDetector_intruderDetected(QString)));
-    connect(readerDetector, SIGNAL(sig_readerDetected(Reader*)), this, SLOT(readerDetector_readerDetected(Reader*)));
+    connect(readerDetector, SIGNAL(sig_intruderEjected(QString)), this, SLOT(readerDetector_intruderEjected(QString)));
+    connect(readerDetector, SIGNAL(sig_readerConnected(Reader*)), this, SLOT(readerDetector_readerConnected(Reader*)));
+    connect(readerDetector, SIGNAL(sig_readerDisconnected(Reader*)), this, SLOT(readerDetector_readerDisconnected(Reader*)));
     connect(readerDetector, SIGNAL(destroyed()), this, SLOT(readerDetector_destroyed()));
 }
 
@@ -46,20 +47,13 @@ void DetecterLecteurs::readerDetector_switchedOff()
     emit sig_occuredSignal("readerDetector_switchedOff");
 }
 
-
-void DetecterLecteurs::readerDetector_clientDetected()
-{
-    emit sig_occuredSignal("readerDetector_clientDetected");
-}
-
-
-void DetecterLecteurs::readerDetector_intruderDetected(QString address)
+void DetecterLecteurs::readerDetector_intruderEjected(QString address)
 {
     emit sig_occuredSignal("readerDetector_intruderDetected : " + address);
 }
 
 
-void DetecterLecteurs::readerDetector_readerDetected(Reader* reader)
+void DetecterLecteurs::readerDetector_readerConnected(Reader* reader)
 {
     QString msg;
     msg += "Reader : ";
@@ -71,6 +65,16 @@ void DetecterLecteurs::readerDetector_readerDetected(Reader* reader)
     //connect(reader, SIGNAL(sig_disconnected()), this, SLOT()
 }
 
+void DetecterLecteurs::readerDetector_readerDisconnected(Reader* reader)
+{
+    QString msg;
+    msg += "Reader : ";
+    msg += "Num(" + QString::number(reader->number()) + "), ";
+    msg += "PlaceId(" + QString::number(reader->placeId()) + "), ";
+    msg += "Address(" + reader->address() + "), ";
+    msg += "IsConnected(" + QString::number(reader->isConnected()) + ").";
+    emit sig_occuredSignal("readerDetector_readerDisconnected :" + msg);
+}
 
 void DetecterLecteurs::readerDetector_destroyed()
 {

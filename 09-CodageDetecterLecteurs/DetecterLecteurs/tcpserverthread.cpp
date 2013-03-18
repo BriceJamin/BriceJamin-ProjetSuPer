@@ -19,6 +19,7 @@ TcpServerThread::~TcpServerThread()
 void TcpServerThread::run()
 {
     /* S'exécute dans un nouveau thread. */
+    qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :";
 
     /* Récupère le socket du thread principal et
         en cas d'erreur émet le signal error. */
@@ -39,7 +40,6 @@ void TcpServerThread::run()
     /* Demande à la BDD si c'est un lecteur. */
     /* TODO : Créer une classe servant d'interface à la BDD */
     QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
-    Reader reader;
 
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
@@ -60,7 +60,7 @@ void TcpServerThread::run()
         query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
         if(!query.isActive())
         {
-            qFatal("TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnée.");
+            qFatal("TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnee.");
 
             /*  Termine l'exécution du thread */
             return;
@@ -71,7 +71,7 @@ void TcpServerThread::run()
             qDebug() << "TcpServerThread : Le client " + clientAddress + " n'est pas un lecteur.";
 
             /* Signale la détection d'un intrus */
-            emit sig_intruderDetected(clientAddress);
+            emit sig_intruderEjected(clientAddress);
 
             /* TODO : Déconnecter le client proprement */
 
@@ -84,27 +84,35 @@ void TcpServerThread::run()
         reader.number(query.value(0).toInt());
         reader.placeId(query.value(1).toInt());
         reader.address(query.value(2).toString());
-        reader.isConnected(query.value(3).toBool());
+        reader.isConnected(true);
         db.close();
+
+        // TODO : Mettre à jour la BDD (le lecteur est désormais connecté)
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
 
-    qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :" << endl
-        << "  Le client est le lecteur de numero " << reader.number() << "," << endl
-        << "  de lieu numero " << reader.placeId() << "," << endl
-        << "  d'ip " << reader.address() << "," << endl
-        << "  et de estConnecte " << reader.isConnected() << ".";
+    qDebug() << "Le client est le lecteur num(" << reader.number() << ")," << endl
+        << "placeId(" << reader.placeId() << ")," << endl
+        << "address(" << reader.address() << ")," << endl
+        << "isConnected(" << reader.isConnected() << ").";
 
     /* Signale la détection d'un lecteur */
-    emit sig_readerDetected(&reader);
+    emit sig_readerConnected(&reader);
 
     /* Signalera la déconnexion du lecteur */
-    //connect(&tcpSocket, SIGNAL(disconnected()), &reader, SLOT(slot_disconnected()));
+    connect(&tcpSocket, SIGNAL(disconnected()), this, SLOT(slot_socketDisconnected()));
 
     /* TODO : Tuer le thread lorsqu'un lecteur se déconnecte.*/
 
     /* TODO : Lire les trames reçues tant que le lecteur reste connecté. */
 
     exec();
+}
+
+void TcpServerThread::slot_socketDisconnected()
+{
+    reader.isConnected(false);
+    // TODO : Mettre à jour la BDD (déconnecté)
+    emit sig_readerDisconnected(&reader);
 }

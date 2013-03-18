@@ -15,13 +15,16 @@ public:
 
 signals:
     void sig_errorOccurred(QString);
-    void sig_intruderDetected(QString clientAddress);
-    void sig_readerDetected(Reader* reader);
+    void sig_intruderEjected(QString clientAddress);
+    void sig_readerConnected(Reader* reader);
+    void sig_readerDisconnected(Reader* reader);
 
-public slots:
+private slots:
+    void slot_socketDisconnected();
 
 private:
     int socketDescriptor;
+    Reader reader;
 };
 
 #endif // TCPSERVERTHREAD_H
