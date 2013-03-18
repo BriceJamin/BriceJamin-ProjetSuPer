@@ -10,7 +10,7 @@ class TcpServerThread : public QThread
 Q_OBJECT
 public:
     explicit TcpServerThread(int socketDescriptor, QObject *parent);
-
+    ~TcpServerThread();
     void run();
 
 signals:

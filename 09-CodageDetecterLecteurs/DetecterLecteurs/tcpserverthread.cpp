@@ -9,6 +9,13 @@ TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
 {
 }
 
+TcpServerThread::~TcpServerThread()
+{
+    /* Stoppe proprement l'exécution du Thread */
+    quit();
+    wait();
+}
+
 void TcpServerThread::run()
 {
     /* S'exécute dans un nouveau thread. */
