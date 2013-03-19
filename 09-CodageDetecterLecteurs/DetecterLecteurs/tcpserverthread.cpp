@@ -32,10 +32,10 @@ void TcpServerThread::run()
 
     /* Récupère l'adresse du client. */
     QString clientAddress = tcpSocket.peerAddress().toString();
-    qDebug() << "Connexion du client d'origine' " << clientAddress
-            << ", port " << tcpSocket.peerPort()
-            << " vers " << tcpSocket.localAddress()
-            << ", port " << tcpSocket.localPort();
+    qDebug() << "Connexion du client d'origine " << clientAddress
+            << "port " << tcpSocket.peerPort()
+            << ", vers " << tcpSocket.localAddress().toString()
+            << "port " << tcpSocket.localPort();
 
     /* Demande à la BDD si c'est un lecteur. */
     /* TODO : Créer une classe servant d'interface à la BDD */
@@ -49,18 +49,18 @@ void TcpServerThread::run()
         db.setPassword("mdp_super");
         if (!db.open())
         {
-            qFatal("Impossible d'etablir une connexion avec la Bdd.");
+            qFatal("TcpServerThread::run() : Impossible d'etablir une connexion avec la Bdd.");
             /* Termine l'exécution du thread */
             return;
         }
 
-        qDebug() << "TcpServerThread : Connexion a la bdd reussie.";
+        qDebug() << "TcpServerThread::run() : Connexion a la bdd reussie.";
 
         QSqlQuery query(db);
         query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
         if(!query.isActive())
         {
-            qFatal("TcpServerThread : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnee.");
+            qFatal("TcpServerThread::run() : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnee.");
 
             /*  Termine l'exécution du thread */
             return;
@@ -68,7 +68,7 @@ void TcpServerThread::run()
 
         if(query.size() == 0)
         {
-            qDebug() << "TcpServerThread : Le client " + clientAddress + " n'est pas un lecteur.";
+            qDebug() << "TcpServerThread::run() : Le client " + clientAddress + " n'est pas un lecteur.";
 
             /* Signale la détection d'un intrus */
             emit sig_intruderEjected(clientAddress);
@@ -90,7 +90,7 @@ void TcpServerThread::run()
         query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
         if(!query.isActive())
         {
-            qFatal("TcpServerThread : Requete sql (Mise à jour de estConnecte du lecteur) erronnee.");
+            qFatal("TcpServerThread::run() : Requete sql (Mise à jour de estConnecte du lecteur) erronnee.");
 
             /*  Termine l'exécution du thread */
             return;
