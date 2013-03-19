@@ -122,6 +122,33 @@ void TcpServerThread::run()
 void TcpServerThread::slot_socketDisconnected()
 {
     reader.isConnected(false);
-    // TODO : Mettre à jour la BDD (déconnecté)
+    // Mise à jour de la BDD (le lecteur est désormais déconnecté)
+    QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+        db.setHostName("localhost");
+        db.setDatabaseName("bdd_super");
+        db.setUserName("user_super");
+        db.setPassword("mdp_super");
+        if (!db.open())
+        {
+            qFatal("TcpServerThread::slot_socketDisconnected() : Impossible d'etablir une connexion avec la Bdd.");
+            /* Termine l'exécution du thread */
+            return;
+        }
+
+        QSqlQuery query(db);
+        query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
+        if(!query.isActive())
+        {
+            qFatal("TcpServerThread::slot_socketDisconnected() : Requete sql () erronnee.");
+
+            /*  Termine l'exécution du thread */
+            return;
+        }
+    }
+
+    QSqlDatabase::removeDatabase(nameDatabaseConnexion);
+
     emit sig_readerDisconnected(&reader);
 }
