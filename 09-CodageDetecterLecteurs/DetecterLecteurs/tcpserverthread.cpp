@@ -80,21 +80,30 @@ void TcpServerThread::run()
         }
 
         query.next();
-        //query.finish();
         reader.number(query.value(0).toInt());
         reader.placeId(query.value(1).toInt());
         reader.address(query.value(2).toString());
         reader.isConnected(true);
-        db.close();
+        query.finish();
 
-        // TODO : Mettre à jour la BDD (le lecteur est désormais connecté)
+        // Mise à jour de la BDD (le lecteur est désormais connecté)
+        query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
+        if(!query.isActive())
+        {
+            qFatal("TcpServerThread : Requete sql (Mise à jour de estConnecte du lecteur) erronnee.");
+
+            /*  Termine l'exécution du thread */
+            return;
+        }
+        query.finish();
+        db.close();
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
 
-    qDebug() << "Le client est le lecteur num(" << reader.number() << ")," << endl
-        << "placeId(" << reader.placeId() << ")," << endl
-        << "address(" << reader.address() << ")," << endl
+    qDebug() << "Le client est le lecteur num(" << reader.number() << "),"
+        << "placeId(" << reader.placeId() << "),"
+        << "address(" << reader.address() << "),"
         << "isConnected(" << reader.isConnected() << ").";
 
     /* Signale la détection d'un lecteur */
