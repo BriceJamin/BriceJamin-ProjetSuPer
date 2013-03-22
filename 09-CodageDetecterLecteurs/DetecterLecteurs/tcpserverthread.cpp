@@ -57,6 +57,7 @@ void TcpServerThread::run()
         {
             qFatal("TcpServerThread::run() : Impossible d'etablir une connexion avec la Bdd.");
             /* Termine l'exécution du thread */
+            tcpSocket.close();
             return;
         }
 
@@ -69,6 +70,7 @@ void TcpServerThread::run()
             qFatal("TcpServerThread::run() : Requete sql (Ce lecteur d'ip X existe t'il ?) erronnee.");
 
             /*  Termine l'exécution du thread */
+            tcpSocket.close();
             return;
         }
 
@@ -79,7 +81,8 @@ void TcpServerThread::run()
             /* Signale la détection d'un intrus */
             emit sig_intruderEjected(clientAddress);
 
-            /* TODO : Déconnecter le client proprement */
+            /* Déconnexion du client */
+            tcpSocket.close();
 
             /* Termine l'exécution du thread */
             return;
@@ -99,6 +102,7 @@ void TcpServerThread::run()
             qFatal("TcpServerThread::run() : Requete sql (Mise à jour de estConnecte du lecteur) erronnee.");
 
             /*  Termine l'exécution du thread */
+            tcpSocket.close();
             return;
         }
         query.finish();
