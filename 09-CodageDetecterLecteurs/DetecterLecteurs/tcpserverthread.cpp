@@ -6,6 +6,7 @@
 
 // TODO : Quitter proprement lors d'une erreur sans redondance de code
 // TODO : Créer une classe servant d'interface à la BDD
+// TODO : Alléger le run en créant des fonctions
 
 TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
