@@ -4,6 +4,9 @@
 #include <QSqlQuery>
 #include "reader.h"
 
+// TODO : Quitter proprement lors d'une erreur sans redondance de code
+// TODO : Créer une classe servant d'interface à la BDD
+
 TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor)
 {
