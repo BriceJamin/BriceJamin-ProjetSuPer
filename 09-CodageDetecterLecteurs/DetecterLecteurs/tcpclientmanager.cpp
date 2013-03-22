@@ -1,6 +1,6 @@
 #include "tcpclientmanager.h"
 
-TcpClientManager::TcpClientManager(QObject *parent) :
+TcpClientManager::TcpClientManager(QTcpServer *parent) :
     QTcpSocket(parent)
 {
 }

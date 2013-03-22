@@ -2,12 +2,13 @@
 #define TCPCLIENTMANAGER_H
 
 #include <QTcpSocket>
+#include <QTcpServer>
 
 class TcpClientManager : public QTcpSocket
 {
 Q_OBJECT
 public:
-    explicit TcpClientManager(QObject *parent = 0);
+    explicit TcpClientManager(QTcpServer *parent);
 
 signals:
 
