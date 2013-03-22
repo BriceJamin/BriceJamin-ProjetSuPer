@@ -8,12 +8,14 @@ class TcpClientManager : public QTcpSocket
 {
 Q_OBJECT
 public:
-    explicit TcpClientManager(QTcpServer *parent);
+    explicit TcpClientManager(int socketDescriptor, QTcpServer *parent);
 
 signals:
 
 public slots:
 
+private:
+    int _socketDescriptor;
 };
 
 #endif // TCPCLIENTMANAGER_H
