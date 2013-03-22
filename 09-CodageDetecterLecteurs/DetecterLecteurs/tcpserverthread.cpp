@@ -14,18 +14,21 @@ TcpServerThread::TcpServerThread(int socketDescriptor, QObject *parent)
 
 TcpServerThread::~TcpServerThread()
 {
-    /* Stoppe proprement l'exécution du Thread */
+    // Stoppe proprement l'exécution du Thread
     quit();
     wait();
 }
 
 void TcpServerThread::run()
 {
-    /* S'exécute dans un nouveau thread. */
+    // S'exécute dans un nouveau thread.
+
     qDebug() << "TcpServerThread(" << QThread::currentThreadId() << ") :";
 
-    /* Récupère le socket du thread principal et
-        en cas d'erreur émet le signal error. */
+    /*
+       Récupère le socket du thread principal et
+       en cas d'erreur émet le signal error.
+    */
     QTcpSocket tcpSocket;
      if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
          emit sig_errorOccurred(tcpSocket.errorString());
@@ -33,15 +36,15 @@ void TcpServerThread::run()
          return;
      }
 
-    /* Récupère l'adresse du client. */
+    // Récupère l'adresse du client.
     QString clientAddress = tcpSocket.peerAddress().toString();
+
     qDebug() << "Connexion du client d'origine " << clientAddress
             << "port " << tcpSocket.peerPort()
             << ", vers " << tcpSocket.localAddress().toString()
             << "port " << tcpSocket.localPort();
 
-    /* Demande à la BDD si c'est un lecteur. */
-    /* TODO : Créer une classe servant d'interface à la BDD */
+    // Demande à la BDD si c'est un lecteur.
     QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
 
     {
