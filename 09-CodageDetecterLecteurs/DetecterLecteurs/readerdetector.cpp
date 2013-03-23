@@ -14,7 +14,7 @@ void ReaderDetector::switchOn(QString address, unsigned int port)
         if(isListening())
             emit sig_switchedOn();
         else
-            emit sig_errorOccurred(errorString());
+            emit sig_tcpServerError(errorString());
     }
 }
 

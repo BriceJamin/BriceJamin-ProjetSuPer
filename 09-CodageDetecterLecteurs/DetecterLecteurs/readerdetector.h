@@ -12,10 +12,13 @@ signals:
     void sig_switchedOn();
     void sig_switchedOff();
 
-    void sig_errorOccurred(QString error);
     void sig_intruderEjected(QString address);
     void sig_readerConnected(Reader* reader);
     void sig_readerDisconnected(Reader* reader);
+
+    void sig_tcpClientError(QString);
+    void sig_tcpServerError(QString);
+    void sig_sqlError(QString);
 
 public slots:
     void switchOn(QString address, unsigned int port);

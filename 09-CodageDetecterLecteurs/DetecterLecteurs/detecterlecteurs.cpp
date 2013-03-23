@@ -16,6 +16,11 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
     // connect ReaderDetector's signals to this' slots
     connect(readerDetector, SIGNAL(sig_switchedOn()), this, SLOT(readerDetector_switchedOn()));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
+
+    connect(readerDetector, SIGNAL(sig_tcpClientError(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
+    connect(readerDetector, SIGNAL(sig_tcpServerError(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
+    connect(readerDetector, SIGNAL(sig_sqlError(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
+
     connect(readerDetector, SIGNAL(sig_intruderEjected(QString)), this, SLOT(readerDetector_intruderEjected(QString)));
     connect(readerDetector, SIGNAL(sig_readerConnected(Reader*)), this, SLOT(readerDetector_readerConnected(Reader*)));
     connect(readerDetector, SIGNAL(sig_readerDisconnected(Reader*)), this, SLOT(readerDetector_readerDisconnected(Reader*)));

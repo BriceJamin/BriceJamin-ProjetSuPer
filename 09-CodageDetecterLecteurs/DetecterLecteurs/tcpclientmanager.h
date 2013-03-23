@@ -3,19 +3,33 @@
 
 #include <QTcpSocket>
 #include <QTcpServer>
+#include "reader.h"
 
 class TcpClientManager : public QTcpSocket
 {
 Q_OBJECT
-public:
-    explicit TcpClientManager(int socketDescriptor, QTcpServer *parent);
 
 signals:
+    void sig_intruderEjected(QString);
+    void sig_readerConnected(Reader*);
+    void sig_readerDisconnected(Reader*);
+    void sig_tcpError(QString);
+    void sig_sqlError(QString);
 
 public slots:
     void manage();
 
+public:
+    explicit TcpClientManager(int socketDescriptor, QTcpServer *parent);
+
+private slots:
+    void slot_tcpError();
+    void slot_sqlError(QString);
+    void slot_disconnected();
+
 private:
+    void formatError(const QString&, QString&);
+
     int _socketDescriptor;
 };
 
