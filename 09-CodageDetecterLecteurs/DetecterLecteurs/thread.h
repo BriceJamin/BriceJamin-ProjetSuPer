@@ -9,6 +9,8 @@ Q_OBJECT
 public:
     explicit Thread(QObject *parent = 0);
 
+protected:
+    void run();
 };
 
 #endif // THREAD_H
