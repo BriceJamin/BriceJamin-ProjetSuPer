@@ -25,7 +25,6 @@ public:
 private slots:
     void slot_tcpError();
     void slot_sqlError(QString);
-    void slot_disconnected();
 
 private:
     void formatError(const QString&, QString&);

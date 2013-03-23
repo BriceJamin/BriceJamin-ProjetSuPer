@@ -1,5 +1,7 @@
 #include "readerdetector.h"
-#include "tcpserverthread.h"
+#include "tcpclientmanager.h"
+#include "thread.h"
+
 ReaderDetector::ReaderDetector(QObject *parent) :
     QTcpServer(parent)
 {
@@ -29,13 +31,49 @@ void ReaderDetector::switchOff()
 
 void ReaderDetector::incomingConnection(int socketDescriptor)
  {
-    TcpServerThread *thread = new TcpServerThread(socketDescriptor, this);
+    TcpClientManager* tcpClientManager;
+    tcpClientManager = new TcpClientManager(socketDescriptor, this);
 
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-    connect(thread, SIGNAL(sig_errorOccurred(QString)), this, SIGNAL(sig_errorOccurred(QString)));
-    connect(thread, SIGNAL(sig_intruderEjected(QString)), this, SIGNAL(sig_intruderEjected(QString)));
-    connect(thread, SIGNAL(sig_readerConnected(Reader*)), this, SIGNAL(sig_readerConnected(Reader*)));
-    connect(thread, SIGNAL(sig_readerDisconnected(Reader*)), this, SIGNAL(sig_readerDisconnected(Reader*)));
+    connect(tcpClientManager,
+            SIGNAL(sig_intruderEjected(QString)),
+            this,
+            SIGNAL(sig_intruderEjected(QString)));
+    connect(tcpClientManager,
+            SIGNAL(sig_readerConnected(Reader*)),
+            this,
+            SIGNAL(sig_readerConnected(Reader*)));
+    connect(tcpClientManager,
+            SIGNAL(sig_readerDisconnected(Reader*)),
+            this,
+            SIGNAL(sig_readerDisconnected(Reader*)));
+    connect(tcpClientManager,
+            SIGNAL(sig_tcpError(QString)),
+            this,
+            SIGNAL(sig_tcpError(QString)));
+    connect(tcpClientManager,
+            SIGNAL(sig_sqlError(QString)),
+            this,
+            SIGNAL(sig_sqlError(QString)));
+
+    // TODO : Vérifier que le TcpClientManager emit un disconnected()
+    connect(this,
+            SIGNAL(sig_switchedOff()),
+            tcpClientManager,
+            SLOT(deleteLater()));
+
+    Thread* thread;
+    thread = new Thread(this);
+
+    tcpClientManager->moveToThread(thread);
+
+    connect(thread,
+            SIGNAL(started()),
+            tcpClientManager,
+            SLOT(manage()));
+    connect(tcpClientManager,
+            SIGNAL(disconnected()),
+            thread,
+            SLOT(quit()));
 
     thread->start();
- }
+}
