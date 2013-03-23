@@ -9,20 +9,17 @@ DetecterLecteurs::DetecterLecteurs(ReaderDetector* rd, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // this' signals to this' slots connection
-    connect(this, SIGNAL(sig_occuredSignal(QString)), this, SLOT(occuredSignal(QString)));
-
-    // this' signals to ReaderDetector's slots connection
+    // connect this' signals to ReaderDetector's slots
     connect(this, SIGNAL(sig_switchOn_readerDetector(QString, unsigned int)), readerDetector, SLOT(switchOn(QString, unsigned int)));
     connect(this, SIGNAL(sig_switchOff_readerDetector()), readerDetector, SLOT(switchOff()));
 
-    // ReaderDetector's signals to this' slots connection
+    // connect ReaderDetector's signals to this' slots
     connect(readerDetector, SIGNAL(sig_switchedOn()), this, SLOT(readerDetector_switchedOn()));
-    connect(readerDetector, SIGNAL(sig_errorOccurred(QString)), this, SLOT(readerDetector_errorOccurred(QString)));
     connect(readerDetector, SIGNAL(sig_switchedOff()), this, SLOT(readerDetector_switchedOff()));
     connect(readerDetector, SIGNAL(sig_intruderEjected(QString)), this, SLOT(readerDetector_intruderEjected(QString)));
     connect(readerDetector, SIGNAL(sig_readerConnected(Reader*)), this, SLOT(readerDetector_readerConnected(Reader*)));
     connect(readerDetector, SIGNAL(sig_readerDisconnected(Reader*)), this, SLOT(readerDetector_readerDisconnected(Reader*)));
+
     connect(readerDetector, SIGNAL(destroyed()), this, SLOT(readerDetector_destroyed()));
 }
 
@@ -33,25 +30,18 @@ DetecterLecteurs::~DetecterLecteurs()
 
 void DetecterLecteurs::readerDetector_switchedOn()
 {
-    emit sig_occuredSignal("readerDetector_switchedOn");
+    display("readerDetector_switchedOn");
 }
-
-void DetecterLecteurs::readerDetector_errorOccurred(QString error)
-{
-    emit sig_occuredSignal("readerDetector_errorOccurred :" + error);
-}
-
 
 void DetecterLecteurs::readerDetector_switchedOff()
 {
-    emit sig_occuredSignal("readerDetector_switchedOff");
+    display("readerDetector_switchedOff");
 }
 
 void DetecterLecteurs::readerDetector_intruderEjected(QString address)
 {
-    emit sig_occuredSignal("readerDetector_intruderDetected : " + address);
+    display("readerDetector_intruderDetected : " + address);
 }
-
 
 void DetecterLecteurs::readerDetector_readerConnected(Reader* reader)
 {
@@ -61,8 +51,8 @@ void DetecterLecteurs::readerDetector_readerConnected(Reader* reader)
     msg += "PlaceId(" + QString::number(reader->placeId()) + "), ";
     msg += "Address(" + reader->address() + "), ";
     msg += "IsConnected(" + QString::number(reader->isConnected()) + ").";
-    emit sig_occuredSignal("readerDetector_readerDetected :" + msg);
-    //connect(reader, SIGNAL(sig_disconnected()), this, SLOT()
+
+    display("readerDetector_readerDetected :" + msg);
 }
 
 void DetecterLecteurs::readerDetector_readerDisconnected(Reader* reader)
@@ -73,15 +63,18 @@ void DetecterLecteurs::readerDetector_readerDisconnected(Reader* reader)
     msg += "PlaceId(" + QString::number(reader->placeId()) + "), ";
     msg += "Address(" + reader->address() + "), ";
     msg += "IsConnected(" + QString::number(reader->isConnected()) + ").";
-    emit sig_occuredSignal("readerDetector_readerDisconnected :" + msg);
+
+    display("readerDetector_readerDisconnected :" + msg);
+}
+
+void DetecterLecteurs::readerDetector_errorOccurred(QString error)
+{
+    display("readerDetector_errorOccurred :" + error);
 }
 
 void DetecterLecteurs::readerDetector_destroyed()
 {
-    /*qulonglong readerDetectorQll = (qulonglong) readerDetector;
-    QString readerDetectorString = QString("0x%1").arg(readerDetectorQll, 8, '0');
-    emit sig_occuredSignal("readerDetector_destroyed, readerDetector :" + readerDetectorString);*/
-    emit sig_occuredSignal("readerDetector_destroyed");
+   display("readerDetector_destroyed");
 }
 
 void DetecterLecteurs::changeEvent(QEvent *e)
@@ -118,10 +111,7 @@ void DetecterLecteurs::on_offPushButton_clicked()
     emit sig_switchOff_readerDetector();
 }
 
-void DetecterLecteurs::occuredSignal(QString signal)
+void DetecterLecteurs::display(QString info)
 {
-    qDebug() << "Fenetre : occuredSignal :" << signal << endl
-            //<< "readerDetector value : "
-            //<< QString().sprintf("%8p", readerDetector)
-            << endl;
+    ui->textEdit->append(info);
 }
