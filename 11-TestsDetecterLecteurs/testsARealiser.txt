@@ -1,0 +1,11 @@
+1- Attribution d'un parent à une instance d'une classe dérivée de QObject
+	Si je défini un parent à un objet dérivé de QObject, est-ce que 
+	ce fils est détruit lorsque son parent est détruit ?
+	=> OUI : voir ./ParentQuiDetruitSonFils/
+
+2- Signal et slot monothread :
+	Si j'envoie un signal A::sigA() depuis A::fA() juste avant une boucle infinie présente dans A::fA(), et que ce signal est connecté au slot B::slot_B(), le signal A::sig_A() est-il reçu dans B::slot_B() ?
+
+2- Signal et slot  dans des threads séparés :
+	Si je connecte un signal sig_A d'une instance de la classe A à un slot slot_B d'une instance de la classe B, et cela dans un même thread, puis que je déplace l'instance de la classe B dans un autre thread, dans quel thread est exécuté le slot slot_B ?
+
