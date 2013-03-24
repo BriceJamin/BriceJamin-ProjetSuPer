@@ -12,6 +12,9 @@
 	    donc B::slot_B() est exécuté avant la boucle infinie.
 	=> voir ./SignalEtSlotMonoThread
 
-2- Signal et slot  dans des threads séparés :
-	Si je connecte un signal sig_A d'une instance de la classe A à un slot slot_B d'une instance de la classe B, et cela dans un même thread, puis que je déplace l'instance de la classe B dans un autre thread, dans quel thread est exécuté le slot slot_B ?
-
+3- Signal et slot  dans des threads séparés :
+	* Comment faire avec la méthode QObject::moveToThread(QThread*) ?
+	  => voir ./SignalEtSlotMultithread, main.cpp, fonction test3().
+	  => Améliorer le test en simplifiant les connexions par la'implémentation
+	      des connexions au sein même des classes, quand c'est possibles, par
+	      exemple pour la libération de la mémoire.
