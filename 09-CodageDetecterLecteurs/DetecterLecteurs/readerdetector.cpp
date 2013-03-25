@@ -56,13 +56,15 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
             SIGNAL(sig_sqlError(QString)));
 
     // TODO : Vérifier que le TcpClientManager emit un disconnected()
+    /*
     connect(this,
             SIGNAL(sig_switchedOff()),
             tcpClientManager,
             SLOT(deleteLater()));
+    */
 
-    Thread* thread;
-    thread = new Thread(this);
+    QThread* thread;
+    thread = new QThread(this);
 
     tcpClientManager->moveToThread(thread);
 
@@ -71,7 +73,7 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
             tcpClientManager,
             SLOT(manage()));
     connect(tcpClientManager,
-            SIGNAL(disconnected()),
+            SIGNAL(finished()),
             thread,
             SLOT(quit()));
 

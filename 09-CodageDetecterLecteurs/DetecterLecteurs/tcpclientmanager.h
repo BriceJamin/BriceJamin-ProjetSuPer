@@ -15,6 +15,7 @@ signals:
     void sig_readerDisconnected(Reader*);
     void sig_tcpError(QString);
     void sig_sqlError(QString);
+    void sig_finished();
 
 public slots:
     void manage();
