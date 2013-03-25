@@ -4,23 +4,30 @@ CThreadClient::CThreadClient(QObject *parent, QTcpSocket *cl) :
     QThread(parent)
 {
     client = cl;
-    qDebug("Thread running...");
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
 } // method
 
 //////////////////////////////////////////////////////
 CThreadClient::~CThreadClient()
 {
-    qDebug("Thread ends...");
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
 } // method
 
 void CThreadClient::onFinConnexionClient()
 {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO
+            << "Avant terminate()";
     this->terminate(); // arrêt du thread
 } // method
 
 ///////////////////////////////////////////////////////
 void CThreadClient::run()
  {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
     connect(client, SIGNAL(readyRead()), this, SLOT(onLireTag()));
     connect(client, SIGNAL(destroyed()), this, SLOT(onFinConnexionClient()));
     connect(client, SIGNAL(disconnected()), client, SLOT(deleteLater()));
@@ -30,6 +37,8 @@ void CThreadClient::run()
 ////////////////////////////////////////////////////////
 void CThreadClient::onLireTag()
 {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
     QString tag;
 //    qDebug("Des caracteres recus");
 //    qDebug(QString("%1").arg(client->bytesAvailable()).toLocal8Bit().data());
@@ -39,12 +48,17 @@ void CThreadClient::onLireTag()
         if ( (QString::compare(tag.mid(0,1), "[")) || (QString::compare(tag.right(1), "]")) )
         {   // test validité de la trame
             while (client->read(1) != "]") {
-                qDebug("Rattrapage caractere.");  // synchro avec début de trame
+                qDebug() << QThread::currentThreadId()
+                        << Q_FUNC_INFO
+                        << "Rattrapage caractere."; // synchro avec début de trame
             } // while
         } // if compare
         else
+        {
+            qDebug() << QThread::currentThreadId()
+                    << Q_FUNC_INFO
+                    << "Avant emit dataLue(tag)";
             emit(dataLue(tag));   // EMISSION SIGNAL VERS MAINWINDOW
+        }
     } // while
-//    else
-//        qDebug("Pas assez de caractere a lire");
 } // method

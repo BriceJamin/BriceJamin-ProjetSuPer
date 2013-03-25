@@ -15,11 +15,15 @@ MainWindow::MainWindow(QWidget *parent) :
     serv = new QTcpServer(this);
     serv->listen(QHostAddress::Any, 2222);
     connect(serv, SIGNAL(newConnection()), this, SLOT(onGererThread()));
-    qDebug() << "Serveur en écoute des lecteurs.";
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
 } // method
 
 MainWindow::~MainWindow()
 {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
+
     delete serv;
     
     T_Thread *th;
@@ -35,6 +39,8 @@ MainWindow::~MainWindow()
 
 ///////////////////////////////////////////////////////////
 void MainWindow::onEffacerUnThread() {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
     T_Thread *th;
     int nb;
 
@@ -42,7 +48,8 @@ void MainWindow::onEffacerUnThread() {
     for (int i=0 ; i<nb ; i++) {
         th = lecteurs.at(i);
         if (th->thcl->isFinished()) {
-            qDebug() << "Pb de communication avec le lecteur :"
+            qDebug() << QThread::currentThreadId()
+                    << Q_FUNC_INFO << "Pb de communication avec le lecteur :"
                     << QString("%1").arg(th->noLect);
             delete th->thcl;
             delete th;
@@ -56,43 +63,55 @@ void MainWindow::onEffacerUnThread() {
 ///////////////////////////////////////////////////////////
 // return true si trame au bon format
 bool MainWindow::traitement(QString &trame) {
- QString noBadge, sens, lect, mouv;
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
+    QString noBadge, sens, lect, mouv;
 
- nbT++; // compteur de trames
+    nbT++; // compteur de trames
 
- // séparation des parties de la trame
- noBadge = trame.mid(3,3);
- if (noBadge == "000")
- {
-     qDebug("Mauvais badge.");
-     qDebug() << "Mauvais badge no=000";
+    // séparation des parties de la trame
+    noBadge = trame.mid(3,3);
+    if (noBadge == "000")
+    {
+        qDebug() << QThread::currentThreadId()
+                << Q_FUNC_INFO
+                << "Mauvais badge no=000";
      return false;
- }
- sens = trame.mid(1,2);
- mouv = trame.mid(6,3);
- lect = trame.mid(9,2);
+    }
+    sens = trame.mid(1,2);
+    mouv = trame.mid(6,3);
+    lect = trame.mid(9,2);
 
- // affichage ihm
- qDebug() << "S:" << sens
-         << " B:" << noBadge
-         << " M:" << mouv
-         << " L:" << lect
-         << trame;
+    // affichage ihm
+    qDebug() << QThread::currentThreadId()
+             << Q_FUNC_INFO
+             << "S:" << sens
+             << " B:" << noBadge
+             << " M:" << mouv
+             << " L:" << lect
+             << trame;
 
- return true;
+    return true;
 }
 
 ///////////////////////////////////////////////////////////
 void MainWindow::onTraiterTag(QString tag) {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
+
     if (!traitement(tag)){
-        qDebug("Pb trame !");
-           qDebug() << tag;
+        qDebug() << QThread::currentThreadId()
+                << Q_FUNC_INFO
+                << "Pb trame !"
+                << tag;
     } // if decode
 } // method
 
 ///////////////////////////////////////////////////////////
 void MainWindow::onGererThread()
 {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO;
     T_Thread *th;
     QString adr;
 
@@ -111,6 +130,9 @@ void MainWindow::onGererThread()
 
 void MainWindow::on_menuQuitter_triggered()
 {
+    qDebug() << QThread::currentThreadId()
+            << Q_FUNC_INFO
+            << "Avant this->close();";
     this->close(); // termine l'application
 } // method
 
