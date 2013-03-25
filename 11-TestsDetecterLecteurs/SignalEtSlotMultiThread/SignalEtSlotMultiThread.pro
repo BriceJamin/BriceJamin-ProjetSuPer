@@ -12,10 +12,14 @@ SOURCES += main.cpp \
     c.cpp \
     d.cpp \
     e.cpp \
-    f.cpp
+    f.cpp \
+    g.cpp \
+    h.cpp
 HEADERS += a.h \
     b.h \
     c.h \
     d.h \
     e.h \
-    f.h
+    f.h \
+    g.h \
+    h.h

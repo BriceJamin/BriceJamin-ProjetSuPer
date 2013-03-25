@@ -5,6 +5,8 @@
 #include "d.h"
 #include "e.h"
 #include "f.h"
+#include "g.h"
+#include "h.h"
 
 // Peut contenir des erreurs, l'ignorer
 void test1(QCoreApplication* app)
@@ -148,6 +150,20 @@ void test4()
     qDebug() << QThread::idealThreadCount();
 }
 
+void test5(QCoreApplication* app)
+{
+    // Pas de parent, car impossible de moveToThread
+    // un objet ayant un parent.
+    //H h(app);
+
+    G g(0); H h;
+    g.connect(&h, SIGNAL(sigH_started()), SLOT(slotG_H_started()));
+    g.connect(&h, SIGNAL(sigH_finished()), SLOT(slotG_H_finished()));
+
+
+    app->exec();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
@@ -155,7 +171,7 @@ int main(int argc, char *argv[])
     //test1(&app);
     //test2(&app);
     //test3(&app);
-    test4();
-
+    //test4();
+    test5(&app);
     return app.exec();
 }
