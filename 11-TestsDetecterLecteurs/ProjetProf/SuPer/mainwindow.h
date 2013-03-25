@@ -63,13 +63,6 @@ private:
     void calculerDroite(int sens, T_Point pointA, T_Point pointB, T_Point *pointF);
     void sensDePassage(T_ListeLabel *tll);
 
-    CIhmPersonne *ihmPersonne;
-    CIhmBadge *ihmBadge;
-    CIhmCamera *ihmCamera;
-    CIhmLecteur *ihmLecteur;
-    CIhmAffecter *ihmAffecter;
-    CIhmParametrer *ihmParametrer;
-
     QTcpServer *serv;
     QTcpSocket *cl;
     bool appli; // si SuPer doit continuer après identification.
