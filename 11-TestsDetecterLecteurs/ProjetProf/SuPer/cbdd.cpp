@@ -79,12 +79,12 @@ int CBdd::creerBadgeEnCours()
 } // method
 
 ////////////////////////////////////////////
-bool CBdd::isBadgeEnCours(QString &nob)
+bool CBdd::isBadgeEnCours(QString &)
 {
     return true;
 } // method
 
-bool modifBadgeEnCours(QString &nob, int x, int y)
+bool modifBadgeEnCours(QString &, int, int)
 {
     return true;
 } // method
@@ -264,25 +264,25 @@ int CBdd::ListeDesBadges()
 } // method
 
 /////////////////////////////////////////////////////////
-int CBdd::identiteBadge(int no)
+int CBdd::identiteBadge(int)
 {
     return true;
 } // method
 
 /////////////////////////////////////////////////////////
-bool CBdd::majBadge(T_Bdg *bdg)
+bool CBdd::majBadge(T_Bdg *)
 {
     return true;
 } // method
 
 /////////////////////////////////////////////////////////
-bool CBdd::effBadge(T_Bdg *bdg)
+bool CBdd::effBadge(T_Bdg *)
 {
     return true;
 } // method
 
 /////////////////////////////////////////////////////////
-bool CBdd::addBadge(T_Bdg *bdg)
+bool CBdd::addBadge(T_Bdg *)
 {
     return true;
 } // method
@@ -479,19 +479,19 @@ int CBdd::getNoLecteur(QString adr)
 } // method
 
 //////////////////////////////////////////////
-bool CBdd::majLecteur(T_Lect *lect)
+bool CBdd::majLecteur(T_Lect *)
 {
     return true;
 } // method
 
 //////////////////////////////////////////////
-bool CBdd::effLecteur(T_Lect *lect)
+bool CBdd::effLecteur(T_Lect *)
 {
     return true;
 } // method
 
 //////////////////////////////////////////////
-bool CBdd::addLecteur(T_Lect *lect)
+bool CBdd::addLecteur(T_Lect *)
 {
     return true;
 } // method
