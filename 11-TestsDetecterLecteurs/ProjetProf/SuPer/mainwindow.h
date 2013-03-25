@@ -12,7 +12,6 @@
 #include "cihmlecteur.h"
 #include "cihmbadge.h"
 #include "cihmaffecter.h"
-#include "cbdd.h"
 #include "commun.h"
 #include "cthreadclient.h"
 #include "cihmparametrer.h"
@@ -74,7 +73,6 @@ private:
     QTcpServer *serv;
     QTcpSocket *cl;
     bool appli; // si SuPer doit continuer après identification.
-    CBdd *bdd;
     QList<T_ListeLabel *> listeLabel;
     QList<T_Thread *> lecteurs;   // pointeur vers les différents lecteurs
     quint64 nbT; // compte le nbre de trame recu
