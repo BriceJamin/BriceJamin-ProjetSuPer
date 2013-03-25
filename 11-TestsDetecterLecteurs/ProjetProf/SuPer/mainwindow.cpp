@@ -42,7 +42,6 @@ void MainWindow::onEffacerUnThread() {
     for (int i=0 ; i<nb ; i++) {
         th = lecteurs.at(i);
         if (th->thcl->isFinished()) {
-            afficherLecteur(th->noLect, false);
             qDebug() << "Pb de communication avec le lecteur :"
                     << QString("%1").arg(th->noLect);
             delete th->thcl;

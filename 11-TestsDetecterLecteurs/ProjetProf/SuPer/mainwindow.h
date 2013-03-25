@@ -32,25 +32,9 @@ public:
 
 private slots:
     void on_menuQuitter_triggered();
-    void on_menuGerer_les_personnes_triggered();
-    void on_menuGerer_les_badges_triggered();
-    void on_menuGerer_les_lecteurs_triggered();
-    void on_menuGerer_les_cameras_triggered();
-    void on_menuParametrer_triggered();
-    void on_menuBadgesAffecter();
-    void on_tbVueC_clicked();
-    void on_tbVueSG_clicked();
-    void on_tbVueGAS_clicked();
-    void on_tbVueCapsule_clicked();
-    void on_pbRetour_clicked();
-    void on_twOnglets_currentChanged(int index);
-    void on_affichage();
 
 public slots:
     void onGererThread();
-    void onFinConnexionClient();
-    void onTimerMouv();
-    void onTimerRec();
     void onTraiterTag(QString tag);
     void onEffacerUnThread();
 
@@ -58,7 +42,6 @@ private:
     Ui::MainWindow *ui;
     bool traitement(QString &trame);
     void toutEteindreIhm();
-    void afficherLecteur(int noL, bool etat);
     int calculerMoyenne(T_ListeLabel *tll);
     void calculerDroite(int sens, T_Point pointA, T_Point pointB, T_Point *pointF);
     void sensDePassage(T_ListeLabel *tll);

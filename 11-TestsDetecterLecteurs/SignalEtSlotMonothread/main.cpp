@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
     A a; B b;
 
     // Sans option, c'est l'option Qt::AutoConnection par défaut
-    //  qui est équivalent à Qt::DirectConnection si les deux objets sont dans le même thread
-    //  qui est équivalent à Qt::QueuedConnection si les deux objets sont dans des threads différents
+    //  - qui est équivalent à Qt::DirectConnection si les deux objets sont dans le même thread
+    //  - qui est équivalent à Qt::QueuedConnection si les deux objets sont dans des threads différents
     // Ici les objets sont dans le même thread : Qt::DirectConnection
     // Ce qui revient à faire un appel direct au slot de B (comme
     //  un appel normal à une méthode normale)
@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
     */
     b.connect(&a, SIGNAL(sig_A()), SLOT(slot_B()), Qt::QueuedConnection);
 
+    // Même principe que les deux premiers tests,
+    // L'application ne se fermera jamais, car il faut d'abord
+    // sortir de la méthode slot_A()
     app.connect(&a, SIGNAL(sig_A()), SLOT(quit()));
 
     a.start();

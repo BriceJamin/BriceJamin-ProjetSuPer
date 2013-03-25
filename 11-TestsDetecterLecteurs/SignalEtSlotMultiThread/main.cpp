@@ -110,7 +110,7 @@ void test3(QCoreApplication* app)
 
     // Connexions pour libérer la mémoire de E et F
     // E::sig_finishedE -> E::deleteLater
-    e->connect(e, SIGNAL(sig_finishedE()), SLOT(deleteLater()));
+    // e->connect(e, SIGNAL(sig_finishedE()), SLOT(deleteLater()));
     // F::sig_finishedF -> F::deleteLater
     f->connect(f, SIGNAL(sig_finishedF()), SLOT(deleteLater()));
 
@@ -142,13 +142,20 @@ void test3(QCoreApplication* app)
       */
 }
 
+// Affiche 2 sur mon portable qui est un dual-core
+void test4()
+{
+    qDebug() << QThread::idealThreadCount();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
     //test1(&app);
     //test2(&app);
-    test3(&app);
+    //test3(&app);
+    test4();
 
     return app.exec();
 }
