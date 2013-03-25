@@ -20,16 +20,7 @@ void FIdent::on_buttonBox_rejected()
 
 void FIdent::on_buttonBox_accepted()
 {
-    bool ret=false;
-    bdd = new CBdd(this);
-    ret = bdd->identifier(ui->leIdent->text(), ui->lePass->text());
-    if (ret)
-    {
-      ihm = new MainWindow();
-//      QDesktopWidget *a = qApp->desktop();
-//      ihm->move(a->width()-ihm->width(),a->height()-ihm->height());
-      ihm->show();
-    } // if
-    delete bdd;
+    ihm = new MainWindow();
+    ihm->show();
     close();
 }
