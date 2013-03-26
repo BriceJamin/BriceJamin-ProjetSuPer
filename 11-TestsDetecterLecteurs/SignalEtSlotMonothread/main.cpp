@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     //  - qui est équivalent à Qt::QueuedConnection si les deux objets sont dans des threads différents
     // Ici les objets sont dans le même thread : Qt::DirectConnection
     // Ce qui revient à faire un appel direct au slot de B (comme
-    //  un appel normal à une méthode normale)
+    //  un appel normal à une méthode)
     /* Affiche :
         void A::start()
         Avant emit sig_A()

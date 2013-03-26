@@ -12,14 +12,16 @@ H::H() : QObject()
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "thread.start();";
 
-    thread.start();
+    //thread.start();
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres thread.start();" ;
 }
 
 H::~H()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "thread.wait();";
+    thread.wait();
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "fin";
 }
 
 void H::slotH_start()
