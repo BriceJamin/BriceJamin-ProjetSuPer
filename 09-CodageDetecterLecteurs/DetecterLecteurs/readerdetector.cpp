@@ -34,6 +34,11 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
     TcpClientManager* tcpClientManager;
     tcpClientManager = new TcpClientManager(socketDescriptor, this);
 
+    QThread* thread;
+    thread = new QThread(this);
+
+    tcpClientManager->moveToThread(thread);
+
     connect(tcpClientManager,
             SIGNAL(sig_intruderEjected(QString)),
             this,
@@ -63,10 +68,7 @@ void ReaderDetector::incomingConnection(int socketDescriptor)
             SLOT(deleteLater()));
     */
 
-    QThread* thread;
-    thread = new QThread(this);
 
-    tcpClientManager->moveToThread(thread);
 
     connect(thread,
             SIGNAL(started()),
