@@ -5,21 +5,14 @@ void Server::switchOn()
 {
     qDebug() << Q_FUNC_INFO;
 
-    /*if(! isListening())
-    {
-        listen(_address, _port);
-
-        if(isListening())
-            emit sig_switchedOn();
-        //else
-            //emit sig_errorOccurred(errorString());
-    }
-    //this->listen()*/
+    listen(_address, _port);
 }
 
 void Server::switchOff()
 {
     qDebug() << Q_FUNC_INFO;
+
+    close();
 }
 
 bool Server::setAddress(QString address)
