@@ -3,27 +3,43 @@
 
 void Server::switchOn()
 {
-    qDebug() << Q_FUNC_INFO;
+    if(! isListening())
+    {
+        qDebug() << Q_FUNC_INFO << "listen et sig_switchedOn";
 
-    listen(_address, _port);
+        if( listen(_address, _port) )
+            emit sig_switchedOn();
+    }
+    else
+        qDebug() << Q_FUNC_INFO;
 }
 
 void Server::switchOff()
 {
-    qDebug() << Q_FUNC_INFO;
+    if(isListening())
+    {
+        qDebug() << Q_FUNC_INFO << " -> close et sig_switchedOff";
 
-    close();
+        close();
+        emit sig_switchedOff();
+    }
+    else
+        qDebug() << Q_FUNC_INFO;
 }
 
 bool Server::setAddress(QString address)
 {
-    bool ok;
-    QHostAddress addressQHost;
+    bool ok = false;
 
-    ok = addressQHost.setAddress(address);
+    if(! isListening())
+    {
+        QHostAddress addressQHost;
 
-    if(ok)
-        _address.setAddress(address);
+        ok = addressQHost.setAddress(address);
+
+        if(ok)
+            _address.setAddress(address);
+    }
 
     qDebug() << Q_FUNC_INFO << address << "return" << ok;
 
