@@ -1,19 +1,53 @@
 #include "server.h"
 
-Server::Server(QString address, quint16 port, QObject *parent) :
-    QTcpServer(parent), _port(port)
+
+void Server::switchOn()
 {
-    this->address(address);
+    qDebug() << Q_FUNC_INFO;
+
+    /*if(! isListening())
+    {
+        listen(_address, _port);
+
+        if(isListening())
+            emit sig_switchedOn();
+        //else
+            //emit sig_errorOccurred(errorString());
+    }
+    //this->listen()*/
 }
 
-void Server::slot_switchOn()
+void Server::switchOff()
 {
     qDebug() << Q_FUNC_INFO;
 }
 
-void Server::slot_switchOff()
+bool Server::setAddress(QString address)
 {
-    qDebug() << Q_FUNC_INFO;
+    bool ok;
+    QHostAddress addressQHost;
+
+    ok = addressQHost.setAddress(address);
+
+    if(ok)
+        _address.setAddress(address);
+
+    qDebug() << Q_FUNC_INFO << address << "return" << ok;
+
+    return ok;
+}
+
+bool Server::setPort(QString port)
+{
+    bool ok;
+    ulong portULong = port.toULong(&ok);
+
+    if(ok)
+        _port = portULong;
+
+    qDebug() << Q_FUNC_INFO << port << "return" << ok;
+
+    return ok;
 }
 
 QString Server::address()
@@ -21,19 +55,17 @@ QString Server::address()
     return _address.toString();
 }
 
-bool Server::address(QString address)
-{
-    return _address.setAddress(address);
-}
 
-unsigned int Server::port()
+quint16 Server::port()
 {
     return _port;
 }
 
-bool Server::port(unsigned int port)
+Server::Server(QString address, QString port, QObject *parent) :
+    QTcpServer(parent)
 {
-    // TODO : Vérifier la validité du port
-    _port = port;
-    return true;
+    qDebug() << Q_FUNC_INFO << address << port << parent;
+
+    this->setAddress(address);
+    this->setPort(port);
 }
