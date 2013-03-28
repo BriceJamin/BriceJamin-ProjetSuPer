@@ -7,12 +7,12 @@ Server::Server(QString address, unsigned int port, QObject *parent) :
 
 void Server::slot_switchOn()
 {
-
+    qDebug() << Q_FUNC_INFO;
 }
 
 void Server::slot_switchOff()
 {
-
+    qDebug() << Q_FUNC_INFO;
 }
 
 QString Server::address()
