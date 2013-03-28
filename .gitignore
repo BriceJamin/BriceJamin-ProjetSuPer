@@ -10,3 +10,6 @@ Makefile
 *.o
 moc_*
 ui_*
+
+# Ignorer les fichiers configs de Dolphin
+.directory
