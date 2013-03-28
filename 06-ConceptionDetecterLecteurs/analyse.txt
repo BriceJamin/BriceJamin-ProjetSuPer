@@ -1,0 +1,5 @@
+Dans un premier, temps, le faire SANS threads.
+Dans un second temps, le faire AVEC threads.
+Développer ces deux versions.
+Dire que les threads ne sont pas nécessaires. Dire pourquoi.
+Tout justifier clairement.
