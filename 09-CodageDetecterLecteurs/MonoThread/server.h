@@ -23,6 +23,8 @@ signals:
     void sig_tcpClientError();
 
 public slots:
+    void slot_switchOn();
+    void slot_switchOff();
     
 };
 
