@@ -9,6 +9,9 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
     _server = server;
     ui->addressLineEdit->setText(server->address());
     ui->portSpinBox->setValue(server->port());
+
+    connect(ui->onPushButton, SIGNAL(clicked()), _server, SLOT(slot_switchOn()));
+    connect(ui->offPushButton, SIGNAL(clicked()), _server, SLOT(slot_switchOff()));
 }
 
 MainWindow::~MainWindow()
