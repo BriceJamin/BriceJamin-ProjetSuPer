@@ -19,6 +19,9 @@ public:
 private:
     Ui::MainWindow *ui;
     Server* _server;
+
+private slots:
+    void addressLineEdit_textEdited(QString);
 };
 
 #endif // MAINWINDOW_H
