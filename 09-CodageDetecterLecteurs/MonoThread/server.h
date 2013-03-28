@@ -11,6 +11,9 @@ signals:
     void sig_switchedOn();
     void sig_switchedOff();
 
+    void sig_portChanged(quint16);
+    void sig_addressChanged(QString);
+
     void sig_intruderEjected();
     void sig_readerConnected();
     void sig_readerDisconnected();
@@ -28,6 +31,7 @@ public slots:
 
 public:
     explicit Server(QString address, QString port, QObject *parent = 0);
+    ~Server();
 
     QString address();
     quint16 port();

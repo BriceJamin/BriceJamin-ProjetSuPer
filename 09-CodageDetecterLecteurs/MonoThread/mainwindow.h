@@ -22,8 +22,11 @@ private:
 
 private slots:
     void addressLineEdit_textEdited(QString);
+
     void server_switchedOn();
     void server_switchedOff();
+    void server_addressChanged(QString);
+    void server_portChanged(quint16);
 };
 
 #endif // MAINWINDOW_H

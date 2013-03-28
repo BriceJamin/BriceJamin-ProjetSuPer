@@ -5,6 +5,8 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    qDebug() << Q_FUNC_INFO << server << parent;
+
     ui->setupUi(this);
     _server = server;
 
@@ -19,6 +21,9 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
 
     connect(server, SIGNAL(sig_switchedOn()), this, SLOT(server_switchedOn()));
     connect(server, SIGNAL(sig_switchedOff()), this, SLOT(server_switchedOff()));
+
+    connect(server, SIGNAL(sig_addressChanged(QString)), this, SLOT(server_addressChanged(QString)));
+    connect(server, SIGNAL(sig_portChanged(quint16)), this, SLOT(server_portChanged(quint16)));
 }
 
 MainWindow::~MainWindow()
@@ -65,4 +70,18 @@ void MainWindow::server_switchedOff()
     ui->onPushButton->setEnabled(true);
 
     qDebug() << Q_FUNC_INFO << "design";
+}
+
+void MainWindow::server_addressChanged(QString address)
+{
+    ui->addressLineEdit->setText(address);
+
+    qDebug() << Q_FUNC_INFO << address;
+}
+
+void MainWindow::server_portChanged(quint16 port)
+{
+    ui->portSpinBox->setValue(port);
+
+    qDebug() << Q_FUNC_INFO << port;
 }

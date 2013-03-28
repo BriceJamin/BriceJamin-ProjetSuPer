@@ -1,6 +1,5 @@
 #include "server.h"
 
-
 void Server::switchOn()
 {
     if(! isListening())
@@ -38,7 +37,12 @@ bool Server::setAddress(QString address)
         ok = addressQHost.setAddress(address);
 
         if(ok)
+        {
+            qDebug() << Q_FUNC_INFO << address << "sig_addressChanged()";
+
             _address.setAddress(address);
+            emit sig_addressChanged(address);
+        }
     }
 
     qDebug() << Q_FUNC_INFO << address << "return" << ok;
@@ -48,11 +52,20 @@ bool Server::setAddress(QString address)
 
 bool Server::setPort(QString port)
 {
-    bool ok;
-    ulong portULong = port.toULong(&ok);
+    bool ok = false;
 
-    if(ok)
-        _port = portULong;
+    if(! isListening())
+    {
+        quint16 portQuint16 = port.toULong(&ok); // quint16 <=> ulong
+
+        if(ok)
+        {
+            qDebug() << Q_FUNC_INFO << port << "sig_portChanged()";
+
+            _port = portQuint16;
+            emit sig_portChanged(portQuint16);
+        }
+    }
 
     qDebug() << Q_FUNC_INFO << port << "return" << ok;
 
@@ -77,4 +90,11 @@ Server::Server(QString address, QString port, QObject *parent) :
 
     this->setAddress(address);
     this->setPort(port);
+}
+
+Server::~Server()
+{
+    qDebug() << Q_FUNC_INFO;
+
+    close();
 }
