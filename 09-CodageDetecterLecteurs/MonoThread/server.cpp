@@ -1,8 +1,9 @@
 #include "server.h"
 
-Server::Server(QString address, unsigned int port, QObject *parent) :
-    QTcpServer(parent), _address(address), _port(port)
+Server::Server(QString address, quint16 port, QObject *parent) :
+    QTcpServer(parent), _port(port)
 {
+    this->address(address);
 }
 
 void Server::slot_switchOn()
@@ -17,14 +18,12 @@ void Server::slot_switchOff()
 
 QString Server::address()
 {
-    return _address;
+    return _address.toString();
 }
 
 bool Server::address(QString address)
 {
-    // TODO : Verifier la validité de l'adresse
-    _address = address;
-    return true;
+    return _address.setAddress(address);
 }
 
 unsigned int Server::port()
@@ -34,7 +33,7 @@ unsigned int Server::port()
 
 bool Server::port(unsigned int port)
 {
-    // TODO : Verifier la validité du port
+    // TODO : Vérifier la validité du port
     _port = port;
     return true;
 }

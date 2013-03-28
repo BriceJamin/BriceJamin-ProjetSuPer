@@ -7,7 +7,7 @@ class Server : public QTcpServer
 {
     Q_OBJECT
 public:
-    explicit Server(QString address, unsigned int port, QObject *parent = 0);
+    explicit Server(QString address, quint16 port, QObject *parent = 0);
     
 signals:
     void sig_switchedOn();
@@ -34,8 +34,8 @@ public:
     bool port(unsigned int);
 
 private:
-    QString _address;
-    unsigned int _port;
+    QHostAddress _address;
+    quint16 _port;
 };
 
 #endif // SERVER_H
