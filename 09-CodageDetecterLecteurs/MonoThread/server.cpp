@@ -14,3 +14,27 @@ void Server::slot_switchOff()
 {
 
 }
+
+QString Server::address()
+{
+    return _address;
+}
+
+bool Server::address(QString address)
+{
+    // TODO : Verifier la validité de l'adresse
+    _address = address;
+    return true;
+}
+
+unsigned int Server::port()
+{
+    return _port;
+}
+
+bool Server::port(unsigned int port)
+{
+    // TODO : Verifier la validité du port
+    _port = port;
+    return true;
+}

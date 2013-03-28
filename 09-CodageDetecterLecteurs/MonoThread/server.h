@@ -26,6 +26,13 @@ public slots:
     void slot_switchOn();
     void slot_switchOff();
 
+public:
+    QString address();
+    bool address(QString);
+
+    unsigned int port();
+    bool port(unsigned int);
+
 private:
     QString _address;
     unsigned int _port;
