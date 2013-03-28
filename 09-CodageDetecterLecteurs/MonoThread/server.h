@@ -10,7 +10,18 @@ public:
     explicit Server(QObject *parent = 0);
     
 signals:
-    
+    void sig_switchedOn();
+    void sig_switchedOff();
+
+    void sig_intruderEjected();
+    void sig_readerConnected();
+    void sig_readerDisconnected();
+
+    void sig_tcpError();
+    void sig_sqlError();
+
+    void sig_tcpClientError();
+
 public slots:
     
 };
