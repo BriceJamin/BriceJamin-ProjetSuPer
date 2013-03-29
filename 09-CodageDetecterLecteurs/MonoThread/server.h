@@ -7,6 +7,16 @@ class Server : public QTcpServer
 {
     Q_OBJECT
 
+public:
+    enum SwitchOnState
+    {
+        Success,
+        AddressNotAvailableError,
+        PortProtectedError,
+        PortAlreadyInUseError,
+        UnknownError
+    };
+
 signals:
     void sig_switchedOn();
     void sig_switchedOff();
@@ -24,7 +34,7 @@ signals:
     void sig_tcpClientError();
 
 public slots:
-    void switchOn();
+    SwitchOnState switchOn();
     void switchOff();
     bool setAddress(QString);
     bool setPort(QString);

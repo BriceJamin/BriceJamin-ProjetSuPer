@@ -1,23 +1,55 @@
 #include "server.h"
 
-void Server::switchOn()
+Server::SwitchOnState Server::switchOn()
 {
+    SwitchOnState state = Success;
+
     if(! isListening())
     {
-        qDebug() << Q_FUNC_INFO << "listen et sig_switchedOn";
+        bool ok = listen(_address, _port);
 
-        if( listen(_address, _port) )
+        if(ok)
+        {
+            qDebug() << Q_FUNC_INFO << "-> sig_switchedOn";
+
             emit sig_switchedOn();
+        }
+        else
+        {
+            QAbstractSocket::SocketError socketError = serverError();
+
+            switch(socketError)
+            {
+            case QAbstractSocket::SocketAddressNotAvailableError:
+                state = this->AddressNotAvailableError;
+                break;
+
+            case QAbstractSocket::SocketAccessError:
+                state = this->PortProtectedError;
+                break;
+
+            case QAbstractSocket::AddressInUseError:
+                state = this->PortAlreadyInUseError;
+                break;
+
+            default:
+                state = this->UnknownError;
+            }
+
+            qDebug() << Q_FUNC_INFO << "erreur listen, return " << state;
+        }
     }
     else
-        qDebug() << Q_FUNC_INFO;
+        qDebug() << Q_FUNC_INFO << "ignore (deja en ecoute), return" << state;
+
+    return state;
 }
 
 void Server::switchOff()
 {
     if(isListening())
     {
-        qDebug() << Q_FUNC_INFO << " -> close et sig_switchedOff";
+        qDebug() << Q_FUNC_INFO << "close -> sig_switchedOff";
 
         close();
         emit sig_switchedOff();
@@ -38,14 +70,16 @@ bool Server::setAddress(QString address)
 
         if(ok)
         {
-            qDebug() << Q_FUNC_INFO << address << "sig_addressChanged()";
+            qDebug() << Q_FUNC_INFO << address << "-> sig_addressChanged, return" << ok;
 
             _address.setAddress(address);
             emit sig_addressChanged(address);
         }
+        else
+            qDebug() << Q_FUNC_INFO << address << "mauvais format, return" << ok;
     }
-
-    qDebug() << Q_FUNC_INFO << address << "return" << ok;
+    else
+        qDebug() << Q_FUNC_INFO << address << "ignore (deja en ecoute), return" << ok;
 
     return ok;
 }
@@ -60,14 +94,16 @@ bool Server::setPort(QString port)
 
         if(ok)
         {
-            qDebug() << Q_FUNC_INFO << port << "sig_portChanged()";
+            qDebug() << Q_FUNC_INFO << port << "-> sig_portChanged, return" << ok;
 
             _port = portQuint16;
             emit sig_portChanged(portQuint16);
         }
+        else
+            qDebug() << Q_FUNC_INFO << port << "mauvais format, return" << ok;
     }
-
-    qDebug() << Q_FUNC_INFO << port << "return" << ok;
+    else
+         qDebug() << Q_FUNC_INFO << port << "ignore (deja en ecoute), return" << ok;
 
     return ok;
 }

@@ -22,6 +22,7 @@ private:
 
 private slots:
     void addressLineEdit_textEdited(QString);
+    void onPushButton_clicked();
 
     void server_switchedOn();
     void server_switchedOff();

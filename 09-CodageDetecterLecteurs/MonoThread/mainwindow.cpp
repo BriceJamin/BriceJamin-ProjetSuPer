@@ -13,7 +13,7 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
     ui->addressLineEdit->setText(server->address());
     ui->portSpinBox->setValue(server->port());
 
-    connect(ui->onPushButton, SIGNAL(clicked()), _server, SLOT(switchOn()));
+    connect(ui->onPushButton, SIGNAL(clicked()), this, SLOT(onPushButton_clicked()));
     connect(ui->offPushButton, SIGNAL(clicked()), _server, SLOT(switchOff()));
 
     connect(ui->addressLineEdit, SIGNAL(textChanged(QString)), this, SLOT(addressLineEdit_textEdited(QString)));
@@ -50,6 +50,36 @@ void MainWindow::addressLineEdit_textEdited(QString textEdited)
     qDebug() << Q_FUNC_INFO << textEdited << "-> " + color;
 }
 
+void MainWindow::onPushButton_clicked()
+{
+    QString errorColor = "red";
+    Server::SwitchOnState state;
+
+    state = _server->switchOn();
+
+    switch(state)
+    {
+    case Server::Success:
+        ui->addressLineEdit->setStyleSheet("");
+        ui->portSpinBox->setStyleSheet("");
+        break;
+
+    case Server::AddressNotAvailableError:
+        ui->addressLineEdit->setStyleSheet("background-color:" + errorColor);
+        break;
+
+    case Server::PortProtectedError:
+    case Server::PortAlreadyInUseError:
+        ui->portSpinBox->setStyleSheet("background-color:" + errorColor);
+        break;
+
+    default:
+        ;
+    }
+
+    qDebug() << Q_FUNC_INFO << _server->serverError() << _server->errorString();
+}
+
 void MainWindow::server_switchedOn()
 {
     ui->onPushButton->setStyleSheet("background-color:green");
@@ -74,14 +104,24 @@ void MainWindow::server_switchedOff()
 
 void MainWindow::server_addressChanged(QString address)
 {
-    ui->addressLineEdit->setText(address);
+    QString text = ui->addressLineEdit->text();
 
-    qDebug() << Q_FUNC_INFO << address;
+    if(text != address)
+    {
+        qDebug() << Q_FUNC_INFO << address << "setText addressLineEdit";
+
+        ui->addressLineEdit->setText(address);
+    }
 }
 
 void MainWindow::server_portChanged(quint16 port)
 {
-    ui->portSpinBox->setValue(port);
+    quint16 value = ui->portSpinBox->value();
 
-    qDebug() << Q_FUNC_INFO << port;
+    if(value != port)
+    {
+        qDebug() << Q_FUNC_INFO << port << "setValue portSpinBox";
+
+        ui->portSpinBox->setValue(port);
+    }
 }
