@@ -113,8 +113,8 @@ Server::Server(QString address, QString port, QObject *parent) :
 {
     qDebug() << Q_FUNC_INFO << address << port << parent;
 
-    this->setAddress(address);
-    this->setPort(port);
+    setAddress(address);
+    setPort(port);
 }
 
 Server::~Server()
