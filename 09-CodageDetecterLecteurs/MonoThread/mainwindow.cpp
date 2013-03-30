@@ -55,7 +55,11 @@ void MainWindow::onPushButton_clicked()
     QString errorColor = "red";
     Server::SwitchOnState state;
 
+    qDebug() << Q_FUNC_INFO;
+
     state = _server->switchOn();
+
+    qDebug() << Q_FUNC_INFO << "switchOn() :" << state;
 
     switch(state)
     {
@@ -76,8 +80,6 @@ void MainWindow::onPushButton_clicked()
     default:
         ;
     }
-
-    qDebug() << Q_FUNC_INFO << _server->serverError() << _server->errorString();
 }
 
 void MainWindow::server_switchedOn()

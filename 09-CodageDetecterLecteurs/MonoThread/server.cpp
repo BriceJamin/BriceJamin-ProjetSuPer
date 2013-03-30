@@ -134,3 +134,31 @@ quint16 Server::port()
 {
     return _port;
 }
+
+QDebug operator<<(QDebug debug, const Server::SwitchOnState& state)
+{
+    QString stateString;
+
+    switch(state)
+    {
+    case Server::Success:
+        stateString = "Success";
+        break;
+    case Server::AddressNotAvailableError:
+        stateString = "AddressNotAvailableError";
+        break;
+    case Server::PortProtectedError:
+        stateString = "PortProtectedError";
+        break;
+    case Server::PortAlreadyInUseError:
+        stateString = "PortAlreadyInUseError";
+        break;
+    case Server::UnknownError:
+        stateString = "UnknownError";
+        break;
+    }
+
+    debug << stateString;
+
+    return debug.nospace();
+}

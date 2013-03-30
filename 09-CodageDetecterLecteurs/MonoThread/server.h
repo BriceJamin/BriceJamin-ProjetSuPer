@@ -51,4 +51,6 @@ private:
     quint16 _port;
 };
 
+QDebug operator<<(QDebug, const Server::SwitchOnState&);
+
 #endif // SERVER_H
