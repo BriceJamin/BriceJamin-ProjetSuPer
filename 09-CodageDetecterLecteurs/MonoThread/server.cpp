@@ -4,9 +4,9 @@ Server::SwitchOnState Server::switchOn()
 {
     SwitchOnState state = Success;
 
-    if(! isListening())
+    if(! _server.isListening())
     {
-        bool ok = listen(_address, _port);
+        bool ok = _server.listen(_address, _port);
 
         if(ok)
         {
@@ -16,7 +16,7 @@ Server::SwitchOnState Server::switchOn()
         }
         else
         {
-            QAbstractSocket::SocketError socketError = serverError();
+            QAbstractSocket::SocketError socketError = _server.serverError();
 
             switch(socketError)
             {
@@ -47,11 +47,11 @@ Server::SwitchOnState Server::switchOn()
 
 void Server::switchOff()
 {
-    if(isListening())
+    if(_server.isListening())
     {
         qDebug() << Q_FUNC_INFO << "close -> sig_switchedOff";
 
-        close();
+        _server.close();
         emit sig_switchedOff();
     }
     else
@@ -62,7 +62,7 @@ bool Server::setAddress(QString address)
 {
     bool ok = false;
 
-    if(! isListening())
+    if(! _server.isListening())
     {
         QHostAddress addressQHost;
 
@@ -88,7 +88,7 @@ bool Server::setPort(QString port)
 {
     bool ok = false;
 
-    if(! isListening())
+    if(! _server.isListening())
     {
         quint16 portQuint16 = port.toULong(&ok); // quint16 <=> ulong
 
@@ -109,7 +109,7 @@ bool Server::setPort(QString port)
 }
 
 Server::Server(QString address, QString port, QObject *parent) :
-    QTcpServer(parent)
+    QObject(parent)
 {
     qDebug() << Q_FUNC_INFO << address << port << parent;
 
@@ -121,7 +121,7 @@ Server::~Server()
 {
     qDebug() << Q_FUNC_INFO;
 
-    close();
+    _server.close();
 }
 
 QString Server::address()

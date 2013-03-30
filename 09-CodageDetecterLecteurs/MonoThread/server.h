@@ -3,7 +3,7 @@
 
 #include <QTcpServer>
 
-class Server : public QTcpServer
+class Server : public QObject
 {
     Q_OBJECT
 
@@ -49,6 +49,7 @@ public:
 private:
     QHostAddress _address;
     quint16 _port;
+    QTcpServer _server;
 };
 
 QDebug operator<<(QDebug, const Server::SwitchOnState&);
