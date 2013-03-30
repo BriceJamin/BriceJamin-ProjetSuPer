@@ -90,6 +90,9 @@ void MainWindow::server_switchedOn()
     ui->offPushButton->setStyleSheet("");
     ui->offPushButton->setEnabled(true);
 
+    ui->addressLineEdit->setEnabled(false);
+    ui->portSpinBox->setEnabled(false);
+
     qDebug() << Q_FUNC_INFO << "design";
 }
 
@@ -100,6 +103,9 @@ void MainWindow::server_switchedOff()
 
     ui->onPushButton->setStyleSheet("");
     ui->onPushButton->setEnabled(true);
+
+    ui->addressLineEdit->setEnabled(true);
+    ui->portSpinBox->setEnabled(true);
 
     qDebug() << Q_FUNC_INFO << "design";
 }
