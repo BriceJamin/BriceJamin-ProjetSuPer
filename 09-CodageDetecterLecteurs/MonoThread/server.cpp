@@ -120,15 +120,12 @@ Server::Server(QString address, QString port, QObject *parent) :
 Server::~Server()
 {
     qDebug() << Q_FUNC_INFO;
-
-    _server.close();
 }
 
 QString Server::address()
 {
     return _address.toString();
 }
-
 
 quint16 Server::port()
 {
