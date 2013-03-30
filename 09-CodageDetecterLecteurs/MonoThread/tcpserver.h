@@ -12,6 +12,7 @@ signals:
 
 public:
     explicit TcpServer(QObject *parent = 0);
+    ~TcpServer();
 
 protected:
      void incomingConnection(int socketDescriptor);
