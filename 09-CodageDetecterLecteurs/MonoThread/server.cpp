@@ -132,6 +132,11 @@ quint16 Server::port()
     return _port;
 }
 
+void Server::incomingConnection(int socketDescriptor)
+{
+    qDebug() << Q_FUNC_INFO << socketDescriptor;
+}
+
 QDebug operator<<(QDebug debug, const Server::SwitchOnState& state)
 {
     QString stateString;

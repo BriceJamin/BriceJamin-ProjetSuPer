@@ -46,6 +46,9 @@ public:
     QString address();
     quint16 port();
 
+protected slots:
+    void incomingConnection(int);
+
 private:
     QHostAddress _address;
     quint16 _port;
