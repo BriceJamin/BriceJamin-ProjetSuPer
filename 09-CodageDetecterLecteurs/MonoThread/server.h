@@ -1,7 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QTcpServer>
+#include "tcpserver.h"
 
 class Server : public QObject
 {
@@ -49,7 +49,7 @@ public:
 private:
     QHostAddress _address;
     quint16 _port;
-    QTcpServer _server;
+    TcpServer _server;
 };
 
 QDebug operator<<(QDebug, const Server::SwitchOnState&);
