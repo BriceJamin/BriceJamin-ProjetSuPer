@@ -108,17 +108,6 @@ bool Server::setPort(QString port)
     return ok;
 }
 
-QString Server::address()
-{
-    return _address.toString();
-}
-
-
-quint16 Server::port()
-{
-    return _port;
-}
-
 Server::Server(QString address, QString port, QObject *parent) :
     QTcpServer(parent)
 {
@@ -133,4 +122,15 @@ Server::~Server()
     qDebug() << Q_FUNC_INFO;
 
     close();
+}
+
+QString Server::address()
+{
+    return _address.toString();
+}
+
+
+quint16 Server::port()
+{
+    return _port;
 }
