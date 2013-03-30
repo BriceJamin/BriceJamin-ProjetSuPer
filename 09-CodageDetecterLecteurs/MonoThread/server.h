@@ -3,7 +3,6 @@
 
 #include <QTcpServer>
 
-// TODO : Hériter en protected  si c'est faisable (voir http://www.developpez.net/forums/d1326179/c-cpp/bibliotheques/qt/debuter/heritage-protected-qobjet/)
 class Server : public QTcpServer
 {
     Q_OBJECT
