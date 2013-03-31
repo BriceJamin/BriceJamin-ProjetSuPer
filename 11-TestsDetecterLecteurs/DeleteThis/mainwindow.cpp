@@ -60,9 +60,6 @@ void MainWindow::on_pushButton_clicked()
     // La destruction de a déclenchera l'arrêt du thread
     thread->connect(a, SIGNAL(destroyed()), SLOT(quit()));
 
-    // L'arrêt du thread déclenchera sa mort
-    thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
-
     // Lancement du thread
     thread->start();
 }
