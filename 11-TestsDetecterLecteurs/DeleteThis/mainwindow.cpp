@@ -4,6 +4,7 @@
 #include "thread.h"
 
 #include <QDebug>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,6 +30,15 @@ void MainWindow::changeEvent(QEvent *e)
         break;
     default:
         break;
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    if(_nbThread > 0)
+    {
+        e->ignore();
+        emit killThemAll();
     }
 }
 
