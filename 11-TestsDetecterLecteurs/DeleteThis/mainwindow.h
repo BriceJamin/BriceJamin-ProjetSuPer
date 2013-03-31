@@ -9,6 +9,9 @@ namespace Ui {
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+signals:
+    void killThemAll();
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -18,8 +21,10 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    int _nbThread;
 
 private slots:
+    void on_killThemAllPushButton_clicked();
     void on_pushButton_clicked();
 
     void thread_destroyed();

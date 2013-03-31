@@ -11,9 +11,10 @@ Thread::Thread(QObject *parent) :
 
 Thread::~Thread()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant quit()";
-    quit();
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit()";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant quit()";
+    //quit();
+    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit()";
 }
 
 void Thread::run()

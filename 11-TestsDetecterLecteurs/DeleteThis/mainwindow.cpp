@@ -7,7 +7,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), _nbThread(0)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     ui->setupUi(this);
@@ -61,7 +61,7 @@ void MainWindow::on_pushButton_clicked()
     thread->connect(a, SIGNAL(destroyed()), SLOT(quit()));
 
     // Appui sur Kill them All arretera a
-    a->connect(ui->killThemAllPushButton, SIGNAL(clicked()), SLOT(stop()));
+    a->connect(this, SIGNAL(killThemAll()), SLOT(stop()));
 
     // Lancement du thread
     thread->start();
@@ -69,7 +69,8 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::thread_destroyed()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _nbThread--;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << _nbThread;
 }
 
 void MainWindow::thread_finished()
@@ -79,7 +80,8 @@ void MainWindow::thread_finished()
 
 void MainWindow::thread_started()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _nbThread++;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << _nbThread;
 }
 
 void MainWindow::thread_terminated()
@@ -90,4 +92,9 @@ void MainWindow::thread_terminated()
 void MainWindow::a_destroyed()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+}
+
+void MainWindow::on_killThemAllPushButton_clicked()
+{
+    emit killThemAll();
 }
