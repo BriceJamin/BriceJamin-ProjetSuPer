@@ -14,6 +14,7 @@ public:
 
 public slots:
     void run();
+    void stop();
 };
 
 #endif // A_H

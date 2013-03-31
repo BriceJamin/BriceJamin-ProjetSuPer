@@ -15,7 +15,10 @@ A::~A()
 
 void A::run()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant finished";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+}
+
+void A::stop()
+{
     emit finished();
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "après finished";
 }
