@@ -11,3 +11,8 @@ ClientManager::~ClientManager()
 {
     qDebug() << Q_FUNC_INFO;
 }
+
+void ClientManager::manage()
+{
+    qDebug() << Q_FUNC_INFO;
+}
