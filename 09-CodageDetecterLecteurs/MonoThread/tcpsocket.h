@@ -12,16 +12,16 @@ public:
     explicit TcpSocket(QObject *parent = 0);
 
 private slots:
-    void slot_connected();
+    void slot_connected(); // When the connection has been established
     void slot_disconnected();
     void slot_error(QAbstractSocket::SocketError);
     void slot_hostFound();
     void slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*);
-    void slot_stateChanged(QAbstractSocket::SocketState);
+    void slot_stateChanged(QAbstractSocket::SocketState); // Whenever the state changes
     void slot_aboutToClose();
-    void slot_readyRead();
+    void slot_readyRead(); // emitted every time a new chunk of data has arrived
     void slot_readChannelFinished();
-    void slot_bytesWritten(qint64);
+    void slot_bytesWritten(qint64); // When the client has read the data
 };
 
 #endif // TCPSOCKET_H
