@@ -19,6 +19,7 @@ public slots:
     void stop();
 
 private:
+    bool setSocket();
     int _socketDescriptor;
     QTcpSocket _tcpSocket;
 
