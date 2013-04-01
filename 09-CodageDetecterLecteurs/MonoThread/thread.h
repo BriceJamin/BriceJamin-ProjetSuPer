@@ -10,11 +10,6 @@ public:
     explicit Thread(QObject *parent = 0);
     ~Thread();
     void run();
-
-signals:
-
-public slots:
-
 };
 
 #endif // THREAD_H
