@@ -8,7 +8,7 @@ TcpSocket::TcpSocket(QObject *parent) :
     connect(this, SIGNAL(disconnected()), this, SLOT(slot_disconnected()));
     connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slot_error(QAbstractSocket::SocketError)));
     connect(this, SIGNAL(hostFound()), this, SLOT(slot_hostFound()));
-    connect(this, SIGNAL(proxyAuthenticationRequired()), this, SLOT(slot_proxyAuthenticationRequired()));
+    connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
     connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(slot_stateChanged(QAbstractSocket::SocketState)));
     connect(this, SIGNAL(aboutToClose()), this, SLOT(slot_aboutToClose()));
     connect(this, SIGNAL(readyRead()), this, SLOT(slot_readyRead()));
@@ -36,7 +36,7 @@ void TcpSocket::slot_hostFound()
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
-void TcpSocket::slot_proxyAuthenticationRequired()
+void TcpSocket::slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }

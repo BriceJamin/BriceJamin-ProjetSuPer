@@ -2,6 +2,8 @@
 #define TCPSOCKET_H
 
 #include <QTcpSocket>
+#include <QNetworkProxy>
+#include <QAuthenticator>
 
 class TcpSocket : public QTcpSocket
 {
@@ -14,7 +16,7 @@ private slots:
     void slot_disconnected();
     void slot_error(QAbstractSocket::SocketError);
     void slot_hostFound();
-    void slot_proxyAuthenticationRequired();
+    void slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*);
     void slot_stateChanged(QAbstractSocket::SocketState);
     void slot_aboutToClose();
     void slot_readyRead();
