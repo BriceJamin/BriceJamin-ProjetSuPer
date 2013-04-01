@@ -12,10 +12,12 @@ SOURCES += main.cpp \
     server.cpp \
     tcpserver.cpp \
     clientmanager.cpp \
-    thread.cpp
+    thread.cpp \
+    tcpsocket.cpp
 HEADERS += mainwindow.h \
     server.h \
     tcpserver.h \
     clientmanager.h \
-    thread.h
+    thread.h \
+    tcpsocket.h
 FORMS += mainwindow.ui
