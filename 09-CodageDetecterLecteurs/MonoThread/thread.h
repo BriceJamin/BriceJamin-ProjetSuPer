@@ -10,6 +10,12 @@ public:
     explicit Thread(QObject *parent = 0);
     ~Thread();
     void run();
+
+private slots:
+    void slot_started();
+    void slot_finished();
+    void slot_destroyed();
+    void slot_terminated();
 };
 
 #endif // THREAD_H
