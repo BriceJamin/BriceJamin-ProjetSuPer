@@ -101,6 +101,8 @@ Server::Server(QString address, QString port, QObject *parent) :
 
     _setAddress(address);
     _setPort(port);
+
+    this->connect(&_server, SIGNAL(sig_incomingConnection(int)), SLOT(incomingConnection(int)));
 }
 
 Server::~Server()
