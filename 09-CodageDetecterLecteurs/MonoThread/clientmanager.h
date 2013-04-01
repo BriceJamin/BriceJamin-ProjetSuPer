@@ -2,7 +2,7 @@
 #define CLIENTMANAGER_H
 
 #include <QObject>
-#include <QTcpSocket>
+#include "tcpsocket.h"
 
 class ClientManager : public QObject
 {
@@ -21,7 +21,7 @@ public slots:
 private:
     bool setSocket();
     int _socketDescriptor;
-    QTcpSocket _tcpSocket;
+    TcpSocket _tcpSocket;
 
 };
 
