@@ -6,6 +6,7 @@ ClientManager::ClientManager(int socketDescriptor) :
     QObject(), _socketDescriptor(socketDescriptor)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+    _tcpSocket.setParent(this);
 }
 
 ClientManager::~ClientManager()
