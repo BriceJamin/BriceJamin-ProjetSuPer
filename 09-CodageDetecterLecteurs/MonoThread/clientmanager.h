@@ -7,11 +7,14 @@ class ClientManager : public QObject
 {
 Q_OBJECT
 public:
-    explicit ClientManager();
+    explicit ClientManager(int);
 
 signals:
 
 public slots:
+
+private:
+    int socketDescriptor;
 
 };
 

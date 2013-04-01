@@ -1,6 +1,6 @@
 #include "clientmanager.h"
 
-ClientManager::ClientManager() :
-    QObject()
+ClientManager::ClientManager(int socketDescriptor) :
+    QObject(), _socketDescriptor(socketDescriptor)
 {
 }
