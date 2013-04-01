@@ -61,7 +61,7 @@ void TcpSocket::slot_readChannelFinished()
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
-void TcpSocket::slot_bytesWritten(qint64 q)
+void TcpSocket::slot_bytesWritten(qint64 number)
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << q;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << number;
 }
