@@ -12,6 +12,7 @@ public:
     ~ClientManager();
 
 signals:
+    void sig_finished();
 
 public slots:
     void manage();
