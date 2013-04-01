@@ -3,6 +3,21 @@
 
 #include "tcpserver.h"
 
+/*
+     Créer une classe pour gérer la communication de(s) client(s)
+     L'instancier dans le constructeur, de façon dynamique pour
+    lui laisser la possibilité de changer de thread
+     S'y connecter et ne jamais s'en servir, les signaux doivent
+    faire le boulot.
+      Il faudra lui donner les socketDescriptor, le signal
+    TcpServer::incommingConnection conviendra parfaitement
+      L'IHM peut vouloir savoir qu'une nouvelle connexion est
+    en cour, dans ce cas créer un nouveau signal dans Server,
+    connecté sur TcpServer::incomingConnection. L'IHM ne devant
+    pas accéder au socket descriptor, le nouveau signal du Server
+    ne devra avoir aucun paramètre.
+*/
+
 class Server : public QObject
 {
     Q_OBJECT
