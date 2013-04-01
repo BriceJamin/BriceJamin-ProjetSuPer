@@ -8,7 +8,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), _nbThread(0)
+    ui(new Ui::MainWindow), _nbThread(0), _closeWindowOrder(false)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     ui->setupUi(this);
@@ -38,6 +38,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     if(_nbThread > 0)
     {
         e->ignore();
+        _closeWindowOrder = true;
         emit killThemAll();
     }
 }
@@ -81,6 +82,11 @@ void MainWindow::thread_destroyed()
 {
     _nbThread--;
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << _nbThread;
+    if(_closeWindowOrder && _nbThread == 0)
+    {
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "_closeWindowOrder:" << _closeWindowOrder;
+        close();
+    }
 }
 
 void MainWindow::thread_finished()

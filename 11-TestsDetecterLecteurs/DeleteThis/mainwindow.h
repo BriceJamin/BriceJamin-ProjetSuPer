@@ -23,6 +23,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     int _nbThread;
+    bool _closeWindowOrder;
 
 private slots:
     void on_killThemAllPushButton_clicked();
