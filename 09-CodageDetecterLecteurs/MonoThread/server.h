@@ -43,6 +43,8 @@ signals:
     void sig_readerConnected();
     void sig_readerDisconnected();
 
+    void sig_stopAllClientManager();
+
     void sig_tcpError();
     void sig_sqlError();
 
@@ -53,6 +55,7 @@ public slots:
     void switchOff();
     bool setAddress(QString);
     bool setPort(QString);
+    void killAllCommunications();
 
 public:
     explicit Server(QString address, QString port, QObject *parent = 0);

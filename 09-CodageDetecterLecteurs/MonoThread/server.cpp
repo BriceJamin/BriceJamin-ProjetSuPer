@@ -89,6 +89,11 @@ bool Server::setPort(QString port)
     return ok;
 }
 
+void Server::killAllCommunications()
+{
+    emit sig_stopAllClientManager();
+}
+
 Server::Server(QString address, QString port, QObject *parent) :
     QObject(parent)
 {
