@@ -2,6 +2,7 @@
 #define CLIENTMANAGER_H
 
 #include <QObject>
+#include <QTcpSocket>
 
 class ClientManager : public QObject
 {
@@ -17,6 +18,7 @@ public slots:
 
 private:
     int _socketDescriptor;
+    QTcpSocket _tcpSocket;
 
 };
 
