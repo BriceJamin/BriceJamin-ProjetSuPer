@@ -16,6 +16,7 @@ signals:
 
 public slots:
     void manage();
+    void stop();
 
 private:
     int _socketDescriptor;
