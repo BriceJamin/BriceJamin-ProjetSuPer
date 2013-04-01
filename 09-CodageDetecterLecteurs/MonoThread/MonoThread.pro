@@ -10,8 +10,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     server.cpp \
-    tcpserver.cpp
+    tcpserver.cpp \
+    clientmanager.cpp
 HEADERS += mainwindow.h \
     server.h \
-    tcpserver.h
+    tcpserver.h \
+    clientmanager.h
 FORMS += mainwindow.ui
