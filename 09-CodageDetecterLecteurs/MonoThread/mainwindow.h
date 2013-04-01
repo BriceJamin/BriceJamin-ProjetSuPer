@@ -21,6 +21,7 @@ private:
     Server* _server;
 
 private slots:
+    void on_killAllComPushButton_clicked();
     void addressLineEdit_textEdited(QString);
     void onPushButton_clicked();
 

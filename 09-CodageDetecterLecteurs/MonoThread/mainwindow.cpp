@@ -134,3 +134,9 @@ void MainWindow::server_portChanged(quint16 port)
         ui->portSpinBox->setValue(port);
     }
 }
+
+void MainWindow::on_killAllComPushButton_clicked()
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _server->killAllCommunications();
+}
