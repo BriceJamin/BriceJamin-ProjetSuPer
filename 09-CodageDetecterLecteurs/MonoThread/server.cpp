@@ -111,11 +111,6 @@ quint16 Server::port()
     return _port;
 }
 
-void Server::incomingConnection(int socketDescriptor)
-{
-    qDebug() << Q_FUNC_INFO << socketDescriptor;
-}
-
 bool Server::_setAddress(QString address)
 {
     bool ok;

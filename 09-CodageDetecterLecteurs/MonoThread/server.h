@@ -46,9 +46,6 @@ public:
     QString address();
     quint16 port();
 
-protected slots:
-    void incomingConnection(int);
-
 private:
     bool _setAddress(QString);
     bool _setPort(QString);
