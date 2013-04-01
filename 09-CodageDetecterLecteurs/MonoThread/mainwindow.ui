@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>222</width>
+    <width>278</width>
     <height>72</height>
    </rect>
   </property>
@@ -15,34 +15,14 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="2">
+    <item row="0" column="0">
      <widget class="QPushButton" name="onPushButton">
       <property name="text">
        <string>On</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="portLabel">
-      <property name="text">
-       <string>Port :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QSpinBox" name="portSpinBox">
-      <property name="maximum">
-       <number>65535</number>
-      </property>
-      <property name="value">
-       <number>43210</number>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
+    <item row="0" column="1">
      <widget class="QPushButton" name="offPushButton">
       <property name="enabled">
        <bool>false</bool>
@@ -52,6 +32,23 @@
       </property>
       <property name="text">
        <string>Off</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="2">
+     <widget class="QPushButton" name="killAllComPushButton">
+      <property name="text">
+       <string>Kill all com</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="addressLabel">
+      <property name="text">
+       <string>Address :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -65,13 +62,23 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="addressLabel">
+    <item row="1" column="2">
+     <widget class="QLabel" name="portLabel">
       <property name="text">
-       <string>Address :</string>
+       <string>Port :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QSpinBox" name="portSpinBox">
+      <property name="maximum">
+       <number>65535</number>
+      </property>
+      <property name="value">
+       <number>43210</number>
       </property>
      </widget>
     </item>
