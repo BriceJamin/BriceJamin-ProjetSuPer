@@ -8,7 +8,7 @@ class TcpServer : public QTcpServer
 Q_OBJECT
 
 signals:
-    void sig_newConnection(int);
+    void sig_incomingConnection(int);
 
 public:
     explicit TcpServer(QObject *parent = 0);

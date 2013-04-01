@@ -17,5 +17,5 @@ void TcpServer::incomingConnection(int socketDescriptor)
 {
     qDebug() << Q_FUNC_INFO << "-> sig_newConnection" << socketDescriptor;
 
-    emit sig_newConnection(socketDescriptor);
+    emit sig_incomingConnection(socketDescriptor);
 }

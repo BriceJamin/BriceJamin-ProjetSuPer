@@ -50,6 +50,9 @@ protected slots:
     void incomingConnection(int);
 
 private:
+    bool _setAddress(QString);
+    bool _setPort(QString);
+
     QHostAddress _address;
     quint16 _port;
     TcpServer _server;

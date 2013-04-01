@@ -12,6 +12,9 @@ Server::SwitchOnState Server::switchOn()
         {
             qDebug() << Q_FUNC_INFO << "-> sig_switchedOn";
 
+            _setAddress(_server.serverAddress().toString());
+            _setPort(QString::number(_server.serverPort()));
+
             emit sig_switchedOn();
         }
         else
@@ -63,21 +66,7 @@ bool Server::setAddress(QString address)
     bool ok = false;
 
     if(! _server.isListening())
-    {
-        QHostAddress addressQHost;
-
-        ok = addressQHost.setAddress(address);
-
-        if(ok)
-        {
-            qDebug() << Q_FUNC_INFO << address << "-> sig_addressChanged, return" << ok;
-
-            _address.setAddress(address);
-            emit sig_addressChanged(address);
-        }
-        else
-            qDebug() << Q_FUNC_INFO << address << "mauvais format, return" << ok;
-    }
+        ok = _setAddress(address);
     else
         qDebug() << Q_FUNC_INFO << address << "ignore (deja en ecoute), return" << ok;
 
@@ -90,17 +79,7 @@ bool Server::setPort(QString port)
 
     if(! _server.isListening())
     {
-        quint16 portQuint16 = port.toULong(&ok); // quint16 <=> ulong
-
-        if(ok)
-        {
-            qDebug() << Q_FUNC_INFO << port << "-> sig_portChanged, return" << ok;
-
-            _port = portQuint16;
-            emit sig_portChanged(portQuint16);
-        }
-        else
-            qDebug() << Q_FUNC_INFO << port << "mauvais format, return" << ok;
+        ok = _setPort(port);
     }
     else
          qDebug() << Q_FUNC_INFO << port << "ignore (deja en ecoute), return" << ok;
@@ -113,8 +92,8 @@ Server::Server(QString address, QString port, QObject *parent) :
 {
     qDebug() << Q_FUNC_INFO << address << port << parent;
 
-    setAddress(address);
-    setPort(port);
+    _setAddress(address);
+    _setPort(port);
 }
 
 Server::~Server()
@@ -135,6 +114,44 @@ quint16 Server::port()
 void Server::incomingConnection(int socketDescriptor)
 {
     qDebug() << Q_FUNC_INFO << socketDescriptor;
+}
+
+bool Server::_setAddress(QString address)
+{
+    bool ok;
+    QHostAddress addressQHost;
+
+    ok = addressQHost.setAddress(address);
+
+    if(ok && addressQHost != _address)
+    {
+        qDebug() << Q_FUNC_INFO << address << "-> sig_addressChanged, return" << ok;
+
+        _address.setAddress(address);
+        emit sig_addressChanged(address);
+    }
+    else
+        qDebug() << Q_FUNC_INFO << address << "ignore (mauvais format ou meme valeur), return" << ok;
+
+    return ok;
+}
+
+bool Server::_setPort(QString port)
+{
+    bool ok;
+    quint16 portQuint16 = port.toULong(&ok); // quint16 <=> ulong
+
+    if(ok && portQuint16 != _port)
+    {
+        qDebug() << Q_FUNC_INFO << port << "-> sig_portChanged, return" << ok;
+
+        _port = portQuint16;
+        emit sig_portChanged(portQuint16);
+    }
+    else
+        qDebug() << Q_FUNC_INFO << port << "ignore (mauvais format ou meme valeur), return" << ok;
+
+    return ok;
 }
 
 QDebug operator<<(QDebug debug, const Server::SwitchOnState& state)
