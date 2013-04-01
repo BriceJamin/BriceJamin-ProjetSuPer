@@ -5,8 +5,8 @@
 
 /*
      Créer une classe pour gérer la communication de(s) client(s)
-     L'instancier dans le constructeur, de façon dynamique pour
-    lui laisser la possibilité de changer de thread
+     C'est dans cette classe que les instanciations dynamiques et
+    les moveToThread auront lieu.
      S'y connecter et ne jamais s'en servir, les signaux doivent
     faire le boulot.
       Il faudra lui donner les socketDescriptor, le signal
