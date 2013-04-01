@@ -15,7 +15,6 @@ ClientManager::~ClientManager()
 void ClientManager::manage()
 {
     qDebug() << Q_FUNC_INFO;
-    emit sig_finished();
 }
 
 void ClientManager::stop()
