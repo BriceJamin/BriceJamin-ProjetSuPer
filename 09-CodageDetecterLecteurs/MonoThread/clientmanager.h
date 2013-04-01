@@ -13,9 +13,10 @@ public:
 signals:
 
 public slots:
+    void manage();
 
 private:
-    int socketDescriptor;
+    int _socketDescriptor;
 
 };
 
