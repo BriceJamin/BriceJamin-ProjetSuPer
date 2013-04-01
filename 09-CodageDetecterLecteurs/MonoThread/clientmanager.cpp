@@ -6,3 +6,8 @@ ClientManager::ClientManager(int socketDescriptor) :
 {
     qDebug() << Q_FUNC_INFO << socketDescriptor;
 }
+
+ClientManager::~ClientManager()
+{
+    qDebug() << Q_FUNC_INFO;
+}

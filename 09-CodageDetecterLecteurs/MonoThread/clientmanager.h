@@ -8,6 +8,7 @@ class ClientManager : public QObject
 Q_OBJECT
 public:
     explicit ClientManager(int);
+    ~ClientManager();
 
 signals:
 
