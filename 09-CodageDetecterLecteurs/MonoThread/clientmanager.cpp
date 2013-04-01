@@ -1,23 +1,25 @@
 #include "clientmanager.h"
 #include <QDebug>
+#include <QThread>
 
 ClientManager::ClientManager(int socketDescriptor) :
     QObject(), _socketDescriptor(socketDescriptor)
 {
-    qDebug() << Q_FUNC_INFO << socketDescriptor;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
 }
 
 ClientManager::~ClientManager()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
 void ClientManager::manage()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
 void ClientManager::stop()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     emit sig_finished();
 }

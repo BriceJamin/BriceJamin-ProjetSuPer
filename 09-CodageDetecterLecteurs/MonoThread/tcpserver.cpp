@@ -1,21 +1,22 @@
 #include "tcpserver.h"
+#include <QThread>
 
 TcpServer::TcpServer(QObject *parent) :
     QTcpServer(parent)
 {
-    qDebug() << Q_FUNC_INFO << parent;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << parent;
 }
 
 TcpServer::~TcpServer()
 {
-    qDebug() << Q_FUNC_INFO << "close()";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "close()";
 
     close();
 }
 
 void TcpServer::incomingConnection(int socketDescriptor)
 {
-    qDebug() << Q_FUNC_INFO << "-> sig_newConnection" << socketDescriptor;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "-> sig_newConnection" << socketDescriptor;
 
     emit sig_incomingConnection(socketDescriptor);
 }

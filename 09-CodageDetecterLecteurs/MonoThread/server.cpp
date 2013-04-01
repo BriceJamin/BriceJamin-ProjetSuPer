@@ -1,4 +1,6 @@
 #include "server.h"
+#include "clientmanager.h"
+#include <QThread>
 
 Server::SwitchOnState Server::switchOn()
 {
@@ -10,7 +12,7 @@ Server::SwitchOnState Server::switchOn()
 
         if(ok)
         {
-            qDebug() << Q_FUNC_INFO << "-> sig_switchedOn";
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "-> sig_switchedOn";
 
             _setAddress(_server.serverAddress().toString());
             _setPort(QString::number(_server.serverPort()));
@@ -39,11 +41,11 @@ Server::SwitchOnState Server::switchOn()
                 state = this->UnknownError;
             }
 
-            qDebug() << Q_FUNC_INFO << "erreur listen, return " << state;
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "erreur listen, return " << state;
         }
     }
     else
-        qDebug() << Q_FUNC_INFO << "ignore (deja en ecoute), return" << state;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "ignore (deja en ecoute), return" << state;
 
     return state;
 }
@@ -52,13 +54,13 @@ void Server::switchOff()
 {
     if(_server.isListening())
     {
-        qDebug() << Q_FUNC_INFO << "close -> sig_switchedOff";
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "close -> sig_switchedOff";
 
         _server.close();
         emit sig_switchedOff();
     }
     else
-        qDebug() << Q_FUNC_INFO;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
 bool Server::setAddress(QString address)
@@ -68,7 +70,7 @@ bool Server::setAddress(QString address)
     if(! _server.isListening())
         ok = _setAddress(address);
     else
-        qDebug() << Q_FUNC_INFO << address << "ignore (deja en ecoute), return" << ok;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << address << "ignore (deja en ecoute), return" << ok;
 
     return ok;
 }
@@ -82,7 +84,7 @@ bool Server::setPort(QString port)
         ok = _setPort(port);
     }
     else
-         qDebug() << Q_FUNC_INFO << port << "ignore (deja en ecoute), return" << ok;
+         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << port << "ignore (deja en ecoute), return" << ok;
 
     return ok;
 }
@@ -90,7 +92,7 @@ bool Server::setPort(QString port)
 Server::Server(QString address, QString port, QObject *parent) :
     QObject(parent)
 {
-    qDebug() << Q_FUNC_INFO << address << port << parent;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << address << port << parent;
 
     _setAddress(address);
     _setPort(port);
@@ -98,7 +100,7 @@ Server::Server(QString address, QString port, QObject *parent) :
 
 Server::~Server()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
 
 QString Server::address()
@@ -111,6 +113,11 @@ quint16 Server::port()
     return _port;
 }
 
+void Server::incomingConnection(int socketDescriptor)
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+}
+
 bool Server::_setAddress(QString address)
 {
     bool ok;
@@ -120,13 +127,13 @@ bool Server::_setAddress(QString address)
 
     if(ok && addressQHost != _address)
     {
-        qDebug() << Q_FUNC_INFO << address << "-> sig_addressChanged, return" << ok;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << address << "-> sig_addressChanged, return" << ok;
 
         _address.setAddress(address);
         emit sig_addressChanged(address);
     }
     else
-        qDebug() << Q_FUNC_INFO << address << "ignore (mauvais format ou meme valeur), return" << ok;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << address << "ignore (mauvais format ou meme valeur), return" << ok;
 
     return ok;
 }
@@ -138,13 +145,13 @@ bool Server::_setPort(QString port)
 
     if(ok && portQuint16 != _port)
     {
-        qDebug() << Q_FUNC_INFO << port << "-> sig_portChanged, return" << ok;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << port << "-> sig_portChanged, return" << ok;
 
         _port = portQuint16;
         emit sig_portChanged(portQuint16);
     }
     else
-        qDebug() << Q_FUNC_INFO << port << "ignore (mauvais format ou meme valeur), return" << ok;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << port << "ignore (mauvais format ou meme valeur), return" << ok;
 
     return ok;
 }

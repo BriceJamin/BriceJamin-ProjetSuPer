@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QThread>
 
 MainWindow::MainWindow(Server* server, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    qDebug() << Q_FUNC_INFO << server << parent;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << server << parent;
 
     ui->setupUi(this);
     _server = server;
@@ -28,7 +29,7 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
     delete ui;
 }
@@ -47,7 +48,7 @@ void MainWindow::addressLineEdit_textEdited(QString textEdited)
 
     ui->addressLineEdit->setStyleSheet("color:" + color);
 
-    qDebug() << Q_FUNC_INFO << textEdited << "-> " + color;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << textEdited << "-> " + color;
 }
 
 void MainWindow::onPushButton_clicked()
@@ -55,11 +56,11 @@ void MainWindow::onPushButton_clicked()
     QString errorColor = "red";
     Server::SwitchOnState state;
 
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
     state = _server->switchOn();
 
-    qDebug() << Q_FUNC_INFO << "switchOn() :" << state;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "switchOn() :" << state;
 
     switch(state)
     {
@@ -93,7 +94,7 @@ void MainWindow::server_switchedOn()
     ui->addressLineEdit->setEnabled(false);
     ui->portSpinBox->setEnabled(false);
 
-    qDebug() << Q_FUNC_INFO << "design";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "design";
 }
 
 void MainWindow::server_switchedOff()
@@ -107,7 +108,7 @@ void MainWindow::server_switchedOff()
     ui->addressLineEdit->setEnabled(true);
     ui->portSpinBox->setEnabled(true);
 
-    qDebug() << Q_FUNC_INFO << "design";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "design";
 }
 
 void MainWindow::server_addressChanged(QString address)
@@ -116,7 +117,7 @@ void MainWindow::server_addressChanged(QString address)
 
     if(text != address)
     {
-        qDebug() << Q_FUNC_INFO << address << "setText addressLineEdit";
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << address << "setText addressLineEdit";
 
         ui->addressLineEdit->setText(address);
     }
@@ -128,7 +129,7 @@ void MainWindow::server_portChanged(quint16 port)
 
     if(value != port)
     {
-        qDebug() << Q_FUNC_INFO << port << "setValue portSpinBox";
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << port << "setValue portSpinBox";
 
         ui->portSpinBox->setValue(port);
     }
