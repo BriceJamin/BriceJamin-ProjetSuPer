@@ -144,11 +144,15 @@ void Server::incomingConnection(int socketDescriptor)
     // clientManager::sig_finished() déclenchera sa mort
     clientManager->connect(clientManager, SIGNAL(sig_finished()), SLOT(deleteLater()));
 
+    // Le signal stopAllClientManager stoppera (et tuera) tous les clientManager
+    clientManager->connect(this, SIGNAL(sig_stopAllClientManager()), SLOT(stop()));
+
     // La destruction de clientManager déclenchera l'arrêt du thread
     thread->connect(clientManager, SIGNAL(destroyed()), SLOT(quit()));
 
-    // Le signal stopAllClientManager stoppera (et tuera) tous les clientManager
-    clientManager->connect(this, SIGNAL(sig_stopAllClientManager()), SLOT(stop()));
+    // L'arrêt du thread déclenchera sa mort
+    thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
+    // TODO : Traiter de la même façon le signal terminated ?
 
     // Lancement du thread
     thread->start();

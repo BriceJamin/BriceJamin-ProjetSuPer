@@ -11,10 +11,6 @@ Thread::Thread(QObject *parent) :
     this->connect(this, SIGNAL(finished()), SLOT(slot_finished()));
     this->connect(this, SIGNAL(destroyed()), SLOT(slot_destroyed()));
     this->connect(this, SIGNAL(terminated()), SLOT(slot_terminated()));
-
-    // L'arrêt du thread déclenchera sa mort
-    this->connect(this, SIGNAL(finished()), SLOT(deleteLater()));
-    // TODO : Traiter de la même façon le signal terminated ?
 }
 
 Thread::~Thread()
