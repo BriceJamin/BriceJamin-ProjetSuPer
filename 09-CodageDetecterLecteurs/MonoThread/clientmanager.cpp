@@ -16,10 +16,12 @@ ClientManager::~ClientManager()
 
 void ClientManager::manage()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "debut";
 
     if( ! setSocket())
         return;
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "fin";
 }
 
 void ClientManager::stop()
@@ -30,6 +32,7 @@ void ClientManager::stop()
 
 bool ClientManager::setSocket()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     bool ok;
 
     ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
