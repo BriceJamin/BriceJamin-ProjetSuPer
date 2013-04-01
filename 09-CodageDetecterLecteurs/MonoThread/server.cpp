@@ -1,6 +1,7 @@
 #include "server.h"
 #include "clientmanager.h"
 #include <QThread>
+#include "thread.h"
 
 Server::SwitchOnState Server::switchOn()
 {
@@ -123,6 +124,34 @@ quint16 Server::port()
 void Server::incomingConnection(int socketDescriptor)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+
+    // Declarations
+    Thread* thread;
+    ClientManager* clientManager;
+
+    // Instanciations
+    thread = new Thread();
+    clientManager = new ClientManager(socketDescriptor);
+
+    // MoveToThread
+    clientManager->moveToThread(thread);
+
+    // Connexions
+
+    // Thread::start() déclenche clientManager::manage()
+    clientManager->connect(thread, SIGNAL(started()), SLOT(manage()));
+
+    // clientManager::sig_finished() déclenchera sa mort
+    clientManager->connect(clientManager, SIGNAL(sig_finished()), SLOT(deleteLater()));
+
+    // La destruction de clientManager déclenchera l'arrêt du thread
+    thread->connect(clientManager, SIGNAL(destroyed()), SLOT(quit()));
+
+    // Le signal stopAllClientManager stoppera (et tuera) tous les clientManager
+    clientManager->connect(this, SIGNAL(sig_stopAllClientManager()), SLOT(stop()));
+
+    // Lancement du thread
+    thread->start();
 }
 
 bool Server::_setAddress(QString address)
