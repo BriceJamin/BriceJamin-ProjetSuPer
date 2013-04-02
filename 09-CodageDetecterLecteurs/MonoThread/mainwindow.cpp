@@ -29,7 +29,7 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
     connect(server, SIGNAL(sig_addressChanged(QString)), this, SLOT(server_addressChanged(QString)));
     connect(server, SIGNAL(sig_portChanged(quint16)), this, SLOT(server_portChanged(quint16)));
 
-    connect(server, SIGNAL(sig_newConnection(ClientConnection*)), this, SLOT(server_newConnection(ClientConnection*)));
+    connect(server, SIGNAL(sig_newConnection(const ClientConnection&)), this, SLOT(server_newConnection(const ClientConnection&)));
 }
 
 MainWindow::~MainWindow()
@@ -146,21 +146,21 @@ void MainWindow::server_portChanged(quint16 port)
     }
 }
 
-void MainWindow::server_newConnection(ClientConnection* cC)
+void MainWindow::server_newConnection(const ClientConnection& cC)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     ClientConnectionWindow* cCWindow;
     cCWindow = new ClientConnectionWindow(this);
 
-    cCWindow->connect(cC, SIGNAL(sig_connected()), SLOT(slot_connected()));
-    cCWindow->connect(cC, SIGNAL(sig_isAReader(Reader)), SLOT(slot_isAReader(Reader)));
-    cCWindow->connect(cC, SIGNAL(sig_isNotAReader(QString)), SLOT(slot_isNotAReader(QString)));
-    cCWindow->connect(cC, SIGNAL(sig_dataRead(QString)), SLOT(slot_dataRead(QString)));
-    cCWindow->connect(cC, SIGNAL(sig_disconnected()), SLOT(slot_disconnected()));
-    cCWindow->connect(cC, SIGNAL(sig_closed()), SLOT(slot_closed()));
-    cCWindow->connect(cC, SIGNAL(destroyed()), SLOT(slot_destroyed()));
+    cCWindow->connect(&cC, SIGNAL(sig_connected()), SLOT(slot_connected()));
+    cCWindow->connect(&cC, SIGNAL(sig_isAReader(Reader)), SLOT(slot_isAReader(Reader)));
+    cCWindow->connect(&cC, SIGNAL(sig_isNotAReader(QString)), SLOT(slot_isNotAReader(QString)));
+    cCWindow->connect(&cC, SIGNAL(sig_dataRead(QString)), SLOT(slot_dataRead(QString)));
+    cCWindow->connect(&cC, SIGNAL(sig_disconnected()), SLOT(slot_disconnected()));
+    cCWindow->connect(&cC, SIGNAL(sig_closed()), SLOT(slot_closed()));
+    cCWindow->connect(&cC, SIGNAL(destroyed()), SLOT(slot_destroyed()));
 
-    cC->connect(cCWindow, SIGNAL(sig_closeConnection()), SLOT(close()));
+    cC.connect(cCWindow, SIGNAL(sig_closeConnection()), SLOT(close()));
 
     cCWindow->setWindowFlags(Qt::Window);
     cCWindow->show();

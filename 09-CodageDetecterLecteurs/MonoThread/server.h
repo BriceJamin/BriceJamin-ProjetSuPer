@@ -25,7 +25,7 @@ signals:
     void sig_portChanged(quint16);
     void sig_addressChanged(QString);
 
-    void sig_newConnection(ClientConnection*);
+    void sig_newConnection(const ClientConnection&);
     void sig_closeAllClientConnection();
 
 public slots:

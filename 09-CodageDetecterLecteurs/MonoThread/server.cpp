@@ -154,7 +154,7 @@ void Server::incomingConnection(int socketDescriptor)
     thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
     // TODO : Traiter de la même façon le signal terminated ?
 
-    emit sig_newConnection(clientConnection);
+    emit sig_newConnection(*clientConnection);
 
     // Lancement du thread
     thread->start();

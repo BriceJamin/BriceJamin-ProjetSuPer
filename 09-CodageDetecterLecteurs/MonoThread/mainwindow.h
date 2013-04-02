@@ -30,7 +30,7 @@ private slots:
     void server_switchedOff();
     void server_addressChanged(QString);
     void server_portChanged(quint16);
-    void server_newConnection(ClientConnection*);
+    void server_newConnection(const ClientConnection&);
 };
 
 #endif // MAINWINDOW_H
