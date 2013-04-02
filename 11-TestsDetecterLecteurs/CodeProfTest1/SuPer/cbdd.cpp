@@ -220,7 +220,7 @@ bool CBdd::identifier(const QString &login, const QString &pass)
     query->bindValue(":pass", pass);
     if (!query->exec())
     {
-        qDebug("Erreur MySQL");
+        qDebug("Erreur MySQL:SELECT noPers FROM personnes WHERE ident=:login AND pass=:pass AND exploit='Y' LIMIT 1");
         return false;
     } // if exec
     query->next();
@@ -246,7 +246,7 @@ bool CBdd::isBadgeExiste(QString &noB)
     query->bindValue(":noB", noB);
     if (!query->exec())
     {
-        qDebug("Erreur MySQL");
+        qDebug("Erreur MySQL:SELECT * FROM badges WHERE noBadge=:noB LIMIT 1");
         return false;
     } // if exec
     int no=query->size();
