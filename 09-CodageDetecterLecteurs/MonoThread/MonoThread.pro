@@ -11,13 +11,18 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     server.cpp \
     tcpserver.cpp \
-    clientmanager.cpp \
     thread.cpp \
-    tcpsocket.cpp
+    tcpsocket.cpp \
+    clientconnection.cpp \
+    reader.cpp \
+    clientconnectionwindow.cpp
 HEADERS += mainwindow.h \
     server.h \
     tcpserver.h \
-    clientmanager.h \
     thread.h \
-    tcpsocket.h
-FORMS += mainwindow.ui
+    tcpsocket.h \
+    clientconnection.h \
+    reader.h \
+    clientconnectionwindow.h
+FORMS += mainwindow.ui \
+    clientconnectionwindow.ui

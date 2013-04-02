@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "server.h"
+#include "clientconnection.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,14 +22,15 @@ private:
     Server* _server;
 
 private slots:
-    void on_killAllComPushButton_clicked();
     void addressLineEdit_textEdited(QString);
     void onPushButton_clicked();
+    void on_killAllComPushButton_clicked();
 
     void server_switchedOn();
     void server_switchedOff();
     void server_addressChanged(QString);
     void server_portChanged(quint16);
+    void server_newConnection(ClientConnection*);
 };
 
 #endif // MAINWINDOW_H

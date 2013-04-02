@@ -90,9 +90,9 @@ bool Server::setPort(QString port)
     return ok;
 }
 
-void Server::killAllCommunications()
+void Server::closeAllClientConnection()
 {
-    emit sig_stopAllClientManager();
+    emit sig_closeAllClientConnection();
 }
 
 Server::Server(QString address, QString port, QObject *parent) :
@@ -127,32 +127,34 @@ void Server::incomingConnection(int socketDescriptor)
 
     // Declarations
     Thread* thread;
-    ClientManager* clientManager;
+    ClientConnection* clientConnection;
 
     // Instanciations
     thread = new Thread();
-    clientManager = new ClientManager(socketDescriptor);
+    clientConnection = new ClientConnection(socketDescriptor);
 
     // MoveToThread
-    clientManager->moveToThread(thread);
+    clientConnection->moveToThread(thread);
 
     // Connexions
 
-    // Thread::start() déclenche clientManager::manage()
-    clientManager->connect(thread, SIGNAL(started()), SLOT(manage()));
+    // Thread::start() déclenche clientConnection::open()
+    clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
 
-    // clientManager::sig_finished() déclenchera sa mort
-    clientManager->connect(clientManager, SIGNAL(sig_finished()), SLOT(deleteLater()));
+    // clientConnection::sig_closed() déclenchera sa mort
+    clientConnection->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(deleteLater()));
 
-    // Le signal stopAllClientManager stoppera (et tuera) tous les clientManager
-    clientManager->connect(this, SIGNAL(sig_stopAllClientManager()), SLOT(stop()));
+    // Le signal closeAllClientConnection stoppera (et tuera) tous les clientConnection
+    clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
 
-    // La destruction de clientManager déclenchera l'arrêt du thread
-    thread->connect(clientManager, SIGNAL(destroyed()), SLOT(quit()));
+    // La destruction de clientConnection déclenchera l'arrêt du thread
+    thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(quit()));
 
     // L'arrêt du thread déclenchera sa mort
     thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
     // TODO : Traiter de la même façon le signal terminated ?
+
+    emit sig_newConnection(clientConnection);
 
     // Lancement du thread
     thread->start();
