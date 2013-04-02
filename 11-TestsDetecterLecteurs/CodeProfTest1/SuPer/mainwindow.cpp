@@ -531,7 +531,7 @@ void MainWindow::on_pbRetour_clicked()
   vue=0;
 }
 
-void MainWindow::on_twOnglets_currentChanged(int index)
+void MainWindow::on_twOnglets_currentChanged(int)
 {
 // T_ListeLabel *tll;
 
