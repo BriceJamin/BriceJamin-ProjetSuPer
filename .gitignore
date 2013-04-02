@@ -3,7 +3,7 @@
 *.lock
 
 # Ignorer la configuration personnelle de QT
-*.pro.user
+*.pro.user*
 
 # Ignorer les fichiers de compilations de QT
 Makefile
