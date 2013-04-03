@@ -3,7 +3,8 @@
 # -------------------------------------------------
 QT += core \
     gui \
-    network
+    network \
+    sql
 greaterThan(QT_MAJOR_VERSION, 4):QT += widgets
 TARGET = MonoThread
 TEMPLATE = app
