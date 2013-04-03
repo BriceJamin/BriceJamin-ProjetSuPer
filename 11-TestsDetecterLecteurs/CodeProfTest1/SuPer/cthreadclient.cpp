@@ -1,8 +1,10 @@
 #include "cthreadclient.h"
+#include <QThread>
 
 CThreadClient::CThreadClient(QObject *parent, QTcpSocket *cl) :
     QThread(parent)
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     client = cl;
     qDebug("Thread running...");
 } // method
@@ -10,17 +12,20 @@ CThreadClient::CThreadClient(QObject *parent, QTcpSocket *cl) :
 //////////////////////////////////////////////////////
 CThreadClient::~CThreadClient()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     qDebug("Thread ends...");
 } // method
 
 void CThreadClient::onFinConnexionClient()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     this->terminate(); // arrêt du thread
 } // method
 
 ///////////////////////////////////////////////////////
 void CThreadClient::run()
  {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     connect(client, SIGNAL(readyRead()), this, SLOT(onLireTag()));
     connect(client, SIGNAL(destroyed()), this, SLOT(onFinConnexionClient()));
     connect(client, SIGNAL(disconnected()), client, SLOT(deleteLater()));
@@ -30,6 +35,7 @@ void CThreadClient::run()
 ////////////////////////////////////////////////////////
 void CThreadClient::onLireTag()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     QString tag;
 //    qDebug("Des caracteres recus");
 //    qDebug(QString("%1").arg(client->bytesAvailable()).toLocal8Bit().data());

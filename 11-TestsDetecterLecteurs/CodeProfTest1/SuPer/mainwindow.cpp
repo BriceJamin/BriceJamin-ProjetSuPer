@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent) ,
     ui(new Ui::MainWindow)
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     ui->setupUi(this);
 
     // pour le menu
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     delete ihmAffecter;
     delete ihmPersonne;
     delete ihmLecteur;
