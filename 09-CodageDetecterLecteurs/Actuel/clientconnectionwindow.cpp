@@ -45,9 +45,9 @@ void ClientConnectionWindow::slot_isAReader(Reader reader)
 {
     QString string;
 
-    string = "Reader num(" + QString::number(reader.number()) + "),"
-              + "placeId(" + QString::number(reader.placeId()) + "),"
-              + "address(" + reader.address() + "),"
+    string = "Reader num(" + QString::number(reader.number()) + "), "
+              + "placeId(" + QString::number(reader.placeId()) + "), "
+              + "address(" + reader.address() + "), "
               + "isConnected(" + QString::number(reader.isConnected()) + ").";
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO
@@ -56,7 +56,7 @@ void ClientConnectionWindow::slot_isAReader(Reader reader)
         << "address(" << reader.address() << "),"
         << "isConnected(" << reader.isConnected() << ").";
 
-    ui->textEdit->append("*** Is a reader. " + string);
+    ui->textEdit->append("*** Is a reader.\n" + string);
 }
 
 void ClientConnectionWindow::slot_isNotAReader(QString ip)
