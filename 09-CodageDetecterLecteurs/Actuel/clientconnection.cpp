@@ -106,19 +106,22 @@ void ClientConnection::filter()
         query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
         if(!query.isActive())
         {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Requete sql [Update lecteur.estConnecte] ERROR";
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ERROR";
 
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
             _tcpSocket.close();
             return;
         }
+
         query.finish();
         db.close();
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
 
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ok -> sig_isAReader(reader)";
     qRegisterMetaType<Reader>("Reader");
     emit sig_isAReader(reader);
 
