@@ -1,0 +1,32 @@
+22/02-27/02 : Découverte et apprentissage du gestionnaire de version Git.
+27/02-28/02 : Création d'un dossier de projet adapté au suivi de version.
+01/03 : Découverte de QtCreator
+02/03 : Création classes TcpServer, TcpServerThread, ReaderDetector
+03/03 : Allumage / Extinction ReaderDetector
+	Liaison TcpServer - ReaderDetector
+	Lancement d'un nouveau thread.
+07/03 : Récupération via requêtes SQL des champs d'un lecteur
+	Identification d'un lecteur
+08/03 : Termine le thread lors d'une erreur
+	Signalement détection d'un intrus avec transmission de son adresse ip.
+09/03 : Création classe Reader
+10/03 : Signalement détection d'un reader avec transmission du reader
+11/03 : Découverte de l'event loop de Qt
+	Classes Reader et ReaderClient deviennent respectivement ReaderData et Reader
+	Création classe ClientTcp
+12/03 : ClientTcp hérite de QTcpSocket
+	Création classe ClientTcpWindow
+	Liaison classes ClientTcp et ClientTcpWindow
+	Lancement de nouveaux ClientTcpWindow possibles via MainWindow
+	Correction des clefs étrangères du script SQL de la BDD
+	Problème rencontré : 
+		Les clients lancés en local ont tous la même adresse, 127.0.0.1
+		Ce qui rend la différenciation des readers impossible en local.
+14/03 : Problème rencontré :
+		Plusieurs connexions SQL effectuées dans des threads différents impossible
+		Fermeture de la précédente lors de l'ouverture d'une nouvelle connexion.
+
+
+
+
+
