@@ -1,8 +1,9 @@
  La bibliothèque Qt offre un mécanisme de communication entre objets
 héritant de QObject reposant sur l'utilisation des signaux et slots.
  Un slot est similaire à une méthode d'une classe et peut être
-connecté à des signaux, qui, une fois émis, déclencheront 
+connecté à des signaux, qui, une fois émis, déclencheront
 l'exécution du slot.
+
  Il existe plusieurs type de connexions entre signaux et slots, dont les
 trois principales sont :
 
@@ -11,10 +12,10 @@ trois principales sont :
 	 C'est le type de connexion par défaut.
 	 Si les instances des objets connectés appartiennent au même thread,
 	le type de connexion effectué est alors DirectConnexion.
-	 Si elle n'appartiennent pas au même thread, le type de connexion 
+	 Si elle n'appartiennent pas au même thread, le type de connexion
 	effectué est alors QueuedConnection.
 
-- DirectConnection : 
+- DirectConnection :
 
 	 Lorsque le signal est émis, le slot est immédiatement exécuté.
 	 Ce comportement est comparable à l'appel d'une fonction : le bloc
@@ -36,8 +37,32 @@ trois principales sont :
 	sont connectés.
 	 L'exécution des slots est alors asynchrone.
 
-Il est donc aisé de permettre à un objet d'en observer un autre si ils héritent
-tous les deux de QObject.
+Ces types de connexions permettent ainsi la communications entre objets, même
+s'ils sont dans des threads différents.
 
-Une application graphique Qt est composée d'une instance de la classe
-QMainWindow, qui délivre 
+Il est donc aisé de permettre à un objet d'en observer un autre lorsqu'ils
+héritent de QObject.
+
+ La partie "Visualiser" sera une IHM basée sur une application graphique Qt,
+composée d'une instance de la classe QMainWindow, qui délivre l'event loop du
+thread principal.
+ Héritant de QObject, elle peut utiliser les signaux et les slots.
+ Son fonctionnement repose en partie sur les informations détenues par la partie
+"Détecter", un serveur pouvant fonctionner en multithreads.
+ La communication entre threads différents étant grandement facilitée par les
+signaux, la partie "Détecter" devra employer des objets héritant de QObject et
+communiquer avec "Visualiser" par leur intermédiaire.
+
+ "Visualiser" doit observer "Détecter" et être mise à jour pour refléter l'évolution
+de "Détecter".
+ "Détecter" devra donc mettre à la disposition de "Visualiser" des signaux destinés
+à la renseigner de tous les évènements dont il a connaissance.
+ "Visualiser" peut être composé de plusieurs objets observant des évènements différents
+de "Détecter".
+ C'est pourquoi, afin de simplifier la gestion de la communication, "Visualiser" aura
+la responsabilité de connecter ses propres objets à "Détecter", et ce dernier ignorera
+qui l'observe.
+ Ainsi, la partie "Détecter" fontionnera indépendemment de "Visualiser", et "Visualiser"
+reposera uniquement sur les noms des objets de "Détecter" et de leurs signaux, ce qui
+limite les dépendances entre les deux : seules les connexions devront être changées
+depuis "Visualiser" en cas de changement.
