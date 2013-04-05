@@ -1,0 +1,43 @@
+ La bibliothèque Qt offre un mécanisme de communication entre objets
+héritant de QObject reposant sur l'utilisation des signaux et slots.
+ Un slot est similaire à une méthode d'une classe et peut être
+connecté à des signaux, qui, une fois émis, déclencheront 
+l'exécution du slot.
+ Il existe plusieurs type de connexions entre signaux et slots, dont les
+trois principales sont :
+
+- AutoConnection :
+
+	 C'est le type de connexion par défaut.
+	 Si les instances des objets connectés appartiennent au même thread,
+	le type de connexion effectué est alors DirectConnexion.
+	 Si elle n'appartiennent pas au même thread, le type de connexion 
+	effectué est alors QueuedConnection.
+
+- DirectConnection : 
+
+	 Lorsque le signal est émis, le slot est immédiatement exécuté.
+	 Ce comportement est comparable à l'appel d'une fonction : le bloc
+	de code appelant ne se poursuivra que lorsque l'exécution de la
+	fonction sera terminée.
+	 L'exécution du slot est alors synchrone.
+
+- QueuedConnection :
+
+	 Lorsque le signal est émis, il est mis dans une liste FIFO de
+	l'event loop, la boucle d'évènements.
+	 C'est une boucle infinie qui exécute successivement les évènements
+	de sa liste, et les y ôte.
+	Lors de l'exécution du programme les évènements sont ajoutés dans une
+	liste d'attente et le bloc de code contenant l'émission continue son
+	exécution.
+	 Une fois l'exécution terminée la boucle d'évènements traite la file
+	d'attente des signaux et déclenche l'exécution des slots auxquels ils
+	sont connectés.
+	 L'exécution des slots est alors asynchrone.
+
+Il est donc aisé de permettre à un objet d'en observer un autre si ils héritent
+tous les deux de QObject.
+
+Une application graphique Qt est composée d'une instance de la classe
+QMainWindow, qui délivre 
