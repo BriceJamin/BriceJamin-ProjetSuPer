@@ -1,0 +1,13 @@
+Activation désactivation de l'écoute
+
+La classe Server possède deux slots publics switchOn() et switchOff(), qui ont pour rôle d'activer/désactiver l'écoute du serveur. Elle reposent sur l'utilisation des  méthodes listen() et close() de la classe QTcpServer.
+Ce sont des slots pour permettre à une IHM de connecter par exemple le signal clicked() d'un de ses QPuhButton.
+Elle a ainsi le choix : utiliser les signaux ou faire appel directement au slot, ce qui est possible car les slots sont des méthodes.
+La différence est que si elle utilise les signaux elle ne pourra pas accéder au retour de la méthode switchOn, qui est un énuméré nommé SwitchOnState contenant :
+- Success : L'appel a réussi, le serveur est en écoute et le signal switchedOn() a été émis.
+- AddressNotAvailableError : L'adresse d'écoute n'est pas libre, il faut alors la libérer (arrêter le programme qui l'utilise) ou en choisir une autre.
+- PortProtectedError : Le port demandé pour la mise en écoute est réservé pour d'autres applications. C'est par exemple le cas du port 80, utilisé pour la communication HTTP. 
+- PortAlreadyInUseError : Le port est déjà utilisé, il faut le libérer (fermer l'application qui l'utilise) ou en choisir un autre.
+- UnknowError : Une erreur inconnue est survenue. Normalement cela ne devrait pas arriver, mais si jamais cela arrive un jour, l'utilisateur saura qu'une erreur est survenue, même inconnue, ce qui est mieux que de l'informaer que tout va bien alors que tout va mal.
+
+[Insérer la diagramme 2-SwitchOnOff]
