@@ -1,0 +1,13 @@
+Fonctionnement MultiThread
+
+A la connexion d'un nouveau client un nouveau QThread est créé dynamiquement.
+Il lui est rattaché une instance de l'objet devant être exécuté dans un threead différent, ce qui est le cas de l'instance de la classe ClientConnection créée également à chaque nouvelle connexion d'un client.
+
+Se déroule ensuite les connexions nécessaires au bon fonctionnement du ClientConnection et du Qthread :
+La lancement du thread déclenchera l'initiation de la connexion de la connexion.
+La déconnexion du ClientConnection entrainera sa mort, car une fois déconnecté la connexion est perdue défninitivement, et si le même client se reconnecte une nouvelle connexion sera ouverte, il faut donc libérer la mémoire.
+La mort du ClientConnection entrainera l'arrêt du thread, puis sa mort. Iidem, inutile de conserver un thread sans aucune exécution à effectué.
+
+Puis le tread est lancé.
+
+[Insérer diagramme 5-MultiThread]
