@@ -1,0 +1,20 @@
+Modifications de l'adresse et du port
+
+La classe Server a pour attributs une adresse découte et un port.
+Il faut les lui renseigner avant de la switchOn() sans quoi la demande
+sera ignorée en retrournant un erreur.
+Ils sont modifiables depuis :
+- Les paramètres du constructeur
+- Les accesseurs en écriture setAddress(QString) et setPort(QString). Ils sont tous deux des slots.
+Ils prennent en paramètre des Qtring, classes courantes et facile d'utilisation pour l'IHM. Elle
+peut ainsi, par exemple, connecter les signaux textChanged(QString) de ses QLineEdit directement
+sur ces slots.
+
+Quelque soit l'accès utilisé, en cas de valeur correcte, les signaux correspondants sig_portChanged(quint16)
+et sig_addressChanged(QString) seront émis, et en cas de valeur incorrecte les attributs resteront inchangés.
+Les accesseurs en écriture quand à eux retournent en plus un booléen, à true si la valeur est correcte, sinon à false.
+Lors de la transmission de valeurs par les paramètres du constructeur, seul le prochain appel à listen permetta de savoir s'ils étaient incorrects.
+
+[Insérer le diagramme 3-SetAdressePort] 
+
+
