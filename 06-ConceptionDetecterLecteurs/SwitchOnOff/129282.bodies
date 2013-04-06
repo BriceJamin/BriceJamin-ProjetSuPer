@@ -1,0 +1,37 @@
+class Server
+!!!136450.cpp!!!	incomingConnection(in socketDescriptor : int) : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+
+    // Declarations
+    Thread* thread;
+    ClientConnection* clientConnection;
+
+    // Instanciations
+    thread = new Thread();
+    clientConnection = new ClientConnection(socketDescriptor);
+
+    // MoveToThread
+    clientConnection->moveToThread(thread);
+
+    // Connexions
+
+    // Thread::start() déclenche clientConnection::open()
+    clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
+
+    // clientConnection::sig_closed() déclenchera sa mort
+    clientConnection->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(deleteLater()));
+
+    // Le signal closeAllClientConnection stoppera (et tuera) tous les clientConnection
+    clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
+
+    // La destruction de clientConnection déclenchera l'arrêt du thread
+    thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(quit()));
+
+    // L'arrêt du thread déclenchera sa mort
+    thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
+    // TODO : Traiter de la même façon le signal terminated ?
+
+    emit sig_newConnection(*clientConnection);
+
+    // Lancement du thread
+    thread->start();

@@ -1,0 +1,60 @@
+format 74
+
+classcanvas 128002 class_ref 129666 // TcpServer
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 39 246 2000
+end
+classcanvas 128130 class_ref 136962 // QTcpServer
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 3 83 2000
+end
+classcanvas 128258 class_ref 137090 // QObject
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 127 3 2000
+end
+classcanvas 128642 class_ref 129282 // Server
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 168 83 2006
+end
+classcanvas 131202 class_ref 129538 // SwitchOnState
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 324 85 2012
+end
+note 131458 "address, port : QString"
+  xyzwh 205 234 2000 143 37
+relationcanvas 128386 relation_ref 136450 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 136578 // <generalisation>
+  geometry VHV unfixed
+  from ref 128130 z 2001 to point 73 62
+  line 130178 z 2001 to point 154 62
+  line 130306 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 129282 // <directional composition>
+  geometry HVr
+  decenter_begin 172
+  decenter_end 536
+  from ref 128642 z 2007 to point 186 265
+  line 131074 z 2007 to ref 128002
+  role_a_pos 121 246 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 136706 // <generalisation>
+  geometry VHV unfixed
+  from ref 128642 z 2007 to point 226 62
+  line 129666 z 2007 to point 154 62
+  line 129794 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131330 ---+ decenter_begin 509 decenter_end 607
+  from ref 131202 z 2013 to ref 128642
+line 131586 -_-_ geometry HV decenter_begin 888 decenter_end 657
+  from ref 128642 z 2007 to point 296 192
+  line 131842 z 2007 to ref 131458
+end
