@@ -1,0 +1,28 @@
+class ClientConnection
+!!!128002.cpp!!!	sig_connected() : void
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
+!!!128130.cpp!!!	sig_isAReader(in _t1 : Reader) : void
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+!!!128258.cpp!!!	sig_isNotAReader(in _t1 : QString) : void
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+!!!128386.cpp!!!	sig_dataRead(in _t1 : QString) : void
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
+!!!128514.cpp!!!	sig_disconnected() : void
+    QMetaObject::activate(this, &staticMetaObject, 4, 0);
+!!!128642.cpp!!!	sig_closed() : void
+    QMetaObject::activate(this, &staticMetaObject, 5, 0);
+!!!128770.cpp!!!	ClientConnection(in socketDescriptor : int)
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+    _tcpSocket.setParent(this);
+
+    this->connect(&_tcpSocket, SIGNAL(connected()), SIGNAL(sig_connected()));
+    this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
+!!!128898.cpp!!!	~ClientConnection()
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!129154.cpp!!!	close() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _tcpSocket.close();
+    emit sig_closed();

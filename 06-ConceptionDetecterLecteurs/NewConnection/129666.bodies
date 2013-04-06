@@ -1,0 +1,8 @@
+class TcpServer
+!!!136834.cpp!!!	sig_incomingConnection(in _t1 : int) : void
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+!!!137218.cpp!!!	incomingConnection(in socketDescriptor : int) : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "-> sig_newConnection" << socketDescriptor;
+
+    emit sig_incomingConnection(socketDescriptor);
