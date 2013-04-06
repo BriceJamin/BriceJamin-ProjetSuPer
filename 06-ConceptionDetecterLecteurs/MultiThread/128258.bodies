@@ -1,0 +1,29 @@
+class Reader
+!!!133122.cpp!!!	Reader()
+    _number = 0;
+    _placeId = 0;
+    _address = "";
+    _isConnected = false;
+!!!133250.cpp!!!	Reader(in reader : Reader)
+    _number = reader._number;
+    _placeId = reader._placeId;
+    _address = reader._address;
+    _isConnected = reader._isConnected;
+!!!133378.cpp!!!	~Reader()
+
+!!!133506.cpp!!!	number() : uint
+    return _number;
+!!!133634.cpp!!!	placeId() : uint
+    return _placeId;
+!!!133762.cpp!!!	address() : QString
+    return _address;
+!!!133890.cpp!!!	isConnected() : bool
+    return _isConnected;
+!!!134018.cpp!!!	number(in number : uint) : void
+    _number = number;
+!!!134146.cpp!!!	placeId(in placeId : uint) : void
+    _placeId = placeId;
+!!!134274.cpp!!!	address(in address : QString) : void
+    _address = address;
+!!!134402.cpp!!!	isConnected(in isConnected : bool) : void
+    _isConnected = isConnected;

@@ -1,0 +1,3 @@
+class ClientConnection
+!!!128898.cpp!!!	~ClientConnection()
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
