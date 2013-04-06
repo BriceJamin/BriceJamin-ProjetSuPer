@@ -1,0 +1,18 @@
+class TcpSocket
+!!!137346.cpp!!!	TcpSocket(inout parent : QObject = 0)
+    connect(this, SIGNAL(connected()), this, SLOT(slot_connected()));
+    connect(this, SIGNAL(disconnected()), this, SLOT(slot_disconnected()));
+    connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slot_error(QAbstractSocket::SocketError)));
+    connect(this, SIGNAL(hostFound()), this, SLOT(slot_hostFound()));
+    connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
+    connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(slot_stateChanged(QAbstractSocket::SocketState)));
+    connect(this, SIGNAL(aboutToClose()), this, SLOT(slot_aboutToClose()));
+    connect(this, SIGNAL(readyRead()), this, SLOT(slot_readyRead()));
+    connect(this, SIGNAL(readChannelFinished()), this, SLOT(slot_readChannelFinished()));
+    connect(this, SIGNAL(bytesWritten(qint64)), this, SLOT(slot_bytesWritten(qint64)));
+!!!137602.cpp!!!	slot_disconnected() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!137730.cpp!!!	slot_error(in error : QAbstractSocket::SocketError) : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << error;
+!!!138370.cpp!!!	slot_readyRead() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
