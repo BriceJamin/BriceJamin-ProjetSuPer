@@ -1,0 +1,9 @@
+Filtrage des clients
+
+Le filtrage des clients est la première tâche effectuée lors de la connexion d'un nouveau client.
+Elle consiste à obtenir l'ip de ce client et à consulter la base de données pour savoir si ce client
+est référencé comme étant un lecteur.
+S'il ne l'est pas, le signal isNotAReader(QString) est transmis avec son adresse ip, et la connexion avec le client est aussitôt coupée.
+S'il l'est, alors toutes les informations du lecteurs sont récupérées depuis la base de données, sont stoquées dans une classe Reader et sont transmises via l'émission du signal isAReader(Reader). Ce n'est qu'à partir de ce moment là que les données envoyées par le client sont lues et traitées.
+
+[Diagramme 7-Filtrage]
