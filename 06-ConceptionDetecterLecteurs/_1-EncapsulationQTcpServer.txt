@@ -1,0 +1,20 @@
+Encapsulation de TcpServer
+
+Il existe une classe QTcpServer qui permet d'écouter sur une adresse et un port, et de signaler l'arrivée des clients Tcp.
+Elle possède pour cela une méthode protected nommée incommingConnexion, qui transmet en paramètre le descripteur de
+la socket du client. Une fois en possession de ce descripteur, il est alors possible de créer un QTcpSocket, d'en modifier
+le descripteur avec setDescripteur, et il est alors possible de communiquer avec le nouveau client.
+Cette méthode est appelée automatiquement par la classe QTcpServeur, et pour recevoir son descripteur il est obligatoire de dériver de QTcpServer et de réimplémenter sa méthode incommingConnexion(int).
+
+Je peux donc créer une classe Server pour cela et effectuer un héritage public de QTcpServer. Mais cette classe servira d'interface à l'IHM, et je ne souhaite pas que l'IHM puisse accéder à certaines méthodes publiques héritées de QTcpServer. Il me faut protéger ma classe Server des accès non désirés.
+Je pourrai hériter de manière protected, mais cela rendrait également protected les méthodes de la classe mère de QTcpServer : QObject, ce qui interdirait toute communication via signaux et slot sur ma classe Server, ce qui n'est pas envisageable, la communication avec l'IHM devant s'effectuer jstement via signaux et slots.
+
+Pour résoudre ce problème j'ai utilisé une classe intermédiaire, nommée TcpServer, dérivée publique de la classe QTcpServer, à laquelle j'ajoute un signal sig_incommingConnexion(int).
+J'ai ensuite réimplémenté la méthode incommingConnexion(int), récupéré le descripteur transmis, et l'ai émis vers l'extérieur à l'aide du nouveau signal sig_incommingConnexion(int).
+Ma classe Server n'a plus qu'à encapsuler une instance de cette classe TcpServer et connecter le signal TcpServer::incommingConnection() à un slot, nommé incommingConnexion().
+
+La classe Server a ainsi une méthode semblable à celle de QTcpServer, sans pour autant en hériter, ce qui assure que l'extérieur n'y a pas accès et est obligé de passer par Server pour agir dessus.
+
+[Diagramme Encapsulation QTcpServer]
+en émettant ce nouveau signal un signal avec comme paramètre un int, servant à envoyer vers l'extérieur le paramètre int récupéré de incommingConnexion. 
+des accès non désirés.
