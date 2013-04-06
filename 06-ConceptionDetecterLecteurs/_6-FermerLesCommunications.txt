@@ -1,0 +1,13 @@
+Forcer l'arrêt des communications
+
+Il est possible d'arrêter la communication avec un client en utilisant la méthode ClientConnection::close().
+Cela a pour conséquence non seulement de stoper toute communication, mais aussi de libérer les ressources de cette connexion (toute déconnexion d'un client entraine la mort de l'instance ClientConnection ainsi que de son thread hôte).
+Forcer l'arrêt des communications avec tous les clients, et par conséquent libérer de chaque connexion, peut être intéressant par exemple lorsqu'on souhaite quitter le programme.
+Il est rendu possible via un signal de la classe Server, closeAllClientConnection().
+A chaque instanciation d'un nouveau ClientConnection, le signal est connecté sur son slot close(), si bien que ce signal est perpéuellement connecté à tous les slots close() de toutes les instances de CLientConnection de l'application.
+Une seule émission de ce signal suffit donc à forcer l'arrêt des communications et à libérer leurs ressources.
+Ce signal est émis lors de l'éxécution de son slot closeAllClientConnection().
+L'IHM peut donc s'en servir pour libérer la mémoire avant de se fermer.
+
+[Diagramme 6-FermerLesCommunications]
+
