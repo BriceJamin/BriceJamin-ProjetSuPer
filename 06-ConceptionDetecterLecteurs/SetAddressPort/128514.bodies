@@ -1,0 +1,54 @@
+class ClientConnectionWindow
+!!!129538.cpp!!!	sig_closeConnection() : void
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
+!!!129666.cpp!!!	ClientConnectionWindow(inout parent : QWidget = 0)
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    ui->setupUi(this);
+!!!129794.cpp!!!	~ClientConnectionWindow()
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    delete ui;
+!!!129922.cpp!!!	changeEvent(inout e : QEvent) : void
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+!!!130050.cpp!!!	on_closeConnectionPushButton_clicked() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    emit sig_closeConnection();
+!!!130178.cpp!!!	slot_connected() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    ui->textEdit->append("*** Connected");
+!!!130306.cpp!!!	slot_isAReader(in reader : Reader) : void
+    QString string;
+
+    string = "Reader num(" + QString::number(reader.number()) + "), "
+              + "placeId(" + QString::number(reader.placeId()) + "), "
+              + "address(" + reader.address() + "), "
+              + "isConnected(" + QString::number(reader.isConnected()) + ").";
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO
+            << "Reader num(" << reader.number() << "),"
+        << "placeId(" << reader.placeId() << "),"
+        << "address(" << reader.address() << "),"
+        << "isConnected(" << reader.isConnected() << ").";
+
+    ui->textEdit->append("*** Is a reader.\n" + string);
+!!!130434.cpp!!!	slot_isNotAReader(in ip : QString) : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << ip;
+    ui->textEdit->append("*** " + ip + " is not a reader");
+!!!130562.cpp!!!	slot_dataRead(in data : QString) : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << data;
+    ui->textEdit->append("Data received:" + data);
+!!!130690.cpp!!!	slot_disconnected() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    ui->textEdit->append("*** Disconnected");
+!!!130818.cpp!!!	slot_closed() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    ui->textEdit->append("*** Closed");
+!!!130946.cpp!!!	slot_destroyed() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    ui->textEdit->append("*** Destroyed");

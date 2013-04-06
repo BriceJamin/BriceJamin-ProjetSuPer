@@ -1,0 +1,25 @@
+class Thread
+!!!138754.cpp!!!	Thread(inout parent : QObject = 0)
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+
+    // Suivi cursus de vie du thread
+    this->connect(this, SIGNAL(started()), SLOT(slot_started()));
+    this->connect(this, SIGNAL(finished()), SLOT(slot_finished()));
+    this->connect(this, SIGNAL(destroyed()), SLOT(slot_destroyed()));
+    this->connect(this, SIGNAL(terminated()), SLOT(slot_terminated()));
+!!!138882.cpp!!!	~Thread()
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant quit()";
+    //quit();
+    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit()";
+!!!139010.cpp!!!	run() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    exec();
+!!!139138.cpp!!!	slot_started() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!139266.cpp!!!	slot_finished() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!139394.cpp!!!	slot_destroyed() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!139522.cpp!!!	slot_terminated() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;

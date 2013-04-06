@@ -1,0 +1,30 @@
+class ClientManager
+!!!131074.cpp!!!	ClientManager(in socketDescriptor : int)
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
+    _tcpSocket.setParent(this);
+!!!131202.cpp!!!	~ClientManager()
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+!!!131458.cpp!!!	manage() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "debut";
+
+    if( ! setSocket())
+        return;
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "fin";
+!!!131586.cpp!!!	stop() : void
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    emit sig_finished();
+!!!131714.cpp!!!	setSocket() : bool
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    bool ok;
+
+    ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
+
+    if(! ok)
+    {
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "ok:" << ok;
+    }
+    else
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "ok:" << ok;
+
+    return ok;
