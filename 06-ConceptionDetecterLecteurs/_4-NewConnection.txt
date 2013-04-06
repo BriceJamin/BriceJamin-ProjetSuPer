@@ -1,0 +1,16 @@
+Connexion d'un nouveau client
+
+A la connexion d'un nouveau client, une instance de la classe ClientConnection est créée dynamiquement.
+Son rôle est de gérer tout ce qui est en rapport avec la communication avec le client.
+Elle se crée en fournissant en paramètre de son constructeur le descripteur de socket du nouveau client, qu'elle
+mémorise dans un attribut.
+Elle offre plusieurs signaux sur lesquels l'IHM peut vouloir se connecter, c'est pourquoi elle est envoyée vers l'extérieur
+via l'émission du signal sig_newConnection(const ClientConnection&).
+Si l'IHM avait connecté l'un de ses slots à ce dernier signal, elle peut alors se connecter aux signaux de du ClientConnection reçu :
+sig_isAReader() : Le nouveau client est un lecteur (plus de précisions plus loin).
+sig_isNotAReader() : Le nouveau client n'est pas un lecteur.
+sig_dataRead() : Le client à envoyé des données
+sig_disconnected() : Le client s'est déconnecté
+sig_closed() : La communication avec le client à été fermée sur l'appel de la méthode close()
+
+[Insérer diagramme 4-NewConnection] 
