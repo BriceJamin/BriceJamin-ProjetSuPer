@@ -1,0 +1,14 @@
+format 74
+
+componentcanvas 128130 component_ref 128002 // Visualiser
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  xyzwh 52 30 2000 181 173
+end
+componentcanvas 128258 component_ref 128130 // Detecter
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  xyzwh 306 33 2000 171 165
+end
+simplerelationcanvas 128386 simplerelation_ref 128002
+  from ref 128130 z 2001 to ref 128258
+end
+end
