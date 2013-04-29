@@ -42,6 +42,9 @@ public:
     QString address();
     quint16 port();
 
+private slots:
+    void incomingConnection(int socketDescriptor);
+
 private:
     bool _setAddress(QString);
     bool _setPort(QString);
