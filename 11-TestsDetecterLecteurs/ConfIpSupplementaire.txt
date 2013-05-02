@@ -1,0 +1,10 @@
+Sur OpenSUSE :
+cp /etc/sysconfig/network/ifcfg-eth0 /chemin/vers/la/sauvegarde
+vi /etc/sysconfig/network/ifcfg-eth0
+Ajouter à la fin du fichier :
+-----
+IPADDR_1=IP_SUPPLEMENTAIRE
+LABEL_1=0
+-----
+Puis relancer eth0
+ifup eth0
