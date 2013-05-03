@@ -1,8 +1,30 @@
-1. Lorsqu'un client d'IP interdite essaie de se connecter, une fenêtre s'affiche pour en informer l'utilisateur.
-   Si ce client floode ses demandes de connexion, pleins de fenêtres s'ouvrent, et le PC ne répond plus.
+1. Pleins de fenêtres s'ouvrent, et le PC ne répond plus.
+   Cause :
+      Les lecteurs tentent de se connecter tant qu'ils n'y parviennent pas, fermer la connexion revient à en ouvrir une nouvelle juste après.
+      Lorsqu'un client d'IP inconnue essaie de se connecter, une fenêtre s'affiche pour en informer l'utilisateur.
+      Donc pour chaque tentative de connexion d'un lecteur d'IP inconnue, une fenêtre s'affiche.
+
+   Solutions envisagées :
+      1. Fermer les fenêtres à la déconnexion pour libérer les ressources.
+         Ne résoud pas le problème du flood de demande de connexion.
+         Solution abandonnée.
+      2. Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête, et ignorer toute communication avec le lecteur.
+         Solution adoptée.
+
 
 2. Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
-   QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
+      QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
+   Cause : Lorsqu'un intrus est détecté dans ClientConnection::filter(), la méthode ne se termine pas proprement.
+
+   Solutions envisagées :
+      1. Terminer la méthode ClientConnection::filter() proprement en :
+         - Appelant QSqlDatabase::removeDatabase() si QSqlDatabase::addDatabase() a été appelé.
+         - Appelant QSqlDatabase::close si QSqlDatabase::open() a été appelé.
+
 
 3. Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
-   Error in my_thread_global_end(): 13 threads didn't exit
+      Error in my_thread_global_end(): 13 threads didn't exit
+   Cause : Serait la même que pour le bug n°2.
+
+   Solutions envisagées :
+      1. Résoudre le bug n°2 et voir si celui-ci disparait.
