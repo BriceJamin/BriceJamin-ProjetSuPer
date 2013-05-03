@@ -20,7 +20,8 @@
    Solutions envisagées :
       1. Terminer la méthode ClientConnection::filter() proprement en :
          - Appelant QSqlDatabase::removeDatabase() si QSqlDatabase::addDatabase() a été appelé.
-         - Appelant QSqlDatabase::close si QSqlDatabase::open() a été appelé.
+         - Appelant QSqlDatabase::close() si QSqlDatabase::open() a été appelé.
+         - Appelant QSqlQuery::finish() si QSqlQuery::exec() a été appelé.
 
 
 3. Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
