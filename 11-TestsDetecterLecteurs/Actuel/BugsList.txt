@@ -1,14 +1,15 @@
 1. Pleins de fenêtres s'ouvrent, et le PC ne répond plus.
    Cause :
-      Les lecteurs tentent de se connecter tant qu'ils n'y parviennent pas, fermer la connexion revient à en ouvrir une nouvelle juste après.
-      Lorsqu'un client d'IP inconnue essaie de se connecter, une fenêtre s'affiche pour en informer l'utilisateur.
-      Donc pour chaque tentative de connexion d'un lecteur d'IP inconnue, une fenêtre s'affiche.
+      Les lecteurs tentent de se connecter tant qu'ils n'y parviennent pas.
+      Un lecteur dont l'ip n'est pas présente dans la bdd est considéré comme un intrus.
+      Lorsqu'un intrus est détecté sa connexion est fermée et une fenêtre s'ouvre pour le signaler.
+      Une fois déconnecté le lecteur retente de se connecter, ce qui entraine une boucle infinie de connexion avec ouverture de fenêtre et déconnexion.
 
    Solutions envisagées :
       1. Fermer les fenêtres à la déconnexion pour libérer les ressources.
          Ne résoud pas le problème du flood de demande de connexion.
          Solution abandonnée.
-      2. Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête, et ignorer toute communication avec le lecteur.
+      2. Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête et éviter la boucle infinie.
          Solution adoptée.
 
 
