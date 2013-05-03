@@ -64,80 +64,71 @@ void ClientConnection::filter()
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Error.";
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
-            db.close();
-            db.removeDatabase(nameDatabaseConnexion);
             _tcpSocket.close();
-            return;
         }
-
-        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Success.";
-
-        QSqlQuery query(db);
-        query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
-        if(!query.isActive())
+        else
         {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] ERROR";
-            // TODO : Emettre signal d'erreur
-            // TODO : Stopper proprement
-            query.finish();
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Success.";
+
+            QSqlQuery query(db);
+            query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
+            if(!query.isActive())
+            {
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] ERROR";
+                // TODO : Emettre signal d'erreur
+                // TODO : Stopper proprement
+                _tcpSocket.close();
+            }
+            else
+            {
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip X existe ?] ok";
+
+                if(query.size() == 0)
+                {
+                    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
+
+                    // Ne pas le déconnecter ici.
+                    // Mais il faut qu'il puisse être déconnecté tout de même proprement plus tard.
+                    // Y réfléchir.
+
+                    // Signale la détection d'un intrus
+                    emit sig_isNotAReader(clientAddress);
+                }
+                else
+                {
+                    query.next();
+                    reader.number(query.value(0).toInt());
+                    reader.placeId(query.value(1).toInt());
+                    reader.address(query.value(2).toString());
+                    reader.isConnected(true);
+                    query.finish();
+
+                    // Update BDD (lecteur connecté)
+                    query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
+                    if(!query.isActive())
+                    {
+                        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ERROR";
+
+                        // TODO : Emettre signal d'erreur
+                        // TODO : Stopper proprement
+                    }
+                    else
+                    {
+                        query.finish();
+
+                        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ok -> sig_isAReader(reader)";
+                        qRegisterMetaType<Reader>("Reader");
+                        emit sig_isAReader(reader);
+
+                        this->connect(&_tcpSocket, SIGNAL(readyRead()), SLOT(readyRead()));
+                    }
+                }
+            }
             db.close();
-            db.removeDatabase(nameDatabaseConnexion);
-            _tcpSocket.close();
-            return;
         }
-
-        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip X existe ?] ok";
-
-        if(query.size() == 0)
-        {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
-
-            // TODO : Stopper proprement
-            query.finish();
-            db.close();
-            db.removeDatabase(nameDatabaseConnexion);
-            _tcpSocket.close();
-
-            // Signale la détection d'un intrus
-            emit sig_isNotAReader(clientAddress);
-
-            return;
-        }
-
-        query.next();
-        reader.number(query.value(0).toInt());
-        reader.placeId(query.value(1).toInt());
-        reader.address(query.value(2).toString());
-        reader.isConnected(true);
-        query.finish();
-
-        // Update BDD (lecteur connecté)
-        query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
-        if(!query.isActive())
-        {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ERROR";
-
-            // TODO : Emettre signal d'erreur
-            // TODO : Stopper proprement
-            query.finish();
-            db.close();
-            db.removeDatabase(nameDatabaseConnexion);
-            _tcpSocket.close();
-            return;
-        }
-
-        query.finish();
-        db.close();
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
-
-
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ok -> sig_isAReader(reader)";
-    qRegisterMetaType<Reader>("Reader");
-    emit sig_isAReader(reader);
-
-    this->connect(&_tcpSocket, SIGNAL(readyRead()), SLOT(readyRead()));
 }
 
 void ClientConnection::readyRead()
