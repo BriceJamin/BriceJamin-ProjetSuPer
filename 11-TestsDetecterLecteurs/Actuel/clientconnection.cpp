@@ -64,6 +64,8 @@ void ClientConnection::filter()
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Error.";
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
+            db.close();
+            db.removeDatabase(nameDatabaseConnexion);
             _tcpSocket.close();
             return;
         }
@@ -77,6 +79,9 @@ void ClientConnection::filter()
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] ERROR";
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
+            query.finish();
+            db.close();
+            db.removeDatabase(nameDatabaseConnexion);
             _tcpSocket.close();
             return;
         }
@@ -87,11 +92,15 @@ void ClientConnection::filter()
         {
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
 
+            // TODO : Stopper proprement
+            query.finish();
+            db.close();
+            db.removeDatabase(nameDatabaseConnexion);
+            _tcpSocket.close();
+
             // Signale la détection d'un intrus
             emit sig_isNotAReader(clientAddress);
 
-            // TODO : Stopper proprement
-            _tcpSocket.close();
             return;
         }
 
@@ -110,6 +119,9 @@ void ClientConnection::filter()
 
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
+            query.finish();
+            db.close();
+            db.removeDatabase(nameDatabaseConnexion);
             _tcpSocket.close();
             return;
         }

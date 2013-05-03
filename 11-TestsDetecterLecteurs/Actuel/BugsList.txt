@@ -30,3 +30,5 @@
 
    Solutions envisagées :
       1. Résoudre le bug n°2 et voir si celui-ci disparait.
+         En cour  de résolution du bug n°2, celui ci a disparu.
+         Résolu.
