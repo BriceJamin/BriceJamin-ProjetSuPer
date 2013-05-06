@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 
+#include "clienttcpwindow.h"
+
 namespace Ui {
 class MainWindow;
 }
