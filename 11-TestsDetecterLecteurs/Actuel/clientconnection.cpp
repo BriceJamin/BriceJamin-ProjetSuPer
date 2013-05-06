@@ -86,11 +86,6 @@ void ClientConnection::filter()
                 if(query.size() == 0)
                 {
                     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
-
-                    // Ne pas le déconnecter ici.
-                    // Mais il faut qu'il puisse être déconnecté tout de même proprement plus tard.
-                    // Y réfléchir.
-
                     // Signale la détection d'un intrus
                     emit sig_isNotAReader(clientAddress);
                 }
