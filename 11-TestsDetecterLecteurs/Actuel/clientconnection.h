@@ -9,19 +9,19 @@ class ClientConnection : public QObject
 {
 Q_OBJECT
 signals:
-    void sig_connected();
+    void sig_connected(); // Inutile car précède dans tous les cas sig_isAReader et sig_isNotAReader. N'est de toute façon jamais appelé car récupération de la socket via setdescripteur : la socket est déjà connectée. A supprimer.
     void sig_isAReader(Reader);
     void sig_isNotAReader(QString);
     void sig_dataRead(QString);
     void sig_disconnected();
-    void sig_closed();
+    void sig_closed(); // Inutile car en cas de rupture de connexion disconnected est aussi émis. A supprimer ?
 
 public:
     explicit ClientConnection(int);
     ~ClientConnection();
 
 public slots:
-    void open();
+    void open(); // Seul server (ou le thread ?) doit y avoir accès, la rendre privée et ajouter server en amis seulement sur cette méthode.
     void close();
 
 private:

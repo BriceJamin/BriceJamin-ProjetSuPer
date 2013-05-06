@@ -11,7 +11,7 @@ ClientConnection::ClientConnection(int socketDescriptor) :
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
     _tcpSocket.setParent(this);
 
-    this->connect(&_tcpSocket, SIGNAL(connected()), SIGNAL(sig_connected()));
+    this->connect(&_tcpSocket, SIGNAL(connected()), SIGNAL(sig_connected())); // Supprimer
     this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
 }
 
@@ -19,6 +19,7 @@ ClientConnection::~ClientConnection()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 }
+
 void ClientConnection::open()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant setSocketDescriptor";
@@ -30,14 +31,14 @@ void ClientConnection::open()
     if(_tcpSocket.isValid())
         filter();
     else
-        delete this;
+        delete this; // Signalement manquant de l'erreur survenue. Ca me parait moche : utiliser plutot deleteLater ?
 }
 
 void ClientConnection::close()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     _tcpSocket.close();
-    emit sig_closed();
+    emit sig_closed(); // Supprimer ?
 }
 
 void ClientConnection::filter()
