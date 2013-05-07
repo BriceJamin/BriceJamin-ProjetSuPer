@@ -72,9 +72,19 @@
       1. [Adopté] Vider régulièrement le buffer pour l'empêcher de grossir.
 
 
-6. La configuration TCP KeepAlive est perdue après un redémarrage.
+6. [Résolu] La configuration TCP KeepAlive est perdue après un redémarrage.
    La commande utilisée pour le vérifier est :
       sysctl net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes
 
    Solutions envisagées :
-      1. Rendre cette permission permanente via les bons fichiers de configuration.
+      1. [Adoptée] Rendre cette permission permanente via la configuration des bons fichiers de configuration.
+         Sous Debian cette configuration s'effectue dans le fichier :
+	    - /etc/sysctl.conf
+	 Voilà les lignes ajoutées :
+	    # Pour projet SuPer
+            # Et détecter les lecteurs débranchés
+	    net.ipv4.tcp_keepalive_time=0
+	    net.ipv4.tcp_keepalive_intvl=15
+	    net.ipv4.tcp_keepalive_probes=3
+	 Après un redémarrage les valeurs sont bien conservées.
+
