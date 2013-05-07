@@ -44,7 +44,7 @@
 	    void QAbstractSocket::setSocketOption ( QAbstractSocket::SocketOption option, const QVariant & value )
 	 Où QAbstractSocket::SocketOption est une enum contenant :
             QAbstractSocket::KeepAliveOption : Set this to 1 to enable the SO_KEEPALIVE socket option
-
+         Après vérification, l'option est bien désactivée.
 
 5. Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
 

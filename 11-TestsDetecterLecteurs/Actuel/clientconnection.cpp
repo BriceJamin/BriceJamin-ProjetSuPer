@@ -11,7 +11,6 @@ ClientConnection::ClientConnection(int socketDescriptor) :
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
     _tcpSocket.setParent(this);
 
-    this->connect(&_tcpSocket, SIGNAL(connected()), SIGNAL(sig_connected())); // Supprimer
     this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
 }
 
@@ -25,6 +24,8 @@ void ClientConnection::open()
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant setSocketDescriptor";
 
     bool ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
+
+    qDebug() << "L'option KeepAliveOption a pour valeur" << _tcpSocket.socketOption(QAbstractSocket::KeepAliveOption).toInt();
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "setSocketDescriptor:" << ok;
 
