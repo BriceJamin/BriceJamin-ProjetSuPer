@@ -1,0 +1,2 @@
+1. Lorsqu'un client d'IP interdite essaie de se connecter, une fenêtre s'affiche pour en informer l'utilisateur.
+   Si ce client floode ses demandes de connexion, pleins de fenêtres s'ouvrent, et le PC ne répond plus.
