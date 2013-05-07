@@ -1,2 +1,5 @@
 1. Lorsqu'un client d'IP interdite essaie de se connecter, une fenêtre s'affiche pour en informer l'utilisateur.
    Si ce client floode ses demandes de connexion, pleins de fenêtres s'ouvrent, et le PC ne répond plus.
+
+2. Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
+   QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
