@@ -1,4 +1,4 @@
-1. Pleins de fenêtres s'ouvrent, et le PC ne répond plus.
+1. [Résolu] Pleins de fenêtres s'ouvrent, et le PC ne répond plus.
    Cause :
       Les lecteurs tentent de se connecter tant qu'ils n'y parviennent pas.
       Un lecteur dont l'ip n'est pas présente dans la bdd est considéré comme un intrus.
@@ -13,7 +13,7 @@
          Solution adoptée.
 
 
-2. Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
+2. [Résolu] Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
       QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
    Cause : Lorsqu'un intrus est détecté dans ClientConnection::filter(), la méthode ne se termine pas proprement.
 
@@ -24,11 +24,10 @@
          - Appelant QSqlQuery::finish() si QSqlQuery::exec() a été appelé.
 
 
-3. Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
+3. [Résolu] Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
       Error in my_thread_global_end(): 13 threads didn't exit
    Cause : Serait la même que pour le bug n°2.
 
    Solutions envisagées :
       1. Résoudre le bug n°2 et voir si celui-ci disparait.
          En cour  de résolution du bug n°2, celui ci a disparu.
-         Résolu.
