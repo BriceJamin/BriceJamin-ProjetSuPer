@@ -31,3 +31,8 @@
    Solutions envisagées :
       1. Résoudre le bug n°2 et voir si celui-ci disparait.
          En cour  de résolution du bug n°2, celui ci a disparu.
+
+4. Un lecteur que l'on débranche physiquement n'est pas détecté.
+
+   Solutions envisagées :
+      1. Chercher dans la doc de Qt ce qui peut détecter ce genre d'évenement.
