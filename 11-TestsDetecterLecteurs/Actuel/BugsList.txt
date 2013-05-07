@@ -36,3 +36,9 @@
 
    Solutions envisagées :
       1. Chercher dans la doc de Qt ce qui peut détecter ce genre d'évenement.
+
+
+5. Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
+
+   Solutions envisagées :
+      1. Vider régulièrement le buffer pour l'empêcher de grossir.
