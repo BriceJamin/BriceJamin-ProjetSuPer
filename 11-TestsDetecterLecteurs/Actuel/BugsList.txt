@@ -70,3 +70,6 @@
 
    Solutions envisagées :
       1. [Adopté] Vider régulièrement le buffer pour l'empêcher de grossir.
+
+
+6. La configuration TCP KeepAlive est perdue après un redémarrage.
