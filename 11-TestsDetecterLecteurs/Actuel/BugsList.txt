@@ -3,3 +3,6 @@
 
 2. Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
    QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
+
+3. Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
+   Error in my_thread_global_end(): 13 threads didn't exit
