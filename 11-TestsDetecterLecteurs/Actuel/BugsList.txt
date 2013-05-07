@@ -73,6 +73,8 @@
 
 
 6. La configuration TCP KeepAlive est perdue après un redémarrage.
+   La commande utilisée pour le vérifier est :
+      sysctl net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes
 
    Solutions envisagées :
       1. Rendre cette permission permanente via les bons fichiers de configuration.
