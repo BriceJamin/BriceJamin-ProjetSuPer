@@ -25,12 +25,16 @@ void ClientConnection::open()
 
     bool ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
 
-    qDebug() << "L'option KeepAliveOption a pour valeur" << _tcpSocket.socketOption(QAbstractSocket::KeepAliveOption).toInt();
+
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "setSocketDescriptor:" << ok;
 
     if(_tcpSocket.isValid())
+    {
+        _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1); // Activation de l'option KeepAlive
+        qDebug() << "L'option KeepAliveOption a pour valeur" << _tcpSocket.socketOption(QAbstractSocket::KeepAliveOption).toInt();
         filter();
+    }
     else
         delete this; // Signalement manquant de l'erreur survenue. Ca me parait moche : utiliser plutot deleteLater ?
 }
