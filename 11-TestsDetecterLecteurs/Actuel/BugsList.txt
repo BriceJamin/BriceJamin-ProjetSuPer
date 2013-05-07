@@ -73,3 +73,6 @@
 
 
 6. La configuration TCP KeepAlive est perdue après un redémarrage.
+
+   Solutions envisagées :
+      1. Rendre cette permission permanente via les bons fichiers de configuration.
