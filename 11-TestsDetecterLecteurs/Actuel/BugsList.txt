@@ -33,11 +33,18 @@
          En cour  de résolution du bug n°2, celui ci a disparu.
 
 4. Un lecteur que l'on débranche physiquement n'est pas détecté.
+   Tous les signaux de QTcpSocket ont été implémenté, ça ne se détecte donc pas par cette classe.
+   Il n'y a plus que la classe QTcpServer concernée par ce genre d'évènement qui serait susceptible de le détecter.
 
    Solutions envisagées :
-      1. Chercher dans la doc de Qt ce qui peut détecter ce genre d'évenement.
-
-
+      1. Réimplémenter tous les signaux de la classe QTcpServer afin de voir si l'un d'entre eux détecte cette déconnexion.
+         Déjà effectué, il n'y en a qu'un : incommingConnection().
+	 Solution rejetée.
+      2. Utiliser l'option TCP keep alive qui envoit régulièrement un paquet pour maintenanir la connexion active, et permettrai cette détection.
+         Cette option est activale dans QT via la classe mère de QTcpSocket :
+	    void QAbstractSocket::setSocketOption ( QAbstractSocket::SocketOption option, const QVariant & value )
+	 Où QAbstractSocket::SocketOption est une enum contenant :
+            QAbstractSocket::KeepAliveOption : Set this to 1 to enable the SO_KEEPALIVE socket option
 5. Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
 
    Solutions envisagées :
