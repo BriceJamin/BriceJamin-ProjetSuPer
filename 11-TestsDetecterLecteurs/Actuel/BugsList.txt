@@ -9,8 +9,7 @@
       1. Fermer les fenêtres à la déconnexion pour libérer les ressources.
          Ne résoud pas le problème du flood de demande de connexion.
          Solution abandonnée.
-      2. Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête et éviter la boucle infinie.
-         Solution adoptée.
+      2. [Adopté] Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête et éviter la boucle infinie.
 
 
 2. [Résolu] Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
@@ -18,7 +17,7 @@
    Cause : Lorsqu'un intrus est détecté dans ClientConnection::filter(), la méthode ne se termine pas proprement.
 
    Solutions envisagées :
-      1. Terminer la méthode ClientConnection::filter() proprement en :
+      1. [Adopté] Terminer la méthode ClientConnection::filter() proprement en :
          - Appelant QSqlDatabase::removeDatabase() si QSqlDatabase::addDatabase() a été appelé.
          - Appelant QSqlDatabase::close() si QSqlDatabase::open() a été appelé.
          - Appelant QSqlQuery::finish() si QSqlQuery::exec() a été appelé.
@@ -29,23 +28,25 @@
    Cause : Serait la même que pour le bug n°2.
 
    Solutions envisagées :
-      1. Résoudre le bug n°2 et voir si celui-ci disparait.
+      1. [Adopté]  Résoudre le bug n°2 et voir si celui-ci disparait.
          En cour  de résolution du bug n°2, celui ci a disparu.
+
 
 4. Un lecteur que l'on débranche physiquement n'est pas détecté.
    Tous les signaux de QTcpSocket ont été implémenté, ça ne se détecte donc pas par cette classe.
    Il n'y a plus que la classe QTcpServer concernée par ce genre d'évènement qui serait susceptible de le détecter.
 
    Solutions envisagées :
-      1. Réimplémenter tous les signaux de la classe QTcpServer afin de voir si l'un d'entre eux détecte cette déconnexion.
+      1. [Rejeté] Réimplémenter tous les signaux de la classe QTcpServer afin de voir si l'un d'entre eux détecte cette déconnexion.
          Déjà effectué, il n'y en a qu'un : incommingConnection().
-	 Solution rejetée.
-      2. Utiliser l'option TCP keep alive qui envoit régulièrement un paquet pour maintenanir la connexion active, et permettrai cette détection.
-         Cette option est activale dans QT via la classe mère de QTcpSocket :
+      2. [Adopté] Utiliser l'option TCP keep alive qui envoit régulièrement un paquet pour maintenanir la connexion active, et permettrai cette détection.
+         Cette option est activable dans QT via la classe mère de QTcpSocket :
 	    void QAbstractSocket::setSocketOption ( QAbstractSocket::SocketOption option, const QVariant & value )
 	 Où QAbstractSocket::SocketOption est une enum contenant :
             QAbstractSocket::KeepAliveOption : Set this to 1 to enable the SO_KEEPALIVE socket option
+
+
 5. Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
 
    Solutions envisagées :
-      1. Vider régulièrement le buffer pour l'empêcher de grossir.
+      1. [Adopté] Vider régulièrement le buffer pour l'empêcher de grossir.
