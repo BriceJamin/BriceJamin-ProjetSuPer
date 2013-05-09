@@ -25,25 +25,24 @@ void ClientConnection::open()
 
     bool ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
 
-
-
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "setSocketDescriptor:" << ok;
 
     if(_tcpSocket.isValid())
     {
-        _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1); // Activation de l'option KeepAlive
+         // Activation de l'option KeepAlive
+        _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
         qDebug() << "L'option KeepAliveOption a pour valeur" << _tcpSocket.socketOption(QAbstractSocket::KeepAliveOption).toInt();
         filter();
     }
     else
-        delete this; // Signalement manquant de l'erreur survenue. Ca me parait moche : utiliser plutot deleteLater ?
+        delete this; // TODO : Signalement manquant de l'erreur survenue ; Utiliser deleteLater à la place de delete this.
 }
 
 void ClientConnection::close()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     _tcpSocket.close();
-    emit sig_closed(); // Supprimer ?
+    emit sig_closed(); // TODO : Supprimer ?
 }
 
 void ClientConnection::filter()
@@ -61,13 +60,15 @@ void ClientConnection::filter()
 
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+        // TODO : Stoquer ces constantes dans des variables initialisées à un endroit plus visible (.h ?)
         db.setHostName("localhost");
+        // TODO : Envoyer un nom invalide à setDatabaseName pour tester le comportement du code
         db.setDatabaseName("bdd_super");
         db.setUserName("user_super");
         db.setPassword("mdp_super");
         if (!db.open())
         {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Error.";
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail.";
             // TODO : Emettre signal d'erreur
             // TODO : Stopper proprement
             _tcpSocket.close();
@@ -77,10 +78,11 @@ void ClientConnection::filter()
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlDatabase::open() : Success.";
 
             QSqlQuery query(db);
+            // TODO : Glisser une erreur de requete pour tester le comportement du code
             query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
             if(!query.isActive())
             {
-                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] ERROR";
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] fail.";
                 // TODO : Emettre signal d'erreur
                 // TODO : Stopper proprement
                 _tcpSocket.close();
@@ -105,6 +107,7 @@ void ClientConnection::filter()
                     query.finish();
 
                     // Update BDD (lecteur connecté)
+                    // TODO : Glisser une erreur de requete pour tester le comportement du code
                     query.exec("UPDATE lecteur SET estConnecte=" + QString::number(reader.isConnected()) + " WHERE ip=\"" + reader.address() + "\";");
                     if(!query.isActive())
                     {
@@ -143,4 +146,3 @@ void ClientConnection::readyRead()
         emit sig_dataRead(data);
     }
 }
-
