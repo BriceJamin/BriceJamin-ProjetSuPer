@@ -47,18 +47,24 @@
          Après vérification, l'option est bien désactivée.
          Après activation, un débranchement du lecteur ne déclenche aucun signal après quelques secondes.
       3. [Adopté] Consulter la configuration du TCP KeepAlive directement sur l'OS.
-         Sur Debian, 3 fichiers permettent de configurer cela :
+         La commande suivante peut permettre de consulter la configuration du TCP keep alive :
+	    sysctl net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes
+	 Elle affiche :
+	    net.ipv4.tcp_keepalive_time = 7200
+	    net.ipv4.tcp_keepalive_intvl = 75
+	    net.ipv4.tcp_keepalive_probes = 9  
+         En consultant les 3 fichiers suivants (sur Debian) :
 	    - /proc/sys/net/ipv4/tcp_keepalive_time
 	       Durée d'attente avant d'envoyer le premier paquet keepalive : 7200 secondes
 	    - /proc/sys/net/ipv4/tcp_keepalive_intvl
 	       Durée d'attente avant un renvoi du paquet keepalive : 75 secondes
 	    - /proc/sys/net/ipv4/tcp_keepalive_probes
 	       Nombre de renvoi sans réponse avant de considérer la cible comme déconnectée : 9
-	 Cette configuration n'est pas adaptée, il faut attendre 7200 secondes avant de commencer à vérifier si le lecteurs est connecté ou non.
+	 Cette configuration n'est pas adaptée, car il faut attendre 7200 secondes avant de commencer à vérifier si le lecteurs est connecté ou non.
      4. [Adopté] Modifier la configuration, avec :
-           - Démarrage du keepalive immédiat (0 seconde d'attente).
+           - Démarrage immédiat du keepalive. (0 seconde d'attente).
 	   - Renvoyer un paquet keepalive toutes les 5 secondes.
-	   - Si pas de réponse au bout de 3 renvois, considérer que la connexion est perdue.
+	   - Si pas de réponses au bout de 3 renvois, considérer que la connexion est perdue.
 	Avec cette config il serait théoriquement possible de détecter un lecteur débranché au bout de :
 	   - 3 x 5 >= 15 secondes dans le meilleur des cas (premier envoi juste après le débranchement du lecteur)
 	   - 4 x 5 <= 20 secondes dans le pire des cas (premier envoi juste avant le débranchement du lecteur).
@@ -84,7 +90,6 @@
 	    # Pour projet SuPer
             # Et détecter les lecteurs débranchés
 	    net.ipv4.tcp_keepalive_time=0
-	    net.ipv4.tcp_keepalive_intvl=15
+	    net.ipv4.tcp_keepalive_intvl=5
 	    net.ipv4.tcp_keepalive_probes=3
 	 Après un redémarrage les valeurs sont bien conservées.
-
