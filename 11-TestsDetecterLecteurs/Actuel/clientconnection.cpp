@@ -23,19 +23,22 @@ void ClientConnection::open()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant setSocketDescriptor";
 
-    bool ok = _tcpSocket.setSocketDescriptor(_socketDescriptor);
-
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "setSocketDescriptor:" << ok;
+    _tcpSocket.setSocketDescriptor(_socketDescriptor);
 
     if(_tcpSocket.isValid())
     {
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "_tcpSocket.isValid()";
+
          // Activation de l'option KeepAlive
         _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
-        qDebug() << "L'option KeepAliveOption a pour valeur" << _tcpSocket.socketOption(QAbstractSocket::KeepAliveOption).toInt();
+
         filter();
     }
     else
-        delete this; // TODO : Signalement manquant de l'erreur survenue ; Utiliser deleteLater à la place de delete this.
+    {
+        emit sig_error(); // TODO : Identifier l'erreur (avec une enum ?)
+        deleteLater();
+    }
 }
 
 void ClientConnection::close()
