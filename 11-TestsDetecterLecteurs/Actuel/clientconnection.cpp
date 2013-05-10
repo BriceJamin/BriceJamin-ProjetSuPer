@@ -36,7 +36,7 @@ void ClientConnection::open()
     }
     else
     {
-        emit sig_error(); // TODO : Identifier l'erreur (avec une enum ?)
+        emit sig_error("socket invalid"); // TODO : Utiliser un enum
         deleteLater();
     }
 }
