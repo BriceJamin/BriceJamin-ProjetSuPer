@@ -18,10 +18,10 @@ signals:
 
 public:
     explicit ClientConnection(int);
-    ~ClientConnection();
+    ~ClientConnection(); // TODO : Personne ne devrait l'employer, le rendre privé ?
 
 public slots:
-    void open(); // TODO : Seul server (ou le thread ?) doit y avoir accès, la rendre privée et ajouter server en amis seulement sur cette méthode.
+    void open(); // TODO : Seul server (ou le thread ?) l'emploient, la rendre privée et ajouter server en amis ?
     void close();
 
 private:
