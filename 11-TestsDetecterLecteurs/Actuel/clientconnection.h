@@ -14,7 +14,7 @@ signals:
     void sig_dataRead(QString);
     void sig_disconnected();
     void sig_closed(); // TODO : Inutile car en cas de rupture de connexion disconnected est aussi émis. A supprimer ?
-    void sig_error();
+    void sig_error(QString);
 
 public:
     explicit ClientConnection(int);
