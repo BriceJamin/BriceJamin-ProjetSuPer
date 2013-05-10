@@ -72,7 +72,7 @@ void ClientConnection::filter()
         if (!db.open())
         {
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail.";
-            // TODO : Emettre signal d'erreur
+            emit sig_error("open database error");
             // TODO : Stopper proprement
             _tcpSocket.close();
         }
@@ -85,8 +85,8 @@ void ClientConnection::filter()
             query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
             if(!query.isActive())
             {
-                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlQuery::exec() [lecteur d'ip" << clientAddress << "existe ?] fail.";
-                // TODO : Emettre signal d'erreur
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlQuery::exec() [reader ip" << clientAddress << "exists ?] fail.";
+                emit sig_error("sql error : [Select reader infos]");
                 // TODO : Stopper proprement
                 _tcpSocket.close();
             }
@@ -116,7 +116,7 @@ void ClientConnection::filter()
                     {
                         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ERROR";
 
-                        // TODO : Emettre signal d'erreur
+                        emit sig_error("sql error : [Update reader.isConnected]");
                         // TODO : Stopper proprement
                     }
                     else
