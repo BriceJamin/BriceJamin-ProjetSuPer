@@ -24,6 +24,7 @@ HEADERS += mainwindow.h \
     tcpsocket.h \
     clientconnection.h \
     reader.h \
-    clientconnectionwindow.h
+    clientconnectionwindow.h \
+    bddConfig.h
 FORMS += mainwindow.ui \
     clientconnectionwindow.ui

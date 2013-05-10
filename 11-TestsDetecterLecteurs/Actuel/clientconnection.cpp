@@ -1,5 +1,6 @@
 #include "clientconnection.h"
 #include "reader.h"
+#include "bddConfig.h"
 #include <QThread>
 #include <QMetaType>
 #include <QSqlDatabase>
@@ -63,12 +64,11 @@ void ClientConnection::filter()
 
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
-        // TODO : Stoquer ces constantes dans des variables initialisées à un endroit plus visible (.h ?)
-        db.setHostName("localhost");
+        db.setHostName(BDD_HOST_NAME);
         // TODO : Envoyer un nom invalide à setDatabaseName pour tester le comportement du code
-        db.setDatabaseName("bdd_super");
-        db.setUserName("user_super");
-        db.setPassword("mdp_super");
+        db.setDatabaseName(BDD_DATABASE_NAME);
+        db.setUserName(BDD_USER_NAME);
+        db.setPassword(BDD_PASSWORD);
         if (!db.open())
         {
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail.";
