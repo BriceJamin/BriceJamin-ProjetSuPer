@@ -152,7 +152,6 @@ void MainWindow::server_newConnection(const ClientConnection& cC)
     ClientConnectionWindow* cCWindow;
     cCWindow = new ClientConnectionWindow(this);
 
-    cCWindow->connect(&cC, SIGNAL(sig_connected()), SLOT(slot_connected()));
     cCWindow->connect(&cC, SIGNAL(sig_isAReader(Reader)), SLOT(slot_isAReader(Reader)));
     cCWindow->connect(&cC, SIGNAL(sig_isNotAReader(QString)), SLOT(slot_isNotAReader(QString)));
     cCWindow->connect(&cC, SIGNAL(sig_dataRead(QString)), SLOT(slot_dataRead(QString)));

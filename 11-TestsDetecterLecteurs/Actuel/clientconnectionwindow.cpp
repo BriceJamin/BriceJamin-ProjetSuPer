@@ -35,12 +35,6 @@ void ClientConnectionWindow::on_closeConnectionPushButton_clicked()
     emit sig_closeConnection();
 }
 
-void ClientConnectionWindow::slot_connected()
-{
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
-    ui->textEdit->append("*** Connected");
-}
-
 void ClientConnectionWindow::slot_isAReader(Reader reader)
 {
     QString string;
