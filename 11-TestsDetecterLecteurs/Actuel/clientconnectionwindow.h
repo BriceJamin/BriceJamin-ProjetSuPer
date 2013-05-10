@@ -25,7 +25,6 @@ private:
 
 private slots:
     void on_closeConnectionPushButton_clicked();
-    void slot_connected();
     void slot_isAReader(Reader);
     void slot_isNotAReader(QString);
     void slot_dataRead(QString);
