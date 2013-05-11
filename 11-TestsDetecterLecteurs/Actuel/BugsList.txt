@@ -96,3 +96,19 @@
 
 
 7. La fermeture de la fenêtre principale ne libère pas la mémoire (ClientConnection, Thread).
+
+   Solutions envisagées :
+      Dans Server :
+      1. Prendre en compte dans Server de la demande de fermeture du programme
+         a. Créer un slot à cet effet
+	 b. Créer une donnée membre permettant de mémoriser la demande
+      2. Suivre le compte des connexions dans Server.
+         a. Créer un compteur de (ConnectionClient | Thread) dans Server ?
+	 b. Incrémenter ce compteur lors d'une (nouvelle connexion | création dun nouveau thread) ?
+	 c. Décrémenter ce compteur lors de la (destruction d'une connexion | destruction d'un thread) ?
+	 d. Emettre un signal si une fermeture du programme a été demandée et que ce compteur est à zéro
+      Dans la fenêtre principale :
+      3. Inhiber la demande de fermeture de la fenêtre principale et la mémoriser
+      4. Informer Server de la volonté de fermer le programme
+      5. Attendre le signal de Server et quitter dès sa réception
+      6. Si l'attente est trop longue, demander à l'utilisateur s'il faut prolonger l'attente ou non.
