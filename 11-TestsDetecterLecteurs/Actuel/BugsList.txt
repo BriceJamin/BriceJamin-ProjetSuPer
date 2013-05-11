@@ -118,3 +118,10 @@
 
    Solutions envisagées :
       1. Lors d'un signalement d'une erreur de connexion à la BDD, arrêter l'écoute du Server.
+
+
+9. Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
+      QSqlError(2003, "QMYSQL: Unable to connect", "Can't connect to MySQL server on 'localhost' (111)")
+   Qui entraine l'erreur suivante à chaque déconnexion d'un client :
+      Error in my_thread_global_end(): 2 threads didn't exit
+   Alors que d'autres clients arrivent à se connecter quasi simultanément.
