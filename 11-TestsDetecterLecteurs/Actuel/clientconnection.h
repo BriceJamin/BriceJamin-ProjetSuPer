@@ -27,6 +27,7 @@ public slots:
 private:
     TcpSocket _tcpSocket;
     int _socketDescriptor;
+    bool _opened;
 
 private slots:
     void filter();

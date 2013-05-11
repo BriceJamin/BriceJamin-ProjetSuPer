@@ -7,7 +7,7 @@
 #include <QSqlQuery>
 
 ClientConnection::ClientConnection(int socketDescriptor) :
-    QObject(), _socketDescriptor(socketDescriptor)
+    QObject(), _socketDescriptor(socketDescriptor), _opened(false)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
     _tcpSocket.setParent(this);
@@ -22,23 +22,28 @@ ClientConnection::~ClientConnection()
 
 void ClientConnection::open()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant setSocketDescriptor";
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
-    _tcpSocket.setSocketDescriptor(_socketDescriptor);
-
-    if(_tcpSocket.isValid())
+    if(! _opened)
     {
-        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "_tcpSocket.isValid()";
+        _tcpSocket.setSocketDescriptor(_socketDescriptor);
 
-         // Activation de l'option KeepAlive
-        _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        if(_tcpSocket.isValid())
+        {
+            _opened = true;
 
-        filter();
-    }
-    else
-    {
-        emit sig_error("socket invalid"); // TODO : Utiliser un enum
-        deleteLater();
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "_tcpSocket.isValid()," << _opened;
+
+             // Activation de l'option KeepAlive
+            _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+
+            filter();
+        }
+        else
+        {
+            emit sig_error("socket invalid"); // TODO : Utiliser un enum ?
+            deleteLater();
+        }
     }
 }
 
