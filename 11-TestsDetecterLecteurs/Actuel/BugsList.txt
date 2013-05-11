@@ -93,3 +93,6 @@
 	    net.ipv4.tcp_keepalive_intvl=5
 	    net.ipv4.tcp_keepalive_probes=3
 	 Après un redémarrage les valeurs sont bien conservées.
+
+
+7. La fermeture de la fenêtre principale ne libère pas la mémoire (ClientConnection, Thread).
