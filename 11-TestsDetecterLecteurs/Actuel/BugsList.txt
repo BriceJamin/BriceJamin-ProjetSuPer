@@ -125,3 +125,14 @@
    Qui entraine l'erreur suivante à chaque déconnexion d'un client :
       Error in my_thread_global_end(): 2 threads didn't exit
    Alors que d'autres clients arrivent à se connecter quasi simultanément.
+
+   Solutions envisagées :
+      1. Augmenter le délai de connexion qui est à 0 par défaut.
+         Pour cela tenter de modifier les options de connection via la méthode :
+	    void QSqlDatabase::setConnectOptions ( const QString & options = QString() )
+	 L'option applicable à MySql qu'il faut changer est :
+	    MYSQL_OPT_RECONNECT
+	 Car dans la doc de MySql :
+	    http://dev.mysql.com/doc/refman/5.5/en/mysql-command-options.html#option_mysql_connect_timeout
+	 Il est expliqué que le rôle de l'option connect_timeout est :
+	    The number of seconds before connection timeout. (Default value is 0.)
