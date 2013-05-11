@@ -115,3 +115,6 @@
 
 
 8. Une erreur de connexion à la BDD provoque un flood de connexion déconexion.
+
+   Solutions envisagées :
+      1. Lors d'un signalement d'une erreur de connexion à la BDD, arrêter l'écoute du Server.
