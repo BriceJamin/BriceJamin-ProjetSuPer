@@ -5,6 +5,7 @@
 #include <QMetaType>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 
 ClientConnection::ClientConnection(int socketDescriptor) :
     QObject(), _socketDescriptor(socketDescriptor), _opened(false)
@@ -69,6 +70,7 @@ void ClientConnection::filter()
 
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+        db.setConnectOptions("MYSQL_OPT_RECONNECT=5");
         db.setHostName(BDD_HOST_NAME);
         // TODO : Envoyer un nom invalide à setDatabaseName pour tester le comportement du code
         db.setDatabaseName(BDD_DATABASE_NAME);
@@ -76,7 +78,7 @@ void ClientConnection::filter()
         db.setPassword(BDD_PASSWORD);
         if (!db.open())
         {
-            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail.";
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail :" << db.lastError();
             emit sig_error("open database error");
             // TODO : Stopper proprement
             _tcpSocket.close();
