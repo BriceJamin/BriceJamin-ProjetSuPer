@@ -16,6 +16,11 @@ TcpSocket::TcpSocket(QObject *parent) :
     connect(this, SIGNAL(bytesWritten(qint64)), this, SLOT(slot_bytesWritten(qint64)));
 }
 
+TcpSocket::~TcpSocket()
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+}
+
 void TcpSocket::slot_connected()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;

@@ -10,6 +10,7 @@ class TcpSocket : public QTcpSocket
 Q_OBJECT
 public:
     explicit TcpSocket(QObject *parent = 0);
+    ~TcpSocket();
 
 private slots:
     void slot_connected(); // When the connection has been established

@@ -130,8 +130,9 @@ void Server::incomingConnection(int socketDescriptor)
     ClientConnection* clientConnection;
 
     // Instanciations
-    thread = new Thread();
+    thread = new Thread(this);
     clientConnection = new ClientConnection(socketDescriptor);
+    clientConnection->setParent(thread);
 
     // MoveToThread
     clientConnection->moveToThread(thread);
@@ -141,17 +142,20 @@ void Server::incomingConnection(int socketDescriptor)
     // Thread::start() déclenche clientConnection::open()
     clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
 
-    // clientConnection::sig_closed() déclenchera sa mort
-    clientConnection->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(deleteLater()));
+    // Le signal closeAllClientConnection déclenchera tous les ClientConnection::close()
+    //clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
 
-    // Le signal closeAllClientConnection stoppera (et tuera) tous les clientConnection
-    clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
+    // clientConnection::sig_disconnected() déclenchera sa propre destruction
+    //clientConnection->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(deleteLater()));
+
+    // L'arrêt du thread entrainera la destruction de clientConnection
+    //clientConnection->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
 
     // La destruction de clientConnection déclenchera l'arrêt du thread
-    thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(quit()));
+    //thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(quit()));
 
-    // L'arrêt du thread déclenchera sa mort
-    thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
+    // L'arrêt du thread déclenchera sa propre destruction
+    //thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
     // TODO : Traiter de la même façon le signal terminated ?
 
     emit sig_newConnection(*clientConnection);

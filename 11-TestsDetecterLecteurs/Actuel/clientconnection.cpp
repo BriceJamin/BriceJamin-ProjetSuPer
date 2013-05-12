@@ -19,6 +19,7 @@ ClientConnection::ClientConnection(int socketDescriptor) :
 ClientConnection::~ClientConnection()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _tcpSocket.close();
 }
 
 void ClientConnection::open()

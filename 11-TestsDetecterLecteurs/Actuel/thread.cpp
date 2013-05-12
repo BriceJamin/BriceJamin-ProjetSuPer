@@ -15,10 +15,13 @@ Thread::Thread(QObject *parent) :
 
 Thread::~Thread()
 {
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
-    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "avant quit()";
-    //quit();
-    //qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit()";
+    // Demander l'arrêt de l'exécution du thread associé à ce QThread
+    quit();
+
+    // Attendre tant qu'il n'est pas arrêté
+    bool finished = wait();
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit(), wait() return" << finished;
 }
 
 void Thread::run()
