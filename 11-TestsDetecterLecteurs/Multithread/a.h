@@ -1,20 +1,15 @@
 #ifndef A_H
 #define A_H
-
 #include <QObject>
-
 class A : public QObject
 {
 Q_OBJECT
-signals:
-    void finished();
 public:
-    explicit A(QObject *parent = 0);
+    A();
     ~A();
-
 public slots:
-    void run();
-    void stop();
+    void start();
+private:
+    int* _i;
 };
-
 #endif // A_H
