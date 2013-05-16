@@ -7,8 +7,8 @@ ClientTcp::ClientTcp(QObject *parent) :
     QTcpSocket(parent)
 {
     _clientNumber = ++_clientsNumber;
-    _address = "127.0.0." + QString::number(_clientNumber);
-    setPeerAddress(_address);
+    //_address = "127.0.0." + QString::number(_clientNumber);
+    //setPeerAddress(_address);
 }
 
 ClientTcp::~ClientTcp()

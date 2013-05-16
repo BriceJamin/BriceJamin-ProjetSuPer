@@ -28,7 +28,7 @@
     <item row="5" column="0" colspan="2">
      <widget class="QLineEdit" name="serverPortLineEdit">
       <property name="text">
-       <string>43210</string>
+       <string>2222</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -45,7 +45,7 @@
     <item row="1" column="0">
      <widget class="QLineEdit" name="serverAddressLineEdit">
       <property name="text">
-       <string>127.0.0.254</string>
+       <string>192.168.60.100</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
