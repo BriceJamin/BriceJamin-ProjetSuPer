@@ -132,7 +132,7 @@
    Alors que d'autres clients arrivent à se connecter quasi simultanément.
 
    Solutions envisagées :
-      1. Augmenter le délai de connexion qui est à 0 par défaut.
+      1. [Adopté] Augmenter le délai de connexion qui est à 0 par défaut.
          Pour cela tenter de modifier les options de connection via la méthode :
 	    void QSqlDatabase::setConnectOptions ( const QString & options = QString() )
 	 L'option applicable à MySql qu'il faut changer est :
