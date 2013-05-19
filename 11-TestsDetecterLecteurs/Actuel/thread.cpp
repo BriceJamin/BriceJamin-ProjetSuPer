@@ -19,9 +19,9 @@ Thread::~Thread()
     quit();
 
     // Attendre tant qu'il n'est pas arrêté
-    bool finished = wait();
+    wait();
 
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit(), wait() return" << finished;
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "apres quit(), wait().";
 }
 
 void Thread::run()
