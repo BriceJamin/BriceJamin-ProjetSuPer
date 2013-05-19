@@ -7,6 +7,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+QMutex ClientConnection::_mutex;
+
 ClientConnection::ClientConnection(int socketDescriptor) :
     QObject(), _socketDescriptor(socketDescriptor), _opened(false)
 {
@@ -59,6 +61,7 @@ void ClientConnection::close()
 
 void ClientConnection::filter()
 {
+    _mutex.lock();
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
     // Récupère l'adresse du client.
@@ -145,6 +148,7 @@ void ClientConnection::filter()
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
+    _mutex.unlock();
 }
 
 void ClientConnection::readyRead()

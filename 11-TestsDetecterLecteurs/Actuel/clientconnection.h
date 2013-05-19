@@ -2,6 +2,7 @@
 #define CLIENTCONNECTION_H
 
 #include <QObject>
+#include <QMutex>
 #include "tcpsocket.h"
 #include "reader.h"
 
@@ -28,6 +29,7 @@ private:
     TcpSocket _tcpSocket;
     int _socketDescriptor;
     bool _opened;
+    static QMutex _mutex;
 
 private slots:
     void filter();

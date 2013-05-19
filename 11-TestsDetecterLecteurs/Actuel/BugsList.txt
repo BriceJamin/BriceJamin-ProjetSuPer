@@ -125,7 +125,7 @@
       1. Lors d'un signalement d'une erreur de connexion à la BDD, arrêter l'écoute du Server.
 
 
-9. Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
+9. [Résolu] Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
       QSqlError(2003, "QMYSQL: Unable to connect", "Can't connect to MySQL server on 'localhost' (111)")
    Qui entraine l'erreur suivante à chaque déconnexion d'un client :
       Error in my_thread_global_end(): 2 threads didn't exit
@@ -145,10 +145,10 @@
 	    setConnectOptions("MYSQL_OPT_RECONNECT=5");
          Elle n'apparait maintenant plus que lors d'1 lancement sur 5 environ.
 
-      2. Utiliser des mutex autour de ce qui est en rapport avec la Bdd pour éviter qu'ils n'exécutent des choses en même temps, ce qui éliminerait l'origine du problème.
+      2. [Adopté] Utiliser des mutex autour de ce qui est en rapport avec la Bdd pour éviter qu'ils n'exécutent des choses en même temps, ce qui éliminerait l'origine du problème.
          Pour cela ajouter à la classe ClientConnection un attribut QMutex partagé entre tous les objets (static)
 	 Ajouter un lock dans les méthodes de ClientConnection avant chaque l'utilisation de la Bdd.
 	 Ajouter un unlock dans les méthodes de ClientConnection avant après l'utilisation de la Bdd.
-
+         Après ces ajouts l'erreur n'apparait plus du tout.
 
 10. Une déconnexion d'un client ne met pas à jour la BDD.
