@@ -3,6 +3,8 @@
 
 #include "tcpserver.h"
 #include "clientconnection.h"
+#include "thread.h"
+#include <QList>
 
 class Server : public QObject
 {
@@ -52,6 +54,9 @@ private:
     QHostAddress _address;
     quint16 _port;
     TcpServer _server;
+
+    QList<ClientConnection*> _clientConnectionList;
+    QList<Thread*> _threadList;
 };
 
 QDebug operator<<(QDebug, const Server::SwitchOnState&);

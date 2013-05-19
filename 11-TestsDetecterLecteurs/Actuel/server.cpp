@@ -109,6 +109,20 @@ Server::Server(QString address, QString port, QObject *parent) :
 Server::~Server()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+
+    while (!_threadList.isEmpty())
+    {
+        Thread* thread = _threadList.takeFirst();
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete"  << thread;
+        delete thread;
+    }
+
+    while (!_clientConnectionList.isEmpty())
+    {
+        ClientConnection* clientConnection = _clientConnectionList.takeFirst();
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete"  << clientConnection;
+        delete clientConnection;
+    }
 }
 
 QString Server::address()
@@ -130,9 +144,12 @@ void Server::incomingConnection(int socketDescriptor)
     ClientConnection* clientConnection;
 
     // Instanciations
-    thread = new Thread(this);
+    thread = new Thread;
     clientConnection = new ClientConnection(socketDescriptor);
-    clientConnection->setParent(thread);
+
+
+    _threadList.append(thread);
+    _clientConnectionList.append(clientConnection);
 
     // MoveToThread
     clientConnection->moveToThread(thread);
