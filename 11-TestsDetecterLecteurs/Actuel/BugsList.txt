@@ -125,7 +125,7 @@
       1. Lors d'un signalement d'une erreur de connexion à la BDD, arrêter l'écoute du Server.
 
 
-9. [Résolu] Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
+9. Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
       QSqlError(2003, "QMYSQL: Unable to connect", "Can't connect to MySQL server on 'localhost' (111)")
    Qui entraine l'erreur suivante à chaque déconnexion d'un client :
       Error in my_thread_global_end(): 2 threads didn't exit
@@ -141,7 +141,8 @@
 	    http://dev.mysql.com/doc/refman/5.5/en/mysql-command-options.html#option_mysql_connect_timeout
 	 Il est expliqué que le rôle de l'option connect_timeout est :
 	    The number of seconds before connection timeout. (Default value is 0.)
-	 En augmentant le délai à 5 secondes, l'erreur ne survient plus :
+	 En augmentant le délai à 5 secondes, l'erreur ne survient presque plus :
 	    setConnectOptions("MYSQL_OPT_RECONNECT=5");
+         Elle n'apparait maintenant plus que lors d'1 lancement sur 5 environ.
 
 10. Une déconnexion d'un client ne met pas à jour la BDD.
