@@ -143,3 +143,5 @@
 	    The number of seconds before connection timeout. (Default value is 0.)
 	 En augmentant le délai à 5 secondes, l'erreur ne survient plus :
 	    setConnectOptions("MYSQL_OPT_RECONNECT=5");
+
+10. Une déconnexion d'un client ne met pas à jour la BDD.
