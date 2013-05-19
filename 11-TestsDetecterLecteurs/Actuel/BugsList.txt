@@ -113,6 +113,10 @@
 	      4. Informer Server de la volonté de fermer le programme
 	      5. Attendre le signal de Server et quitter dès sa réception
 	      6. Si l'attente est trop longue, demander à l'utilisateur s'il faut prolonger l'attente ou non.
+
+      2. Mémoriser les adresses de ce qu'il faut désallouer (Thread et ClientConnection) dans des données membres
+         Désalouer la mémoire dans le constructeur via delete en faisant bien attention de désalouer Thread en premier (voir 11. Multithread/ pour consulter les tests effectués)
+	 Comme il n'est pas possible de savoir combien il y aura de Thread ou de Client connection, les stocker dans une liste.
 8. Une erreur de connexion à la BDD provoque un flood de connexion déconexion.
 
    Solutions envisagées :
