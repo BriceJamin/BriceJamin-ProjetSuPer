@@ -14,6 +14,7 @@ ClientConnection::ClientConnection(int socketDescriptor) :
     _tcpSocket.setParent(this);
 
     this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
+    // TODO this->connect(&_tcpSocket, SIGNAL(disconnected()), SLOT(deleteLater()));
 }
 
 ClientConnection::~ClientConnection()
