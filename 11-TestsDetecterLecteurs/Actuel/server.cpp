@@ -142,7 +142,7 @@ void Server::incomingConnection(int socketDescriptor)
     // Thread::start() déclenche clientConnection::open()
     clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
 
-    // Le signal closeAllClientConnection déclenchera tous les ClientConnection::close()
+    // Le signal closeAllClientConnection déclenchera le close() de TOUS les clientconnection
     //clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
 
     // clientConnection::sig_disconnected() déclenchera sa propre destruction
@@ -154,9 +154,15 @@ void Server::incomingConnection(int socketDescriptor)
     // La destruction de clientConnection déclenchera l'arrêt du thread
     //thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(quit()));
 
+    // L'arrêt du thread déclenche la destruction de clientconnection
+    //clientConnection->connect(thread, )
+
     // L'arrêt du thread déclenchera sa propre destruction
     //thread->connect(thread, SIGNAL(finished()), SLOT(deleteLater()));
     // TODO : Traiter de la même façon le signal terminated ?
+
+    // La destruction de clientConnection déclenchera la destruction du thread
+    //thread->connect(clientConnection, SIGNAL(destroyed()), SLOT(deleteLater()));
 
     emit sig_newConnection(*clientConnection);
 
