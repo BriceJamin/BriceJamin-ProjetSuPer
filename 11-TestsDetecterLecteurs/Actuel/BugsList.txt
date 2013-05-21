@@ -151,4 +151,5 @@
 	 Ajouter un unlock dans les méthodes de ClientConnection avant après l'utilisation de la Bdd.
          Après ces ajouts l'erreur n'apparait plus du tout.
 
+      3. Restreindre la portion de code entre chaque lock - unlock de mutex au strict minimum.
 10. Une déconnexion d'un client ne met pas à jour la BDD.
