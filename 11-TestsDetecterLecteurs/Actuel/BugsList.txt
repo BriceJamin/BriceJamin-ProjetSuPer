@@ -151,5 +151,10 @@
 	 Ajouter un unlock dans les méthodes de ClientConnection avant après l'utilisation de la Bdd.
          Après ces ajouts l'erreur n'apparait plus du tout.
 
-      3. Restreindre la portion de code entre chaque lock - unlock de mutex au strict minimum.
+      3. [Adopté] Restreindre la portion de code entre chaque lock - unlock de mutex au strict minimum.
+         Pour cela chercher la ou les lignes responsables du bug.
+         Le ligne responsable du bug est la suivante :
+            QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+         En déplaçant le lock juste avant et le unlock juste après, l'erreur pas.
+         Résolu.
 10. Une déconnexion d'un client ne met pas à jour la BDD.

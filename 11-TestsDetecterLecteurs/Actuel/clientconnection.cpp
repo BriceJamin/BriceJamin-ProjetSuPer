@@ -61,7 +61,6 @@ void ClientConnection::close()
 
 void ClientConnection::filter()
 {
-    _mutex.lock();
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
     // Récupère l'adresse du client.
@@ -74,13 +73,17 @@ void ClientConnection::filter()
     Reader reader;
 
     {
+        _mutex.lock();
         QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+        _mutex.unlock();
+
         db.setConnectOptions("MYSQL_OPT_RECONNECT=5");
         db.setHostName(BDD_HOST_NAME);
         // TODO : Envoyer un nom invalide à setDatabaseName pour tester le comportement du code
         db.setDatabaseName(BDD_DATABASE_NAME);
         db.setUserName(BDD_USER_NAME);
         db.setPassword(BDD_PASSWORD);
+
         if (!db.open())
         {
             qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail :" << db.lastError();
@@ -148,7 +151,6 @@ void ClientConnection::filter()
     }
 
     QSqlDatabase::removeDatabase(nameDatabaseConnexion);
-    _mutex.unlock();
 }
 
 void ClientConnection::readyRead()
