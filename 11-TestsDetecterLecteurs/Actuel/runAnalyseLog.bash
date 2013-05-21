@@ -39,3 +39,6 @@ echo ">>>>"
 
 # N'affiche que les debugs du thread numéro 304068900
 #grep 3040689008 test.txt 
+
+# Affiche tous les bugs non résolu présents dans BugList.txt
+#grep '^[0-9]\+\. [^\[]' BugsList.txt
