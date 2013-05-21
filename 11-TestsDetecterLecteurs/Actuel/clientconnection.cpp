@@ -114,6 +114,10 @@ void ClientConnection::filter()
                     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
                     // Signale la détection d'un intrus
                     emit sig_isNotAReader(clientAddress);
+
+                    // Le laisser connecté (évite le flood de connexion déconnexion)
+                    // Mais lui vider son buffer dès qu'il se remplit
+                    this->connect(&_tcpSocket, SIGNAL(readyRead()), SLOT(bleedBuffer()));
                 }
                 else
                 {
@@ -140,8 +144,11 @@ void ClientConnection::filter()
 
                         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ok -> sig_isAReader(reader)";
                         qRegisterMetaType<Reader>("Reader");
+
+                        // Signale la détection d'un lecteur
                         emit sig_isAReader(reader);
 
+                        // Traiter les trames reçues
                         this->connect(&_tcpSocket, SIGNAL(readyRead()), SLOT(readyRead()));
                     }
                 }
@@ -163,4 +170,10 @@ void ClientConnection::readyRead()
         QString data = _tcpSocket.readAll();
         emit sig_dataRead(data);
     }
+}
+
+void ClientConnection::bleedBuffer()
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    _tcpSocket.readAll();
 }

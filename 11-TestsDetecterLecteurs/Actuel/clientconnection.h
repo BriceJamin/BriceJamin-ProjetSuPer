@@ -34,6 +34,7 @@ private:
 private slots:
     void filter();
     void readyRead();
+    void bleedBuffer();
 };
 
 #endif // CLIENTCONNECTION_H

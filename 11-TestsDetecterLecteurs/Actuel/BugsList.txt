@@ -72,11 +72,13 @@
 	   sysctl -w net.ipv4.tcp_keepalive_time=0 net.ipv4.tcp_keepalive_intvl=5 net.ipv4.tcp_keepalive_probes=3
 	Et un test avec activation logicielle du keepalive (voir la solution proposée n°3), la déconnexion du lecteur est bien détectée.
 
-5. Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
+5. [Résolu] Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
 
    Solutions envisagées :
       1. [Adopté] Vider régulièrement le buffer pour l'empêcher de grossir.
-
+         Lors de la détection d'un lecteur, le signal QTcpSocket::readyRead() est connecté à clientConnection::readyRead()
+	 Faire de même lors de la détection d'un intrus, mais en connectant QTcpSocket::readyRead() à un nouveau slot clientConnection::bleedMemory() qui se charge de purger le buffer en faisant appel à readAll().
+	 Fonctionne très bien après test.
 
 6. [Résolu] La configuration TCP KeepAlive est perdue après un redémarrage.
    La commande utilisée pour le vérifier est :
