@@ -157,7 +157,7 @@ void ClientConnection::filter()
         }
     }
 
-    QSqlDatabase::removeDatabase(nameDatabaseConnexion);
+    QSqlDatabase::removeDatabase(nameDatabaseConnexion); // TODO : Semble inutile, db est détruit au bloc précédent. L'enlever et réindenter ?
 }
 
 void ClientConnection::readyRead()
