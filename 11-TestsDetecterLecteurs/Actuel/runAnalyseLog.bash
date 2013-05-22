@@ -15,6 +15,14 @@ nbThreads=`cut -d ' '  -f 1 $tempFile | grep -e "^[0-9]" | sort -ur | wc -l`
 echo "<<<< "`date`
 echo "Lignes affichées : $nbDebugLines"
 echo "Errors ou warnings : $nbErrorLines"
+
+iErrorLine=0
+while read errorLine
+do
+	iErrorLine=$((iErrorLine+1))
+        echo " $iErrorLine. $errorLine"
+done < <( grep -i "^[^0-9]" $tempFile )
+
 echo "Debugs d'erreur : $nbDebugErrorLines"
 echo "Threads : $nbThreads"
 echo "Nombre de lignes par thread :"
