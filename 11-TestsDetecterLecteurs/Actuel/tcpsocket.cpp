@@ -9,6 +9,7 @@ TcpSocket::TcpSocket(QObject *parent) :
     connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slot_error(QAbstractSocket::SocketError)));
     connect(this, SIGNAL(hostFound()), this, SLOT(slot_hostFound()));
     connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(slot_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
+    qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");
     connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(slot_stateChanged(QAbstractSocket::SocketState)));
     connect(this, SIGNAL(aboutToClose()), this, SLOT(slot_aboutToClose()));
     connect(this, SIGNAL(readyRead()), this, SLOT(slot_readyRead()));

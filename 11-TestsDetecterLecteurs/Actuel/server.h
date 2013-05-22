@@ -23,6 +23,7 @@ public:
 signals:
     void sig_switchedOn();
     void sig_switchedOff();
+    void sig_switchedOffOnError(QString);
 
     void sig_portChanged(quint16);
     void sig_addressChanged(QString);
@@ -46,6 +47,7 @@ public:
 
 private slots:
     void incomingConnection(int socketDescriptor);
+    void clientConnection_error(QString);
 
 private:
     bool _setAddress(QString);
@@ -57,6 +59,8 @@ private:
 
     QList<ClientConnection*> _clientConnectionList;
     QList<Thread*> _threadList;
+
+    bool _clientConnectionErrorReceived;
 };
 
 QDebug operator<<(QDebug, const Server::SwitchOnState&);

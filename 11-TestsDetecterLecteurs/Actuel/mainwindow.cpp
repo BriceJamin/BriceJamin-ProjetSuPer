@@ -4,6 +4,7 @@
 #include "clientconnectionwindow.h"
 #include "ui_clientconnectionwindow.h"
 #include "clientconnection.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(Server* server, QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +26,7 @@ MainWindow::MainWindow(Server* server, QWidget *parent) :
 
     connect(server, SIGNAL(sig_switchedOn()), this, SLOT(server_switchedOn()));
     connect(server, SIGNAL(sig_switchedOff()), this, SLOT(server_switchedOff()));
+    connect(server, SIGNAL(sig_switchedOffOnError(QString)), this, SLOT(server_switchedOffOnError(QString)));
 
     connect(server, SIGNAL(sig_addressChanged(QString)), this, SLOT(server_addressChanged(QString)));
     connect(server, SIGNAL(sig_portChanged(quint16)), this, SLOT(server_portChanged(quint16)));
@@ -120,6 +122,12 @@ void MainWindow::server_switchedOff()
     ui->portSpinBox->setEnabled(true);
 
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "design";
+}
+
+void MainWindow::server_switchedOffOnError(QString error)
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
+    QMessageBox::critical(this, "Erreur", "L'erreur suivante est survenue :\n" + error + ".\n L'écoute du serveur a été stoppée.");
 }
 
 void MainWindow::server_addressChanged(QString address)

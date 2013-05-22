@@ -121,10 +121,13 @@
 	 Comme il n'est pas possible de savoir combien il y aura de Thread ou de Client connection, les stocker dans une liste.
 
 
-8. Une erreur de connexion à la BDD provoque un flood de connexion déconexion.
+8. [Résolu] Une erreur de connexion à la BDD provoque un flood de connexion déconexion.
 
    Solutions envisagées :
-      1. Lors d'un signalement d'une erreur de connexion à la BDD, arrêter l'écoute du Server.
+      1. [Adopté] Lors d'un signalement d'une erreur de connexion à la BDD par ClientConnection, arrêter l'écoute du Server.
+         Pour cela, dans ClientConnection, envoyer un signal d'erreur représentant la rencontre d'une erreur ou Sql.
+         Server doit alors attraper ce signal, à sa reception arrêter l'écoute, et signaler l'arrêt de l'écoute sur la survenue d'une erreur.
+         Le même problème peut aussi survenir en cas d'erreur Tcp (récupération de socket), alors Server arrête l'écoute dès la survenue d'une erreur quelqu'elle soit.
 
 
 9. [Résolu] Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :

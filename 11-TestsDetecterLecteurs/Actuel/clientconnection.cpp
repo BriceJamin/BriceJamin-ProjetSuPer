@@ -16,7 +16,7 @@ ClientConnection::ClientConnection(int socketDescriptor) :
     _tcpSocket.setParent(this);
 
     this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
-    // TODO this->connect(&_tcpSocket, SIGNAL(disconnected()), SLOT(deleteLater()));
+    // TODO this->connect(&_tcpSocket, SIGNAL(disconnected()), SLOT(deleteLater())); // C'est Server qui crée des ClientConnection, c'est donc Server qui décide quand les détruire
 }
 
 ClientConnection::~ClientConnection()
@@ -47,7 +47,7 @@ void ClientConnection::open()
         else
         {
             emit sig_error("socket invalid"); // TODO : Utiliser un enum ?
-            deleteLater();
+            // deleteLater(); C'est Server qui crée des ClientConnection, c'est donc Server qui décide quand les détruire
         }
     }
 }

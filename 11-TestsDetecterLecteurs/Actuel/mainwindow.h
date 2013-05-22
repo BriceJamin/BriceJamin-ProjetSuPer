@@ -28,6 +28,7 @@ private slots:
 
     void server_switchedOn();
     void server_switchedOff();
+    void server_switchedOffOnError(QString);
     void server_addressChanged(QString);
     void server_portChanged(quint16);
     void server_newConnection(const ClientConnection&);

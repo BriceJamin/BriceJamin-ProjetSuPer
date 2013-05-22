@@ -17,6 +17,7 @@ Server::SwitchOnState Server::switchOn()
 
             _setAddress(_server.serverAddress().toString());
             _setPort(QString::number(_server.serverPort()));
+            _clientConnectionErrorReceived = false;
 
             emit sig_switchedOn();
         }
@@ -102,6 +103,7 @@ Server::Server(QString address, QString port, QObject *parent) :
 
     _setAddress(address);
     _setPort(port);
+    _clientConnectionErrorReceived = false;
 
     this->connect(&_server, SIGNAL(sig_incomingConnection(int)), SLOT(incomingConnection(int)));
 }
@@ -147,7 +149,6 @@ void Server::incomingConnection(int socketDescriptor)
     thread = new Thread;
     clientConnection = new ClientConnection(socketDescriptor);
 
-
     _threadList.append(thread);
     _clientConnectionList.append(clientConnection);
 
@@ -158,6 +159,9 @@ void Server::incomingConnection(int socketDescriptor)
 
     // Thread::start() déclenche clientConnection::open()
     clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
+
+    // Une erreur SQL entrainera l'arrêt de l'écoute du serveur
+    this->connect(clientConnection, SIGNAL(sig_error(QString)), SLOT(clientConnection_error(QString)));
 
     // Le signal closeAllClientConnection déclenchera le close() de TOUS les clientconnection
     //clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
@@ -223,6 +227,18 @@ bool Server::_setPort(QString port)
         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << port << "ignore (mauvais format ou meme valeur), return" << ok;
 
     return ok;
+}
+
+void Server::clientConnection_error(QString error)
+{
+    if(!_clientConnectionErrorReceived)
+    {
+
+        _clientConnectionErrorReceived = true;
+        // Stopper l'écoute pour eviter un flood de demande de connexion en cas d'erreur répétitive
+        switchOff();
+        emit sig_switchedOffOnError(error);
+    }
 }
 
 QDebug operator<<(QDebug debug, const Server::SwitchOnState& state)
