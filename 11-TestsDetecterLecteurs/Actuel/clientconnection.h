@@ -30,11 +30,14 @@ private:
     int _socketDescriptor;
     bool _opened;
     static QMutex _mutex;
+    bool _isAReader;
+    QString _clientAddress;
 
 private slots:
-    void filter();
+    void filter(); // N'est connecté nulle part. N'a pas à être un slot ?
     void readyRead();
     void bleedBuffer();
+    void on_disconnected();
 };
 
 #endif // CLIENTCONNECTION_H

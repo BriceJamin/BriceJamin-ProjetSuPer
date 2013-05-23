@@ -10,19 +10,21 @@
 QMutex ClientConnection::_mutex;
 
 ClientConnection::ClientConnection(int socketDescriptor) :
-    QObject(), _socketDescriptor(socketDescriptor), _opened(false)
+    QObject(), _socketDescriptor(socketDescriptor), _opened(false), _isAReader(false), _clientAddress("")
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
     _tcpSocket.setParent(this);
 
     this->connect(&_tcpSocket, SIGNAL(disconnected()), SIGNAL(sig_disconnected()));
     // TODO this->connect(&_tcpSocket, SIGNAL(disconnected()), SLOT(deleteLater())); // C'est Server qui crée des ClientConnection, c'est donc Server qui décide quand les détruire
+    this->connect(&_tcpSocket, SIGNAL(disconnected()), SLOT(on_disconnected()));
 }
 
 ClientConnection::~ClientConnection()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     _tcpSocket.close();
+    on_disconnected();
 }
 
 void ClientConnection::open()
@@ -41,6 +43,10 @@ void ClientConnection::open()
 
              // Activation de l'option KeepAlive
             _tcpSocket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+
+            // Récupère l'adresse du client.
+            _clientAddress = _tcpSocket.peerAddress().toString();
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "clientAddress:" << _clientAddress;
 
             filter();
         }
@@ -62,11 +68,6 @@ void ClientConnection::close()
 void ClientConnection::filter()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
-
-    // Récupère l'adresse du client.
-    QString clientAddress = _tcpSocket.peerAddress().toString();
-
-    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "clientAddress:" << clientAddress;
 
     // Demande à la BDD si c'est un lecteur.
     QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
@@ -97,10 +98,10 @@ void ClientConnection::filter()
 
             QSqlQuery query(db);
             // TODO : Glisser une erreur de requete pour tester le comportement du code
-            query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + clientAddress + "\"");
+            query.exec("SELECT  num_lecteur, num_lieu, ip, estConnecte FROM lecteur WHERE ip like \"" + _clientAddress + "\"");
             if(!query.isActive())
             {
-                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlQuery::exec() [reader ip" << clientAddress << "exists ?] fail.";
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlQuery::exec() [reader ip" << _clientAddress << "exists ?] fail.";
                 emit sig_error("sql error : [Select reader infos]");
                 // TODO : Stopper proprement
                 _tcpSocket.close();
@@ -113,7 +114,7 @@ void ClientConnection::filter()
                 {
                     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "query.size() == 0 -> isNotAReader";
                     // Signale la détection d'un intrus
-                    emit sig_isNotAReader(clientAddress);
+                    emit sig_isNotAReader(_clientAddress);
 
                     // Le laisser connecté (évite le flood de connexion déconnexion)
                     // Mais lui vider son buffer dès qu'il se remplit
@@ -134,12 +135,12 @@ void ClientConnection::filter()
                     if(!query.isActive())
                     {
                         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ERROR";
-
                         emit sig_error("sql error : [Update reader.isConnected]");
                         // TODO : Stopper proprement
                     }
                     else
                     {
+                        _isAReader = true;
                         query.finish();
 
                         qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.estConnecte] ok -> sig_isAReader(reader)";
@@ -176,4 +177,49 @@ void ClientConnection::bleedBuffer()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
     _tcpSocket.readAll();
+}
+
+void ClientConnection::on_disconnected()
+{
+    if (!_isAReader)
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "isNotAReader";
+    else
+    {
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "isAReader";
+        QString nameDatabaseConnexion = QString::number(QThread::currentThreadId());
+        {
+            _mutex.lock();
+            QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+            _mutex.unlock();
+
+            db.setHostName(BDD_HOST_NAME);
+            db.setDatabaseName(BDD_DATABASE_NAME);
+            db.setUserName(BDD_USER_NAME);
+            db.setPassword(BDD_PASSWORD);
+
+            if (!db.open())
+            {
+                qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "Error : QSqlDatabase::open() fail :" << db.lastError();
+                emit sig_error("open database error");
+            }
+            else
+            {
+                QSqlQuery query(db);
+                query.exec("UPDATE lecteur SET estConnecte=" + QString::number(false) + " WHERE ip=\"" + _clientAddress + "\";");
+                if(!query.isActive())
+                {
+                    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update reader.isDisconnected] ERROR";
+                    emit sig_error("sql error : [Update reader.isDisconnected]");
+                }
+                else
+                {
+                    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "QSqlQuery::exec() [Update lecteur.isDisconnected] ok";
+                    query.finish();
+                }
+                db.close();
+            }
+        }
+
+        QSqlDatabase::removeDatabase(nameDatabaseConnexion); // TODO : Semble inutile, db est détruit au bloc précédent. L'enlever et réindenter ?
+    }
 }

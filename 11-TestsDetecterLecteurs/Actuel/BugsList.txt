@@ -164,8 +164,8 @@
          Résolu.
 
 
-10. Une déconnexion d'un client ne met pas à jour la BDD.
+10. [Résolu] Une déconnexion d'un client ne met pas à jour la BDD.
 
     Solutions envisagées :
-       1. Lors de la réception du signal de déconnexion, dans ClientConnection, se connecter à la Bdd et la mettre à jour.
+       1. [Adopté] Lors de la réception du signal de déconnexion, dans ClientConnection, se connecter à la Bdd et la mettre à jour.
        2. Réutiliser les variables créées dans ClientConnection::filter() pour mettre à jour la Bdd.
