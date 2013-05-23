@@ -4,7 +4,7 @@
 #include "tcpserver.h"
 #include "clientconnection.h"
 #include "thread.h"
-#include <QList>
+#include <QMap>
 
 class Server : public QObject
 {
@@ -48,6 +48,7 @@ public:
 private slots:
     void incomingConnection(int socketDescriptor);
     void clientConnection_error(QString);
+    void clientConnection_disconnected();
 
 private:
     bool _setAddress(QString);
@@ -57,9 +58,7 @@ private:
     quint16 _port;
     TcpServer _server;
 
-    QList<ClientConnection*> _clientConnectionList;
-    QList<Thread*> _threadList;
-
+    QMap<ClientConnection*, Thread*> _clientThreadMap;
     bool _clientConnectionErrorReceived;
 };
 

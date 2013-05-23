@@ -112,19 +112,28 @@ Server::~Server()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
-    while (!_threadList.isEmpty())
-    {
-        Thread* thread = _threadList.takeFirst();
-        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete"  << thread;
-        delete thread;
-    }
+    int i = 0;
+    int count = _clientThreadMap.count();
+    QMapIterator<ClientConnection*, Thread*> mapIterator(_clientThreadMap);
 
-    while (!_clientConnectionList.isEmpty())
+    while (mapIterator.hasNext())
     {
-        ClientConnection* clientConnection = _clientConnectionList.takeFirst();
-        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete"  << clientConnection;
+        i++;
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << i << "/"  << count;
+        mapIterator.next();
+
+        ClientConnection* clientConnection = mapIterator.key();
+        Thread* thread = mapIterator.value();
+
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete" << thread;
+        delete thread;
+
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete" << clientConnection;
         delete clientConnection;
     }
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "map.clear";
+    _clientThreadMap.clear();
 }
 
 QString Server::address()
@@ -141,27 +150,27 @@ void Server::incomingConnection(int socketDescriptor)
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << socketDescriptor;
 
-    // Declarations
-    Thread* thread;
     ClientConnection* clientConnection;
-
-    // Instanciations
-    thread = new Thread;
     clientConnection = new ClientConnection(socketDescriptor);
 
-    _threadList.append(thread);
-    _clientConnectionList.append(clientConnection);
+    Thread* thread;
+    thread = new Thread;
+
+    _clientThreadMap.insert(clientConnection, thread);
 
     // MoveToThread
     clientConnection->moveToThread(thread);
 
     // Connexions
 
-    // Thread::start() déclenche clientConnection::open()
+    // Thread::started() déclenche clientConnection::open()
     clientConnection->connect(thread, SIGNAL(started()), SLOT(open()));
 
-    // Une erreur SQL entrainera l'arrêt de l'écoute du serveur
+    // Une erreur chez un client entrainera l'arrêt de l'écoute du serveur
     this->connect(clientConnection, SIGNAL(sig_error(QString)), SLOT(clientConnection_error(QString)));
+
+    // Le serveur surveille les déconnexions de ses clients pour libérer les ressources
+    this->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(clientConnection_disconnected()));
 
     // Le signal closeAllClientConnection déclenchera le close() de TOUS les clientconnection
     //clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
@@ -231,14 +240,32 @@ bool Server::_setPort(QString port)
 
 void Server::clientConnection_error(QString error)
 {
+    // Seulement si aucune erreur n'a été rencontrée depuis le dernier SwitchOn
     if(!_clientConnectionErrorReceived)
     {
+        qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
 
+        // Mémoriser le passage ici pour ne pas avoir à le faire plusieurs fois
         _clientConnectionErrorReceived = true;
+
         // Stopper l'écoute pour eviter un flood de demande de connexion en cas d'erreur répétitive
         switchOff();
+
+        // Et le signaler
         emit sig_switchedOffOnError(error);
     }
+}
+
+void Server::clientConnection_disconnected()
+{
+    ClientConnection* sender = (ClientConnection*) QObject::sender();
+    Thread* thread = _clientThreadMap.take(sender);
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete" << thread;
+    delete thread;
+
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "delete" << sender;
+    delete sender;
 }
 
 QDebug operator<<(QDebug debug, const Server::SwitchOnState& state)
