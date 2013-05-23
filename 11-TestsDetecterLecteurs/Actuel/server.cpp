@@ -173,7 +173,7 @@ void Server::incomingConnection(int socketDescriptor)
     this->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(clientConnection_disconnected()));
 
     // Le signal closeAllClientConnection déclenchera le close() de TOUS les clientconnection
-    //clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
+    clientConnection->connect(this, SIGNAL(sig_closeAllClientConnection()), SLOT(close()));
 
     // clientConnection::sig_disconnected() déclenchera sa propre destruction
     //clientConnection->connect(clientConnection, SIGNAL(sig_disconnected()), SLOT(deleteLater()));
