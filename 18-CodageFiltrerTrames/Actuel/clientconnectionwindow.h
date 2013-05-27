@@ -28,6 +28,7 @@ private slots:
     void slot_isAReader(Reader);
     void slot_isNotAReader(QString);
     void slot_dataRead(QString);
+    void slot_frameReceived(QString);
     void slot_disconnected();
     void slot_closed();
     void slot_destroyed();

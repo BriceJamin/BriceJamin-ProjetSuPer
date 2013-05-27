@@ -13,6 +13,7 @@ signals:
     void sig_isAReader(Reader);
     void sig_isNotAReader(QString);
     void sig_dataRead(QString);
+    void sig_frameReceived(QString);
     void sig_disconnected();
     void sig_closed(); // TODO : Inutile car en cas de rupture de connexion disconnected est aussi émis. A supprimer ?
     void sig_error(QString);

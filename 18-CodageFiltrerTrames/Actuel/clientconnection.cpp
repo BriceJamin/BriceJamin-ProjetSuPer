@@ -6,6 +6,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QRegExp>
 
 QMutex ClientConnection::_mutex;
 
@@ -166,10 +167,22 @@ void ClientConnection::readyRead()
     qint64 nbBytesAvailable = _tcpSocket.bytesAvailable();
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "bytesAvailable:" << nbBytesAvailable;
 
+    QString data = _tcpSocket.readAll();
+    emit sig_dataRead(data);
+
     if(nbBytesAvailable >= 12)
     {
-        QString data = _tcpSocket.readAll();
-        emit sig_dataRead(data);
+        QString regexFrameString("\\[[0-9A-F]{10}\\]");
+        QRegExp lastValidFrameRegex("(" + regexFrameString + ")(?!" + regexFrameString + ")");
+
+        if(data.contains(lastValidFrameRegex))
+        {
+            QString lastValidFrameString = lastValidFrameRegex.cap(1);
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "lastValidFrameString :" << lastValidFrameString;
+            emit sig_frameReceived(lastValidFrameString);
+        }
+        else
+            qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "! data.contains(lastFrameRegex)";
     }
 }
 

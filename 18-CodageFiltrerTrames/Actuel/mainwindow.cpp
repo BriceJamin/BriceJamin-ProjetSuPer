@@ -165,6 +165,7 @@ void MainWindow::server_newConnection(const ClientConnection& cC)
     cCWindow->connect(&cC, SIGNAL(sig_isAReader(Reader)), SLOT(slot_isAReader(Reader)));
     cCWindow->connect(&cC, SIGNAL(sig_isNotAReader(QString)), SLOT(slot_isNotAReader(QString)));
     cCWindow->connect(&cC, SIGNAL(sig_dataRead(QString)), SLOT(slot_dataRead(QString)));
+    cCWindow->connect(&cC, SIGNAL(sig_frameReceived(QString)), SLOT(slot_frameReceived(QString)));
     cCWindow->connect(&cC, SIGNAL(sig_disconnected()), SLOT(slot_disconnected()));
     cCWindow->connect(&cC, SIGNAL(sig_closed()), SLOT(slot_closed()));
     cCWindow->connect(&cC, SIGNAL(destroyed()), SLOT(slot_destroyed()));

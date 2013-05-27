@@ -65,6 +65,12 @@ void ClientConnectionWindow::slot_dataRead(QString data)
     ui->textEdit->append("Data received:" + data);
 }
 
+void ClientConnectionWindow::slot_frameReceived(QString frame)
+{
+    qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << frame;
+    ui->textEdit->append("Frame received:" + frame);
+}
+
 void ClientConnectionWindow::slot_disconnected()
 {
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO;
