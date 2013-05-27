@@ -166,7 +166,7 @@ void ClientConnection::readyRead()
     qint64 nbBytesAvailable = _tcpSocket.bytesAvailable();
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "bytesAvailable:" << nbBytesAvailable;
 
-    if(nbBytesAvailable > 0)
+    if(nbBytesAvailable >= 12)
     {
         QString data = _tcpSocket.readAll();
         emit sig_dataRead(data);
