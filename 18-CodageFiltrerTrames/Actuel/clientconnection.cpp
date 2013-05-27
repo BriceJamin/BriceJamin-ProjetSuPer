@@ -167,11 +167,11 @@ void ClientConnection::readyRead()
     qint64 nbBytesAvailable = _tcpSocket.bytesAvailable();
     qDebug() << QThread::currentThreadId() << Q_FUNC_INFO << "bytesAvailable:" << nbBytesAvailable;
 
-    QString data = _tcpSocket.readAll();
-    emit sig_dataRead(data);
-
     if(nbBytesAvailable >= 12)
     {
+        QString data = _tcpSocket.readAll();
+        emit sig_dataRead(data);
+
         QString regexFrameString("\\[[0-9A-F]{10}\\]");
         QRegExp lastValidFrameRegex("(" + regexFrameString + ")(?!" + regexFrameString + ")");
 
