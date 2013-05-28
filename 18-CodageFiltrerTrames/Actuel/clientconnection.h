@@ -33,6 +33,7 @@ private:
     static QMutex _mutex;
     bool _isAReader;
     QString _clientAddress;
+    QString _bufferDataRead;
 
 private slots:
     void filter(); // N'est connecté nulle part. N'a pas à être un slot ?
