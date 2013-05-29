@@ -13,3 +13,9 @@ ui_*
 
 # Ignorer les fichiers configs de Dolphin
 .directory
+
+# Ignorer les sauvegardes de Vim
+*.swp
+
+# Ignorer ce dossier qui a son propre dépôt
+12-TestsIntegrationVisualiserDetecter/
