@@ -195,7 +195,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../ressources/poubelle.png</pixmap>
+       <pixmap>ressources/poubelle.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_36">
@@ -211,7 +211,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../ressources/historique.png</pixmap>
+       <pixmap>ressources/historique.png</pixmap>
       </property>
      </widget>
      <widget class="Line" name="line">
@@ -525,7 +525,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btAnnulerLier">
@@ -542,7 +542,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_8">
@@ -558,7 +558,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/new.png</pixmap>
+         <pixmap>ressources/new.png</pixmap>
         </property>
        </widget>
        <widget class="QLabel" name="label_39">
@@ -860,7 +860,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btOkLierMod">
@@ -877,7 +877,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_31">
@@ -906,7 +906,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/modifier.png</pixmap>
+         <pixmap>ressources/modifier.png</pixmap>
         </property>
        </widget>
        <widget class="QLabel" name="label_42">
@@ -1082,7 +1082,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btOkDelier">
@@ -1099,7 +1099,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_32">
@@ -1148,7 +1148,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/supprimer.png</pixmap>
+         <pixmap>ressources/supprimer.png</pixmap>
         </property>
        </widget>
        <widget class="QLabel" name="label_41">
@@ -1260,7 +1260,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_114">
@@ -1388,7 +1388,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_118">
@@ -1475,7 +1475,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/new.png</pixmap>
+         <pixmap>ressources/new.png</pixmap>
         </property>
        </widget>
        <widget class="QLabel" name="label_126">
@@ -1623,7 +1623,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Mettre sous la forme ../ressources/nom_de_image.jpeg</string>
+         <string>Mettre sous la forme ressources/nom_de_image.jpeg</string>
         </property>
        </widget>
       </widget>
@@ -1652,7 +1652,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/modifier.png</pixmap>
+         <pixmap>ressources/modifier.png</pixmap>
         </property>
        </widget>
        <widget class="QLabel" name="label_112">
@@ -1692,7 +1692,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_131">
@@ -1899,7 +1899,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Mettre sous la forme ../ressources/nom_de_image.jpeg</string>
+         <string>Mettre sous la forme ressources/nom_de_image.jpeg</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lEditPersDateFinMod">
@@ -1936,7 +1936,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_139">
@@ -1998,7 +1998,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/supprimer.png</pixmap>
+         <pixmap>ressources/supprimer.png</pixmap>
         </property>
        </widget>
        <widget class="QComboBox" name="cBoxPersExisteSupp">
@@ -2025,7 +2025,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_143">
@@ -2075,7 +2075,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QTextEdit" name="txtInfoPers">
@@ -2136,7 +2136,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_141">
@@ -2278,7 +2278,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QLineEdit" name="lEditPersNumAdd_2">
@@ -2371,7 +2371,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../ressources/new.png</pixmap>
+         <pixmap>ressources/new.png</pixmap>
         </property>
        </widget>
       </widget>
@@ -2424,7 +2424,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btAnnulerPersMod_2">
@@ -2441,7 +2441,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+          <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
         </property>
        </widget>
        <widget class="QLabel" name="label_149">
@@ -2708,7 +2708,7 @@
           </font>
          </property>
          <property name="text">
-          <string>exemple :      ../ressources/vue_generale.jpg</string>
+          <string>exemple :      ressources/vue_generale.jpg</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_50">
@@ -2744,7 +2744,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkVueAdd">
@@ -2761,7 +2761,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_63">
@@ -2777,7 +2777,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/new.png</pixmap>
+          <pixmap>ressources/new.png</pixmap>
          </property>
         </widget>
        </widget>
@@ -2916,7 +2916,7 @@
           </font>
          </property>
          <property name="text">
-          <string>exemple :      ../ressources/vue_generale.jpg</string>
+          <string>exemple :      ressources/vue_generale.jpg</string>
          </property>
         </widget>
         <widget class="QTextEdit" name="txtVueImageMod">
@@ -2975,7 +2975,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkVueMod">
@@ -2992,7 +2992,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_64">
@@ -3008,7 +3008,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/modifier.png</pixmap>
+          <pixmap>ressources/modifier.png</pixmap>
          </property>
         </widget>
         <widget class="QLineEdit" name="lEditNumVueMod">
@@ -3192,7 +3192,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOKVueSupp">
@@ -3209,7 +3209,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_65">
@@ -3225,7 +3225,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/supprimer.png</pixmap>
+          <pixmap>ressources/supprimer.png</pixmap>
          </property>
         </widget>
         <widget class="QLineEdit" name="lEditNumVueSupp">
@@ -3451,7 +3451,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkLieuAdd">
@@ -3468,7 +3468,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_74">
@@ -3484,7 +3484,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/new.png</pixmap>
+          <pixmap>ressources/new.png</pixmap>
          </property>
         </widget>
        </widget>
@@ -3612,7 +3612,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkLieuMod">
@@ -3629,7 +3629,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_83">
@@ -3645,7 +3645,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/modifier.png</pixmap>
+          <pixmap>ressources/modifier.png</pixmap>
          </property>
         </widget>
         <widget class="QLineEdit" name="lEditLieuNumMod">
@@ -3777,7 +3777,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkLieuSupp">
@@ -3794,7 +3794,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_88">
@@ -3810,7 +3810,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/supprimer.png</pixmap>
+          <pixmap>ressources/supprimer.png</pixmap>
          </property>
         </widget>
         <widget class="QLineEdit" name="lEditLieuNumSupp">
@@ -4079,7 +4079,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkZoneAdd">
@@ -4096,7 +4096,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_92">
@@ -4112,7 +4112,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/new.png</pixmap>
+          <pixmap>ressources/new.png</pixmap>
          </property>
         </widget>
         <widget class="QLabel" name="label_107">
@@ -4312,7 +4312,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkZoneMod">
@@ -4329,7 +4329,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_101">
@@ -4345,7 +4345,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/modifier.png</pixmap>
+          <pixmap>ressources/modifier.png</pixmap>
          </property>
         </widget>
         <widget class="QLabel" name="label_108">
@@ -4565,7 +4565,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkZoneSupp">
@@ -4582,7 +4582,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_106">
@@ -4598,7 +4598,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/supprimer.png</pixmap>
+          <pixmap>ressources/supprimer.png</pixmap>
          </property>
         </widget>
         <widget class="QTextEdit" name="txtZoneLieuSupp">
@@ -5066,7 +5066,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkPosition">
@@ -5083,7 +5083,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_187">
@@ -5099,7 +5099,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/new.png</pixmap>
+          <pixmap>ressources/new.png</pixmap>
          </property>
         </widget>
         <widget class="QLabel" name="label_188">
@@ -5115,7 +5115,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/modifier.png</pixmap>
+          <pixmap>ressources/modifier.png</pixmap>
          </property>
         </widget>
        </widget>
@@ -5554,7 +5554,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/ButtonClose.png</normaloff>../ressources/ButtonClose.png</iconset>
+           <normaloff>ressources/ButtonClose.png</normaloff>ressources/ButtonClose.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="btOkPositionSupp">
@@ -5571,7 +5571,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+           <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
          </property>
         </widget>
         <widget class="QLabel" name="label_189">
@@ -5587,7 +5587,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../ressources/supprimer.png</pixmap>
+          <pixmap>ressources/supprimer.png</pixmap>
          </property>
         </widget>
        </widget>
@@ -5710,7 +5710,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../ressources/bt_ok.png</normaloff>../ressources/bt_ok.png</iconset>
+          <normaloff>ressources/bt_ok.png</normaloff>ressources/bt_ok.png</iconset>
         </property>
        </widget>
       </widget>
