@@ -17,5 +17,8 @@ ui_*
 # Ignorer les sauvegardes de Vim
 *.swp
 
+# Ignorer les sauvegardes de KWrite
+*~
+
 # Ignorer ce dossier qui a son propre dépôt
 12-TestsIntegrationVisualiserDetecter/
