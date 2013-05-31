@@ -1,0 +1,48 @@
+Le numéro de la personne :
+Dans la Bdd la table personne est :
+ num_pers     INT UNSIGNED    NOT NULL,
+ nom          VARCHAR(50)     NOT NULL,
+ prenom       VARCHAR(50)     NOT NULL,
+ societe      VARCHAR(50)     NOT NULL,
+ dateDebut    DATE            NOT NULL,
+ dateFin      DATE            NOT NULL,
+ photo        VARCHAR(100)    NOT NULL,
+
+A chaque ajout d'une personne, le numéro de personne devrait être incrémenté, pour éviter à l'utilisateur de choisir lui même le numéro et de générer des erreurs (duplication du numéro alors que c'est une primary key).
+Pour cela il faudrait qu'il soit en auto increment :
+ num_pers     INT UNSIGNED    NOT NULL AUTO_INCREMENT
+Est-ce que ça pose un problème si on précise quand même le numéro ? Après test, non.
+
+Les dates de début et fin d'intrervention :
+Comment sélectionner une date avec Qt ?
+QDateEdit est une zone d'edition qui permet l'affichage d'une popup calendrier permettant de sélectionner la date si son attribut calendarPopup : bool est à true.
+Le format de la date affichée par défaut est : JJ Mmm AAAA.
+
+Comment récupérer la date saisie ?
+Grâce à l'accesseur QDate date () const de QDateEdit.
+
+La date saisie doit être insérée dans la Bdd, dans un champs de type DATE.
+ Quelles sont les spécificitées du type DATE ? 
+ DATE est prévu pour stocker une date avec l'année, le mois, le jour.
+ Il est au format AAAA-MM-JJ et l'intervalle de validité va de '1000-01-01' à '9999-12-31'.
+ Les deux formats (saisi et celui de date) ne correspondent pas.
+Comment  obtenir le bon format pour DATE à partir de avec Qt ?
+ La date saisie récupérée est un QDate.
+ QDate possède une méthode QString QDate::toString ( Qt::DateFormat format = Qt::TextDate ) const.
+ DateFormat est un enum, il faut choisir Qt::ISODate pour obtenir "ISO 8601 extended format: either YYYY-MM-DD".
+
+Il faudrait que par défaut la date d'aujourdhui soit sélectionnée pour dateDebut et dateFin.
+ Comment obtenir la date d'aujourd'hui avec Qt ?
+ Avec QDate QDate::currentDate () qui retourne la date courante du système.
+
+Il faut interdire une date de fin située plus tôt dans le temps que dateDebut.
+ Pour cela un test doit être effectué lors de la modification de chacun des champs : dateDebut <= dateFin.
+ Si le test est négatif, autoriser la modif mais modifier l'autre champs de manière à ce qu'il ait la même valeur que l'autre.
+ Comment comparer des dates en Qt ?
+ La comparaison de QDate est possible grâce à a surcharge de l'opérateur bool QDate::operator<= ( const QDate & d ) const.
+ Pour éviter à l'utilisateur un refus des modifications pour un tel test négatif, il faudrait que lors de l'édition d'une dateDebut > dateFin, dateFin prenne la valeur de dateDebut.
+ Idem lors de l'édition d'une dateFin < dateDebut, dateDebut doit prendre la valeur de dateFin.
+ Une contrainte sur les champs dateDebut et dateFin dans la Bdd pourrait être ajoutée pour garantir son intégrité.
+ Mais la contrainte sur deux colonnes ne semble pas marcher...
+
+
