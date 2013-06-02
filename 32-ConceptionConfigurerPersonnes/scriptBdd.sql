@@ -235,7 +235,7 @@ INSERT INTO personne (num_pers, nom, prenom, societe, dateDebut, dateFin, photo)
 
 
 INSERT INTO badge (num_badge, num_pers, dateMiseEnService, dateChangePile, estActif) VALUES
-  (01, 1, 0, 0, 0);
+  (1, 1, 0, 0, 0);
 
 INSERT INTO zone (num_zone, num_lieu,sensMonter, legende) VALUES
   (1, 1, 2, "reception uniquement lecteur 1"),
