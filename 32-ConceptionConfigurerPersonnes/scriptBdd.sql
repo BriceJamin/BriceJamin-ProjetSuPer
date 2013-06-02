@@ -80,11 +80,32 @@ CREATE TABLE personne
    dateDebut	DATE		DEFAULT NULL,
    dateFin	DATE		DEFAULT NULL,
    photo	VARCHAR(100)	DEFAULT NULL,
-   constraint dateDebut_is_smaller_than_dateFin check(  ( TO_DAYS(dateDebut) - TO_DAYS(dateFin) ) <= 0 ),
+   constraint dateDebut_is_smaller_than_dateFin check(dateDebut <= dateFin),
 
    PRIMARY KEY (num_pers)
 
 )ENGINE=INNODB;
+
+delimiter //
+CREATE TRIGGER personne_before_insert BEFORE INSERT ON personne
+FOR EACH ROW
+BEGIN
+	IF NEW.dateDebut >= NEW.dateFin THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.dateDebut <= personne.dateFin) failed.';
+	END IF;
+END;
+
+CREATE TRIGGER personne_before_update BEFORE UPDATE ON personne
+FOR EACH ROW
+BEGIN
+	IF NEW.dateDebut >= NEW.dateFin THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.dateDebut <= personne.dateFin) failed.';
+	END IF;
+END//
+delimiter ;
+
 
 #DROP TABLE IF EXISTS badge;
 
@@ -100,6 +121,27 @@ CREATE TABLE badge
    PRIMARY KEY (num_badge, num_pers)
 
 )ENGINE=INNODB;
+
+delimiter //
+CREATE TRIGGER badge_before_insert BEFORE INSERT ON badge
+FOR EACH ROW
+BEGIN
+	IF NEW.estActif NOT BETWEEN 0 and 1 THEN
+		SIGNAL SQLSTATE '23000'
+		SET MESSAGE_TEXT = 'Error: check constraint (badge.estActif BETWEEN 0 and 1) failed.';
+	END IF;
+END;
+
+CREATE TRIGGER badge_before_update BEFORE UPDATE ON badge
+FOR EACH ROW
+BEGIN
+	IF NEW.estActif NOT BETWEEN 0 and 1 THEN
+		SIGNAL SQLSTATE '23000'
+		SET MESSAGE_TEXT = 'Error: check constraint (badge.estActif BETWEEN 0 and 1) failed.';
+	END IF;
+END//
+delimiter ;
+
 
 #DROP TABLE IF EXISTS zone;
 
@@ -137,8 +179,6 @@ CREATE TABLE super
    PRIMARY KEY (config)
 
 )ENGINE=INNODB;
-
-
 
 -- Interdiction de supprimer un lieu auquel une zone est liée
 -- Un lieu modifié est aussi modifié dans zone
@@ -190,9 +230,8 @@ INSERT INTO representationLieuSurVue (num_vue, num_lieu, num_zone, x, y, xA, yA,
   (2, 3, 3, 60, 28, 40, 190, 41, 10);
 
 INSERT INTO personne (num_pers, nom, prenom, societe, dateDebut, dateFin, photo) VALUES
-  (1, 'scherer', 'nicolas', 'LAB', '0000-00-00', '0000-00-00', 'ressources/supprimer.png'),
-  (2, 'dada', 'dodo', 'didi', '2013-05-01', '2013-05-29', ''),
-  (3, 'nom', 'prenom', NULL, NULL, NULL, NULL);
+  (1, 'prenom1', 'nom1', NULL, NULL, NULL, NULL),
+  (2, 'prenom2', 'nom2', NULL, '2013-05-01', '2013-05-29', NULL);
 
 
 INSERT INTO badge (num_badge, num_pers, dateMiseEnService, dateChangePile, estActif) VALUES
