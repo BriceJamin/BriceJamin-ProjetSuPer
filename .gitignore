@@ -20,5 +20,8 @@ ui_*
 # Ignorer les sauvegardes de KWrite
 *~
 
+# Ignorer les fichiers ressources objet
+qrc_*
+
 # Ignorer ce dossier qui a son propre dépôt
 12-TestsIntegrationVisualiserDetecter/
