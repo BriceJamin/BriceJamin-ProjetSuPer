@@ -2,6 +2,8 @@
 -- Utilisateur de la bdd : user_super
 -- Mot de passe de l'utilisateur : mdp_super
 
+GRANT ALL PRIVILEGES ON `bdd_super`.* TO 'user_super' IDENTIFIED BY 'mdp_super' WITH GRANT OPTION;
+
 DROP DATABASE IF EXISTS bdd_super;
 
 CREATE DATABASE IF NOT EXISTS bdd_super CHARACTER SET 'utf8' COLLATE utf8_bin;
@@ -65,6 +67,7 @@ CREATE TABLE representationLieuSurVue
    PRIMARY KEY (num_vue, num_lieu, num_zone)
 
 )ENGINE=INNODB;
+
 
 #DROP TABLE IF EXISTS personne;
 
