@@ -1,17 +1,42 @@
-Le numéro de la personne :
-Dans la Bdd la table personne est :
- num_pers     INT UNSIGNED    NOT NULL,
- nom          VARCHAR(50)     NOT NULL,
- prenom       VARCHAR(50)     NOT NULL,
- societe      VARCHAR(50)     NOT NULL,
- dateDebut    DATE            NOT NULL,
- dateFin      DATE            NOT NULL,
- photo        VARCHAR(100)    NOT NULL,
+Une personne est caractérisée par un nom et un prénom.
+Elle peut appartenir à une société.
+Elle peut avoir une durée d'intervention qui commence et se termine à des dates précises.
+Elle peut être représentée par une photo.
 
-A chaque ajout d'une personne, le numéro de personne devrait être incrémenté, pour éviter à l'utilisateur de choisir lui même le numéro et de générer des erreurs (duplication du numéro alors que c'est une primary key).
-Pour cela il faudrait qu'il soit en auto increment :
- num_pers     INT UNSIGNED    NOT NULL AUTO_INCREMENT
-Est-ce que ça pose un problème si on précise quand même le numéro ? Après test, non.
+Ce qui peut se représenter dans une base de données MySQL par les champs suivants :
+- nom, de type texte, donc un VARCHAR de taille 50 devrait être suffisant
+- prenom, idem
+- societe, idem
+- dateDebut, qui représente une date composée d'un jour, d'un mois et d'une année, donc un DATE
+- dateFin, idem
+
+Afin de garantir l'absence de doublons dans la base de donnée, un tuple représentant une personne doit être unique.
+Il parait donc judicieux d'interdire les personnes ayant le même nom et le même prénom.
+C'est pour cela que la table personne doit avoir pour clef primaire le couple de champs nom et prenom.
+Et pour référencer ses tuples dans d'autre tables, il faut un champs de valeur unique représentant un seul tuple.
+C'est pourquoi il faut lui ajouter un champs représentant un identifiant : num_pers.
+C'est un nombre positif unique, donc il est de type INT UNSIGNED et a la contrainte UNIQUE.
+Pour éviter d'avoir à réfléchir à la valeur qu'il faut lui donner, il est préférable de demander au SGBD de gérer sa numérotaion avec le mot clef AUTO_INCREMENT.
+
+Pour assurer l'intégrité des dates, c'est à dire assurer que dateDebut se situe dans le temps avant dateFin, il faut utiliser les contraintes CHECK.
+Malheureusement MySQL ne les prend pas en compte.
+Mais il existe une solution qui consiste à utiliser des Triggers, portions de codes exécutées lors de l'ajout ou de modification d'un tuple personne, et de vérifier si les champs sont valides.
+S'il ne le sont pas, il suffit alors d'emmettre une erreur avec un message similaire à celui généré par la contrainte CHECK.
+
+Exemple d'un trigger refusant l'insertion d'un tuple personne si les dates ne sont pas valides :
+delimiter //
+CREATE TRIGGER personne_before_insert BEFORE INSERT ON personne
+FOR EACH ROW
+BEGIN
+        IF NEW.dateDebut >= NEW.dateFin THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.dateDebut <= personne.dateFin) failed.';
+	END IF;
+END//
+delimiter ;
+
+Pour permettre à l'utilisateur de créer une nouvelle personne, il faut lui proposer des champs à remplir, pour récupérer leurs valeurs et les insérer dans la bdd.
+
 
 Les dates de début et fin d'intrervention :
 Comment sélectionner une date avec Qt ?
@@ -22,7 +47,7 @@ Comment récupérer la date saisie ?
 Grâce à l'accesseur QDate date () const de QDateEdit.
 
 La date saisie doit être insérée dans la Bdd, dans un champs de type DATE.
- Quelles sont les spécificitées du type DATE ? 
+ Quelles sont les spécificitées du type DATE ?
  DATE est prévu pour stocker une date avec l'année, le mois, le jour.
  Il est au format AAAA-MM-JJ et l'intervalle de validité va de '1000-01-01' à '9999-12-31'.
  Les deux formats (saisi et celui de date) ne correspondent pas.
