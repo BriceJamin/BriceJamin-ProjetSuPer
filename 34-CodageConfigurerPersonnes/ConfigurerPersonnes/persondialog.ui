@@ -6,37 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>200</height>
+    <width>624</width>
+    <height>178</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Saisir les informations d'une personne</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>160</y>
-     <width>181</width>
-     <height>32</height>
+     <x>520</x>
+     <y>50</y>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Vertical</enum>
    </property>
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
    <property name="centerButtons">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>116</x>
-     <y>10</y>
+     <x>126</x>
+     <y>30</y>
      <width>95</width>
      <height>44</height>
     </rect>
@@ -61,10 +61,10 @@
   <widget class="QLabel" name="photoLabel">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>30</y>
-     <width>120</width>
-     <height>120</height>
+     <width>140</width>
+     <height>140</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -72,6 +72,11 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel { background-color : black; color : red; }
@@ -93,9 +98,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>259</width>
+     <x>19</x>
+     <y>143</y>
+     <width>271</width>
      <height>24</height>
     </rect>
    </property>
@@ -109,13 +114,16 @@
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>221</x>
-     <y>60</y>
-     <width>111</width>
-     <height>44</height>
+     <x>231</x>
+     <y>80</y>
+     <width>131</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="endFormLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    </property>
     <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="endLabel">
       <property name="text">
@@ -142,7 +150,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>110</y>
+     <y>130</y>
      <width>321</width>
      <height>16</height>
     </rect>
@@ -157,7 +165,7 @@
   <widget class="QLabel" name="previewLabel">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>10</y>
      <width>120</width>
      <height>21</height>
@@ -173,10 +181,10 @@
   <widget class="QPushButton" name="photoPathPushButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>128</y>
-     <width>51</width>
-     <height>24</height>
+     <x>300</x>
+     <y>140</y>
+     <width>61</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -186,8 +194,8 @@
   <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>60</y>
+     <x>20</x>
+     <y>80</y>
      <width>201</width>
      <height>44</height>
     </rect>
@@ -212,8 +220,8 @@
   <widget class="QWidget" name="layoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
+     <x>20</x>
+     <y>30</y>
      <width>95</width>
      <height>44</height>
     </rect>
@@ -238,9 +246,9 @@
   <widget class="QWidget" name="layoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>222</x>
-     <y>10</y>
-     <width>111</width>
+     <x>232</x>
+     <y>30</y>
+     <width>131</width>
      <height>44</height>
     </rect>
    </property>

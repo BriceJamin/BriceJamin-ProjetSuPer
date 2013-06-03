@@ -23,7 +23,11 @@ PersonDialog::~PersonDialog()
 
 void PersonDialog::accept()
 {
+    // Vérifier unicité d'une personne
 
+    // Récupérer la photo
+
+    //
 }
 
 void PersonDialog::changeEvent(QEvent *e)
