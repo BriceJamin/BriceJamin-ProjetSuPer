@@ -20,6 +20,14 @@ PersonTupleView::~PersonTupleView()
     delete ui;
 }
 
+QString PersonTupleView::methodeTest()
+{
+    PersonTupleView personTupleView;
+    personTupleView.show();
+
+    return "It works ! =)";
+}
+
 void PersonTupleView::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);

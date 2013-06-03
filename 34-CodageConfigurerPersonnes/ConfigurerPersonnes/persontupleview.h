@@ -14,6 +14,7 @@ class PersonTupleView : public QWidget {
 public:
     PersonTupleView(QWidget *parent = 0);
     ~PersonTupleView();
+    static QString methodeTest();
 
 protected:
     void changeEvent(QEvent *e);
