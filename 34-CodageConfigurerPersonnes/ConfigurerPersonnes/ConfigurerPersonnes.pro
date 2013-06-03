@@ -7,11 +7,16 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     persontupleview.cpp \
-    testlayout.cpp
+    testlayout.cpp \
+    persondialog.cpp \
+    person.cpp
 HEADERS += mainwindow.h \
     persontupleview.h \
-    testlayout.h
+    testlayout.h \
+    persondialog.h  \
+    person.h
 FORMS += mainwindow.ui \
     persontupleview.ui \
-    testlayout.ui
+    testlayout.ui \
+    persondialog.ui
 RESOURCES += ressources.qrc

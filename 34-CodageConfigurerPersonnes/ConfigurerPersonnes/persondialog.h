@@ -20,6 +20,10 @@ public:
 
     static Person getNewPersonInput();
 
+public slots:
+    virtual void accept();
+
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -31,7 +35,6 @@ private slots:
     void on_photoPathPushButton_clicked();
     void on_endDateEdit_dateChanged(QDate date);
     void on_startDateEdit_dateChanged(QDate date);
-    void on_buttonBox_accepted();
 };
 
 #endif // PERSONDIALOG_H

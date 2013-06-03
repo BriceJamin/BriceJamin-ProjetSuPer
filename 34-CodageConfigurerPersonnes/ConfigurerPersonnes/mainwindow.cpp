@@ -21,13 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //personTupleView->show(); */
     //_testLayout = new TestLayout();
     //_testLayout->setVisible(true);
-    Person person = PersonDialog::getNewPersonInput();
-    qDebug() << person.name()
-                << person.firstname()
-                << person.startDate()
-                << person.endDate()
-                << person.company()
-                << person.photo();
 }
 
 MainWindow::~MainWindow()
@@ -45,4 +38,15 @@ void MainWindow::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void MainWindow::on_addPersonPushButton_clicked()
+{
+    Person person = PersonDialog::getNewPersonInput();
+    qDebug() << person.name()
+                << person.firstname()
+                << person.startDate()
+                << person.endDate()
+                << person.company()
+                << person.photo();
 }

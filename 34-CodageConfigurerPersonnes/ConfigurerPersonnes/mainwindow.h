@@ -25,6 +25,9 @@ private:
     QHBoxLayout *_layout;
     PersonTupleView* _personTupleView;
     TestLayout *_testLayout;
+
+private slots:
+    void on_addPersonPushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

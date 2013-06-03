@@ -21,6 +21,11 @@ PersonDialog::~PersonDialog()
     delete ui;
 }
 
+void PersonDialog::accept()
+{
+
+}
+
 void PersonDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
@@ -55,11 +60,6 @@ Person PersonDialog::getNewPersonInput()
         return dialog.person();
 
     return Person();
-}
-
-void PersonDialog::on_buttonBox_accepted()
-{
-
 }
 
 void PersonDialog::on_startDateEdit_dateChanged(QDate date)
