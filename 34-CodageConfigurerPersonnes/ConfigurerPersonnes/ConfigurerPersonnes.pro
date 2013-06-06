@@ -9,12 +9,14 @@ SOURCES += main.cpp \
     persontupleview.cpp \
     testlayout.cpp \
     persondialog.cpp \
-    person.cpp
+    person.cpp \
+    bdd.cpp
 HEADERS += mainwindow.h \
     persontupleview.h \
     testlayout.h \
     persondialog.h  \
-    person.h
+    person.h \
+    bdd.h
 FORMS += mainwindow.ui \
     persontupleview.ui \
     testlayout.ui \
