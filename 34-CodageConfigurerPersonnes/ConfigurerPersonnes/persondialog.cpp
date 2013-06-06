@@ -2,8 +2,9 @@
 #include "ui_persondialog.h"
 
 #include <QFileDialog>
+#include <QDebug>
 
-QDir PersonDialog::_previousDir;
+QDir PersonDialog::_previousDir = QDir::current();
 
 PersonDialog::PersonDialog(QWidget *parent) :
     QDialog(parent),
