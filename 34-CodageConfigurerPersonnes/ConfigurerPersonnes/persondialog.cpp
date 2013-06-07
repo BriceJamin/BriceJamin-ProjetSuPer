@@ -24,11 +24,15 @@ PersonDialog::~PersonDialog()
 
 void PersonDialog::accept()
 {
-    // Vérifier unicité d'une personne
+    Person person = toPerson();
 
-    // Récupérer la photo
-
-    //
+    if(bdd.addPerson(person))
+        done(QDialog::Accepted);
+    else
+    {
+        ui->nameLineEdit->setStyleSheet("QLineEdit { color : red; }");
+        ui->firstnameLineEdit->setStyleSheet("QLineEdit { color : red; }");
+    }
 }
 
 void PersonDialog::changeEvent(QEvent *e)
@@ -43,7 +47,7 @@ void PersonDialog::changeEvent(QEvent *e)
     }
 }
 
-Person PersonDialog::person()
+Person PersonDialog::toPerson()
 {
     Person person;
 
@@ -62,7 +66,7 @@ Person PersonDialog::getNewPersonInput()
     PersonDialog dialog;
 
     if (dialog.exec() == QDialog::Accepted)
-        return dialog.person();
+        return dialog.toPerson();
 
     return Person();
 }

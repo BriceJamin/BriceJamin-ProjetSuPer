@@ -30,32 +30,32 @@ void Person::setPhoto(QDir photo)
     _photo = photo;
 }
 
-QString Person::name()
+QString Person::name() const
 {
     return _name;
 }
 
-QString Person::firstname()
+QString Person::firstname() const
 {
     return _firstname;
 }
 
-QString Person::company()
+QString Person::company() const
 {
     return _company;
 }
 
-QDate Person::startDate()
+QDate Person::startDate() const
 {
     return _startDate;
 }
 
-QDate Person::endDate()
+QDate Person::endDate() const
 {
     return _endDate;
 }
 
-QDir Person::photo()
+QDir Person::photo() const
 {
     return _photo;
 }

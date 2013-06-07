@@ -5,6 +5,7 @@
 #include <QDate>
 
 #include "person.h"
+#include "bdd.h"
 
 namespace Ui {
     class PersonDialog;
@@ -16,7 +17,7 @@ public:
     PersonDialog(QWidget *parent = 0);
     ~PersonDialog();
 
-    Person person();
+    Person toPerson();
 
     static Person getNewPersonInput();
 
@@ -30,6 +31,7 @@ protected:
 private:
     Ui::PersonDialog *ui;
     static QDir _previousDir;
+    Bdd bdd;
 
 private slots:
     void on_photoPathPushButton_clicked();

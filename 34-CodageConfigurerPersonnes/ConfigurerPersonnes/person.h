@@ -15,12 +15,12 @@ public:
     void setEndDate(QDate);
     void setPhoto(QDir);
 
-    QString name();
-    QString firstname();
-    QString company();
-    QDate startDate();
-    QDate endDate();
-    QDir photo();
+    QString name() const;
+    QString firstname() const;
+    QString company() const;
+    QDate startDate() const;
+    QDate endDate() const;
+    QDir photo() const;
 
     //bool isNull();
 

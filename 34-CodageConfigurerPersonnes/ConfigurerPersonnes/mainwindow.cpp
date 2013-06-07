@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    if(bdd.isOpen())
+        ui->lineEdit->setText("bdd ok");
+    else
+        ui->lineEdit->setText("erreur bdd");
     //_personTupleView = new PersonTupleView();
     //_personTupleView->setVisible(true);
     //QString chaine = PersonTupleView::methodeTest();

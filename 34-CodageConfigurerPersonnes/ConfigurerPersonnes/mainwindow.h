@@ -6,6 +6,7 @@
 
 #include "persontupleview.h"
 #include "testlayout.h"
+#include "bdd.h"
 
 namespace Ui {
     class MainWindow;
@@ -25,6 +26,7 @@ private:
     QHBoxLayout *_layout;
     PersonTupleView* _personTupleView;
     TestLayout *_testLayout;
+    Bdd bdd;
 
 private slots:
     void on_addPersonPushButton_clicked();
