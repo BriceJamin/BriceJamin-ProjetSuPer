@@ -22,6 +22,7 @@ public:
     bool setPerson(const Person&, const Person&);
 
 private:
+    QFile _photoFile;
     static int _instanceCount;
     static QSqlDatabase* _database;
     static bool _isOpen;

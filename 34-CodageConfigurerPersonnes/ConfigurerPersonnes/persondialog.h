@@ -30,6 +30,7 @@ protected:
 
 private:
     Ui::PersonDialog *ui;
+    QFile _photoFile;
     static QDir _previousDir;
     Bdd bdd;
 

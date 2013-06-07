@@ -24,6 +24,7 @@ PersonDialog::~PersonDialog()
 
 void PersonDialog::accept()
 {
+    if()
     Person person = toPerson();
 
     if(bdd.addPerson(person))
@@ -56,6 +57,8 @@ Person PersonDialog::toPerson()
     person.setCompany(ui->companyLineEdit->text());
     person.setStartDate(ui->startDateEdit->date());
     person.setEndDate(ui->endDateEdit->date());
+
+
     person.setPhoto(ui->photoPathLineEdit->text());
 
     return person;
@@ -106,6 +109,7 @@ void PersonDialog::on_photoPathPushButton_clicked()
 
         if(! pixmap.isNull())
         {
+
             ui->photoLabel->setPixmap(pixmap);
             ui->photoPathLineEdit->setStyleSheet("QLineEdit { color : black; }");
         }

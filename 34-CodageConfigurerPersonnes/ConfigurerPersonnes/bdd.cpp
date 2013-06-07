@@ -65,7 +65,6 @@ bool Bdd::addPerson(const Person& person)
     QSqlQuery query(*_database);
     query.exec(queryString);
 
-
     return query.isActive();
 }
 
