@@ -1,0 +1,1 @@
+1. [Done] Libérer la mémoire des threads et ClientConnection lors d'une déconnexion car un ClientConnection ne sert plus à rien une fois qu'il est déconnecté.

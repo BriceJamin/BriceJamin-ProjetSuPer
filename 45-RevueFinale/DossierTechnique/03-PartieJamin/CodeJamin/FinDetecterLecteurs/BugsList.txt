@@ -1,0 +1,171 @@
+1. [Résolu] Pleins de fenêtres s'ouvrent, et le PC ne répond plus.
+   Cause :
+      Les lecteurs tentent de se connecter tant qu'ils n'y parviennent pas.
+      Un lecteur dont l'ip n'est pas présente dans la bdd est considéré comme un intrus.
+      Lorsqu'un intrus est détecté sa connexion est fermée et une fenêtre s'ouvre pour le signaler.
+      Une fois déconnecté le lecteur retente de se connecter, ce qui entraine une boucle infinie de connexion avec ouverture de fenêtre et déconnexion.
+
+   Solutions envisagées :
+      1. Fermer les fenêtres à la déconnexion pour libérer les ressources.
+         Ne résoud pas le problème du flood de demande de connexion.
+         Solution abandonnée.
+      2. [Adopté] Ne pas fermer la connexion pour éviter d'avoir à traiter une nouvelle requête et éviter la boucle infinie.
+
+
+2. [Résolu] Erreur qui apparait lors du flood de demande de connexion d'ip interdites :
+      QSqlDatabasePrivate::addDatabase: duplicate connection name '139675828455168', old connection removed.
+   Cause : Lorsqu'un intrus est détecté dans ClientConnection::filter(), la méthode ne se termine pas proprement.
+
+   Solutions envisagées :
+      1. [Adopté] Terminer la méthode ClientConnection::filter() proprement en :
+         - Appelant QSqlDatabase::removeDatabase() si QSqlDatabase::addDatabase() a été appelé.
+         - Appelant QSqlDatabase::close() si QSqlDatabase::open() a été appelé.
+         - Appelant QSqlQuery::finish() si QSqlQuery::exec() a été appelé.
+
+
+3. [Résolu] Erreur qui apparait à la fermeture du programme, après avoir subi un flood de demande de connexions d'ip interdites :
+      Error in my_thread_global_end(): 13 threads didn't exit
+   Cause : Serait la même que pour le bug n°2.
+
+   Solutions envisagées :
+      1. [Adopté]  Résoudre le bug n°2 et voir si celui-ci disparait.
+         En cour  de résolution du bug n°2, celui ci a disparu.
+
+
+4. [Résolu] Un lecteur que l'on débranche physiquement n'est pas détecté.
+   Tous les signaux de QTcpSocket ont été implémenté, ça ne se détecte donc pas par cette classe.
+   Il n'y a plus que la classe QTcpServer concernée par ce genre d'évènement qui serait susceptible de le détecter.
+
+   Solutions envisagées :
+      1. [Rejeté] Réimplémenter tous les signaux de la classe QTcpServer afin de voir si l'un d'entre eux détecte cette déconnexion.
+         Déjà effectué, il n'y en a qu'un : incommingConnection().
+      2. [Adopté] Utiliser l'option TCP keep alive qui envoit régulièrement un paquet pour maintenanir la connexion active, et permettrai cette détection.
+         Cette option est activable dans QT via la classe mère de QTcpSocket :
+	    void QAbstractSocket::setSocketOption ( QAbstractSocket::SocketOption option, const QVariant & value )
+	 Où QAbstractSocket::SocketOption est une enum contenant :
+            QAbstractSocket::KeepAliveOption : Set this to 1 to enable the SO_KEEPALIVE socket option
+         Après vérification, l'option est bien désactivée.
+         Après activation, un débranchement du lecteur ne déclenche aucun signal après quelques secondes.
+      3. [Adopté] Consulter la configuration du TCP KeepAlive directement sur l'OS.
+         La commande suivante peut permettre de consulter la configuration du TCP keep alive :
+	    sysctl net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes
+	 Elle affiche :
+	    net.ipv4.tcp_keepalive_time = 7200
+	    net.ipv4.tcp_keepalive_intvl = 75
+	    net.ipv4.tcp_keepalive_probes = 9  
+         En consultant les 3 fichiers suivants (sur Debian) :
+	    - /proc/sys/net/ipv4/tcp_keepalive_time
+	       Durée d'attente avant d'envoyer le premier paquet keepalive : 7200 secondes
+	    - /proc/sys/net/ipv4/tcp_keepalive_intvl
+	       Durée d'attente avant un renvoi du paquet keepalive : 75 secondes
+	    - /proc/sys/net/ipv4/tcp_keepalive_probes
+	       Nombre de renvoi sans réponse avant de considérer la cible comme déconnectée : 9
+	 Cette configuration n'est pas adaptée, car il faut attendre 7200 secondes avant de commencer à vérifier si le lecteurs est connecté ou non.
+     4. [Adopté] Modifier la configuration, avec :
+           - Démarrage immédiat du keepalive. (0 seconde d'attente).
+	   - Renvoyer un paquet keepalive toutes les 5 secondes.
+	   - Si pas de réponses au bout de 3 renvois, considérer que la connexion est perdue.
+	Avec cette config il serait théoriquement possible de détecter un lecteur débranché au bout de :
+	   - 3 x 5 >= 15 secondes dans le meilleur des cas (premier envoi juste après le débranchement du lecteur)
+	   - 4 x 5 <= 20 secondes dans le pire des cas (premier envoi juste avant le débranchement du lecteur).
+        Après une configuration avec ces valeurs via la commande :
+	   sysctl -w net.ipv4.tcp_keepalive_time=0 net.ipv4.tcp_keepalive_intvl=5 net.ipv4.tcp_keepalive_probes=3
+	Et un test avec activation logicielle du keepalive (voir la solution proposée n°3), la déconnexion du lecteur est bien détectée.
+
+5. [Résolu] Un lecteur inconnu dont la connexion est établie mais dont la communication est ignorée a certainement un buffer qui grossit, vu que readyRead est déclenché. Ce qui peut poser un problème de mémoire.
+
+   Solutions envisagées :
+      1. [Adopté] Vider régulièrement le buffer pour l'empêcher de grossir.
+         Lors de la détection d'un lecteur, le signal QTcpSocket::readyRead() est connecté à clientConnection::readyRead()
+	 Faire de même lors de la détection d'un intrus, mais en connectant QTcpSocket::readyRead() à un nouveau slot clientConnection::bleedMemory() qui se charge de purger le buffer en faisant appel à readAll().
+	 Fonctionne très bien après test.
+
+6. [Résolu] La configuration TCP KeepAlive est perdue après un redémarrage.
+   La commande utilisée pour le vérifier est :
+      sysctl net.ipv4.tcp_keepalive_time net.ipv4.tcp_keepalive_intvl net.ipv4.tcp_keepalive_probes
+
+   Solutions envisagées :
+      1. [Adoptée] Rendre cette permission permanente via la configuration des bons fichiers de configuration.
+         Sous Debian cette configuration s'effectue dans le fichier :
+	    - /etc/sysctl.conf
+	 Voilà les lignes ajoutées :
+	    # Pour projet SuPer
+            # Et détecter les lecteurs débranchés
+	    net.ipv4.tcp_keepalive_time=0
+	    net.ipv4.tcp_keepalive_intvl=5
+	    net.ipv4.tcp_keepalive_probes=3
+	 Après un redémarrage les valeurs sont bien conservées.
+
+
+7. [Résolu] La fermeture de la fenêtre principale ne libère pas la mémoire (ClientConnection, Thread).
+
+   Solutions envisagées :
+      1. [Rejeté] Trop compliqué, de plus ne fonctionnerait pas, voir la deuxième solution.
+         Dans Server :
+	      1. Prendre en compte dans Server de la demande de fermeture du programme
+		 a. Créer un slot à cet effet
+		 b. Créer une donnée membre permettant de mémoriser la demande
+	      2. Suivre le compte des connexions dans Server.
+		 a. Créer un compteur de (ConnectionClient | Thread) dans Server ?
+		 b. Incrémenter ce compteur lors d'une (nouvelle connexion | création dun nouveau thread) ?
+		 c. Décrémenter ce compteur lors de la (destruction d'une connexion | destruction d'un thread) ?
+		 d. Emettre un signal si une fermeture du programme a été demandée et que ce compteur est à zéro
+	 Dans la fenêtre principale :
+	      3. Inhiber la demande de fermeture de la fenêtre principale et la mémoriser
+	      4. Informer Server de la volonté de fermer le programme
+	      5. Attendre le signal de Server et quitter dès sa réception
+	      6. Si l'attente est trop longue, demander à l'utilisateur s'il faut prolonger l'attente ou non.
+
+      2. [Adopté] Mémoriser les adresses de ce qu'il faut désallouer (Thread et ClientConnection) dans des données membres
+         Désalouer la mémoire dans le constructeur via delete en faisant bien attention de désalouer Thread en premier (voir 11. Multithread/ pour consulter les tests effectués)
+	 Comme il n'est pas possible de savoir combien il y aura de Thread ou de Client connection, les stocker dans une liste.
+
+
+8. [Résolu] Une erreur de connexion à la BDD provoque un flood de connexion déconexion.
+
+   Solutions envisagées :
+      1. [Adopté] Lors d'un signalement d'une erreur de connexion à la BDD par ClientConnection, arrêter l'écoute du Server.
+         Pour cela, dans ClientConnection, envoyer un signal d'erreur représentant la rencontre d'une erreur ou Sql.
+         Server doit alors attraper ce signal, à sa reception arrêter l'écoute, et signaler l'arrêt de l'écoute sur la survenue d'une erreur.
+         Le même problème peut aussi survenir en cas d'erreur Tcp (récupération de socket), alors Server arrête l'écoute dès la survenue d'une erreur quelqu'elle soit.
+
+
+9. [Résolu] Juste après le lancement du programme, environ 1 fois sur 2, il y a une erreur de connexion à la BDD :
+      QSqlError(2003, "QMYSQL: Unable to connect", "Can't connect to MySQL server on 'localhost' (111)")
+   Qui entraine l'erreur suivante à chaque déconnexion d'un client :
+      Error in my_thread_global_end(): 2 threads didn't exit
+   Alors que d'autres clients arrivent à se connecter quasi simultanément.
+
+   Solutions envisagées :
+      1. [Adopté] Augmenter le délai de connexion qui est à 0 par défaut.
+         Pour cela tenter de modifier les options de connection via la méthode :
+	    void QSqlDatabase::setConnectOptions ( const QString & options = QString() )
+	 L'option applicable à MySql qu'il faut changer est :
+	    MYSQL_OPT_RECONNECT
+	 Car dans la doc de MySql :
+	    http://dev.mysql.com/doc/refman/5.5/en/mysql-command-options.html#option_mysql_connect_timeout
+	 Il est expliqué que le rôle de l'option connect_timeout est :
+	    The number of seconds before connection timeout. (Default value is 0.)
+	 En augmentant le délai à 5 secondes, l'erreur ne survient presque plus :
+	    setConnectOptions("MYSQL_OPT_RECONNECT=5");
+         Elle n'apparait maintenant plus que lors d'1 lancement sur 5 environ.
+
+      2. [Adopté] Utiliser des mutex autour de ce qui est en rapport avec la Bdd pour éviter qu'ils n'exécutent des choses en même temps, ce qui éliminerait l'origine du problème.
+         Pour cela ajouter à la classe ClientConnection un attribut QMutex partagé entre tous les objets (static)
+	 Ajouter un lock dans les méthodes de ClientConnection avant chaque l'utilisation de la Bdd.
+	 Ajouter un unlock dans les méthodes de ClientConnection avant après l'utilisation de la Bdd.
+         Après ces ajouts l'erreur n'apparait plus du tout.
+
+      3. [Adopté] Restreindre la portion de code entre chaque lock - unlock de mutex au strict minimum.
+         Pour cela chercher la ou les lignes responsables du bug.
+         Le ligne responsable du bug est la suivante :
+            QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", nameDatabaseConnexion);
+         En déplaçant le lock juste avant et le unlock juste après, l'erreur pas.
+         Résolu.
+
+
+10. [Résolu] Une déconnexion d'un client ne met pas à jour la BDD.
+
+    Solutions envisagées :
+       1. [Adopté] Lors de la réception du signal de déconnexion, dans ClientConnection, se connecter à la Bdd et la mettre à jour.
+       2. Réutiliser les variables créées dans ClientConnection::filter() pour mettre à jour la Bdd.

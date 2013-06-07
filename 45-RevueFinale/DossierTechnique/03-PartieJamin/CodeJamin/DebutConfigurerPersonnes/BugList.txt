@@ -1,0 +1,6 @@
+1. [Open] Sur OpenSuse lors de l'appui sur "Choisir..." de la fenêtre de saisie d'une personne, l'erreur suivante apparait :
+	kfilemodule(5413) KSambaSharePrivate::testparmParamValue: We got some errors while running testparm "Load smb config files from /etc/samba/smb.conf
+	Loaded services file OK.
+	ERROR: pid directory /var/run/samba does not exist
+	
+	Solution : Créer en root le dossier vide /var/run/samba

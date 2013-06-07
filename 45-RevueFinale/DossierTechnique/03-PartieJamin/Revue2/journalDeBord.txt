@@ -1,0 +1,91 @@
+22/02-27/02 : Découverte et apprentissage du gestionnaire de version Git.
+27/02-28/02 : Création d'un dossier de projet adapté au suivi de version.
+01/03 : Découverte de QtCreator
+02/03 : Création classes TcpServer, TcpServerThread, ReaderDetector
+03/03 : Allumage / Extinction ReaderDetector
+	Liaison TcpServer - ReaderDetector
+	Lancement d'un nouveau thread
+03/03-07/03 : Documentation sur la gestion des threads, 
+07/03 : Récupération via requêtes SQL des champs d'un lecteur
+	Identification d'un lecteur
+08/03 : Termine le thread lors d'une erreur
+	Signalement détection d'un intrus avec transmission de son adresse ip
+09/03 : Création classe Reader
+10/03 : Signalement détection d'un reader avec transmission du reader
+11/03 : Découverte de l'event loop de Qt
+	Classes Reader et ReaderClient deviennent respectivement ReaderData et Reader
+	Création classe ClientTcp
+12/03 : ClientTcp hérite de QTcpSocket
+	Création classe ClientTcpWindow
+	Liaison classes ClientTcp et ClientTcpWindow
+	Lancement de nouveaux ClientTcpWindow possibles via MainWindow
+	Correction des clefs étrangères du script SQL de la BDD
+	Problèmes : 
+		Les clients lancés en local ont tous la même adresse, 127.0.0.1
+		Ce qui rend la différenciation des readers impossible en local
+14/03 : Problèmes :
+		Plusieurs connexions SQL effectuées dans des threads différents impossible
+		Fermeture de la connexion précédente lors de l'ouverture d'une nouvelle connexion
+15/03 :	Problème : Erreur lors de la transmission d'objets en références constantes par signaux
+17/03 : Corrections :
+		Des threads qui s'exécutaient encore lors de la fermeture du programme
+		De la connexion BDD qui restait ouverte lors de la fermeture du programme
+	Suppression de la classe Reader
+	Renommage de la classe ReaderData en Reader
+18/03 : Renommage des signaux
+	Rend possible la déconnexion d'un lecteur
+18/03-19/03 : Connexion d'un Reader met à jour la BDD
+22/03 : Correction : Ferme la socket avant la fin du run du thread
+23/03 : Découverte des différentes méthodes d'implémenter les threads avec Qt
+	Création de la classe Thread, réimplémentation de sa méthode run
+	Création de la classe TcpClientManager
+	Découverte de la nécessité de QTcpServer::incommingConnection() pour le multithread
+	Ajout de l'attribut socketDescriptor
+	Signalement des erreurs Tcp et Sql
+	Emploi de moveToThread
+	Récupération du bon QTcpSocket via setDescriptor
+24/03 : Découvertes :
+		Avec les QObject, un parent détruit ses fils lors de sa destruction
+		Un signal connecté à un slot en monothread revient à faire un appel direct du slot
+25/03 : Découverte du risque d'exécuter des slots dans le thread principal et non pas dans un nouveau
+26/03 : Connexions effectuées après un moveToThread permettent l'exécution dans le bon thread
+27/03 : Découverte du server non bloquant sans multithread
+	Orientation vers un programme pouvant fonctionner en monothread ou en multithread
+28/03 : Rassemblement des tests en une seule application
+	Créations de la classe Server, de ses signaux, slots, attributs, accesseurs
+	Liaison IHM-Server effectuée depuis le main
+	Connexion signaux IHM - slots Server
+	Prise en compte par l'IHM de l'invalidité des ports et de l'adresse
+	Sécurisation mise en écoute et accesseurs du Server
+	IHM change sur démarrage/arrêt de l'écoute par le Server
+	Création dans le Server des signaux port/address changés
+29/03 : Création enum Server::SwitchOnState pour gérer les erreurs d'écoute du Server 
+30/03 : Surcharge operator <<() pour afficher les enums Server::SwitchOnState
+	Volonté de protéger le contenu de Server hérité par QTcpServer
+	Découverte de la possibilité d'accèder à des données protected depuis une petite-fille
+	Héritage en protected de QTcpServer non réalisable
+	Choix de l'encapsulation de QTcpServer au lieu de l'héritage
+	Création classe TcpServer et implémentation de sa méthode incomming connection
+	Encapsulation de TcpServer dans Server
+	Création dans Server du slot incommingConnection(int)
+	Début réflexion sur la gestion de la libération des threads et objets liés aux threads
+31/03 : Libération des ressources en évitant delete this
+	Destruction des threads via connexion dans le constructeur
+	Création d'un signal déclenchant la libération des ressources
+	Compte/décompte des threads lors de la création/destruction des threads
+	Refus de la fermeture de la fenêtre et libération des ressources
+01/04 : Mémorisation de la demande de fermeture du programme et libération des ressources
+	Modifications des attributs si différents après listen
+	Tests sur les transmission par signaux
+	Création classe ClientManager, attributs, constructeur, destructeur
+	Création slot stop et signal finished
+	Création de la classe Thread et suivi des signaux de QThread
+	Création bouton déclenchant la libération des ressources
+	Création signal/slot pour stoper les ClientManager
+	Implémentation de Server::incommingConnection et connexion avec TcpServer
+	Découverte : Les attributs d'un QObject changeant de thread doivent l'avoir pour parent
+	Création classe TcpSocket et suivi des signaux de QTcpServer
+	Multithread fonctionnel
+	Envoi du Reader vers l'IHM
+	Transmission de ClientConnexion par réérence constante
+03/04 : Filtrage des clients par vérification de l'existance de leur adresse dans la Bdd

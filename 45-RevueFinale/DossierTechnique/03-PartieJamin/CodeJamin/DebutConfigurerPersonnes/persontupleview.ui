@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PersonTupleView</class>
+ <widget class="QWidget" name="PersonTupleView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>470</width>
+    <height>192</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="urlPhotoLineEdit">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>130</y>
+     <width>259</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cliquez pour choisir une photo ---&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="photoLabel">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>30</y>
+     <width>120</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel { background-color : black; color : red; }
+</string>
+   </property>
+   <property name="text">
+    <string>Aucune photo choisie.</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="urlPhotoLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>321</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Url photo (120 x 120) :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="apercuLabel">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>10</y>
+     <width>120</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Aperçu photo :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="urlPhotoPushButton">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>128</y>
+     <width>51</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Choisir...</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="validerPushButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>160</y>
+     <width>120</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Valider</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="annulerPushButton">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>160</y>
+     <width>120</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>95</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="nomFormLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="nomLabel">
+      <property name="text">
+       <string>Nom :</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="nomLineEdit">
+      <property name="text">
+       <string>Jamin</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>116</x>
+     <y>10</y>
+     <width>95</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="prenomFormLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="prenomLabel">
+      <property name="text">
+       <string>Prénom :</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="prenomLineEdit">
+      <property name="text">
+       <string>Brice</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>222</x>
+     <y>10</y>
+     <width>111</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="debutFormLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="debutLabel">
+      <property name="text">
+       <string>Début d'intervention :</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QDateEdit" name="debutDateEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="displayFormat">
+       <string>dd MMM yyyy</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>201</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="societeFormLayout">
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="societeLineEdit">
+      <property name="text">
+       <string>Inconnue</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="societeLabel">
+      <property name="text">
+       <string>Societe :</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>221</x>
+     <y>60</y>
+     <width>111</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="finFormLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="finLabel">
+      <property name="text">
+       <string>Fin d'intervention :</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QDateEdit" name="finDateEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="displayFormat">
+       <string>dd MMM yyyy</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
