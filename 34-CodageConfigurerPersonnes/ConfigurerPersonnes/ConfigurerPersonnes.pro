@@ -6,19 +6,8 @@ TARGET = ConfigurerPersonnes
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    persontupleview.cpp \
-    testlayout.cpp \
-    persondialog.cpp \
-    person.cpp \
-    bdd.cpp
+    person.cpp
 HEADERS += mainwindow.h \
-    persontupleview.h \
-    testlayout.h \
-    persondialog.h  \
-    person.h \
-    bdd.h
-FORMS += mainwindow.ui \
-    persontupleview.ui \
-    testlayout.ui \
-    persondialog.ui
-RESOURCES += ressources.qrc
+    person.h
+FORMS += mainwindow.ui
+RESOURCES += 
