@@ -1,33 +1,84 @@
+#include <QFile>
+#include <QPixmap>
+#include <QDebug>
 #include "person.h"
 
-void Person::setName(QString name)
+Person::Person() :
+    _nameIsValid(false),
+    _firstnameIsValid(false),
+    _identityIsValid(false)
 {
+}
+
+Person::Person(const Person& p) :
+        _name(p._name),
+        _firstname(p._firstname),
+        _company(p._company),
+        _firstDayIntervention(p._firstDayIntervention),
+        _lastDayIntervention(p._lastDayIntervention),
+        _photo(p._photo),
+        _nameIsValid(p._nameIsValid),
+        _firstnameIsValid(p._firstnameIsValid),
+        _identityIsValid(p._identityIsValid)
+{
+}
+
+Person::~Person()
+{
+}
+
+bool Person::setName(const QString& name)
+{
+    if(name.isEmpty())
+        return false;
+
     _name = name;
+    _nameIsValid = true;
+
+    refreshIdentity();
+
+    return _nameIsValid;
 }
 
-void Person::setFirstname(QString firstname)
+bool Person::setFirstname(const QString& firstname)
 {
+    if(firstname.isEmpty())
+        return false;
+
     _firstname = firstname;
+    _firstnameIsValid = true;
+
+    refreshIdentity();
+
+    return _firstnameIsValid;
 }
 
-void Person::setCompany(QString company)
+void Person::setCompany(const QString& company)
 {
     _company = company;
 }
 
-void Person::setStartDate(QDate startDate)
+void Person::setInterventionPeriod(const QDate& firstDay, const QDate& lastDay)
 {
-    _startDate = startDate;
+    _firstDayIntervention = firstDay;
+    _lastDayIntervention = lastDay;
+
+    if(firstDay.isValid() && lastDay.isValid()
+        && (firstDay > lastDay))
+    {
+        _firstDayIntervention = lastDay;
+        _lastDayIntervention = firstDay;
+    }
 }
 
-void Person::setEndDate(QDate endDate)
+bool Person::setPhoto(const QString& photo)
 {
-    _endDate = endDate;
-}
+    if(! isAValidPhoto(photo))
+        return false;
 
-void Person::setPhoto(QDir photo)
-{
     _photo = photo;
+
+    return true;
 }
 
 QString Person::name() const
@@ -35,9 +86,19 @@ QString Person::name() const
     return _name;
 }
 
+bool Person::nameIsValid() const
+{
+    return _nameIsValid;
+}
+
 QString Person::firstname() const
 {
     return _firstname;
+}
+
+bool Person::firstnameIsValid() const
+{
+    return _firstnameIsValid;
 }
 
 QString Person::company() const
@@ -45,22 +106,98 @@ QString Person::company() const
     return _company;
 }
 
-QDate Person::startDate() const
+QDate Person::firstDayIntervention() const
 {
-    return _startDate;
+    return _firstDayIntervention;
 }
 
-QDate Person::endDate() const
+QDate Person::lastDayIntervention() const
 {
-    return _endDate;
+    return _lastDayIntervention;
 }
 
-QDir Person::photo() const
+void Person::interventionPeriod(QDate& firstDay, QDate& lastDay) const
+{
+    firstDay = _firstDayIntervention;
+    lastDay = _lastDayIntervention;
+}
+
+QString Person::photo() const
 {
     return _photo;
 }
 
-/*bool Person::isEmpty()
+bool Person::isNull() const
 {
-    return _name.isEmpty() | _firstname.isEmpty();
-}*/
+    bool isNull = true;
+
+    isNull &= _name.isNull();
+    isNull &= _firstname.isNull();
+    isNull &= _company.isNull();
+    isNull &= _firstDayIntervention.isNull();
+    isNull &= _lastDayIntervention.isNull();
+    isNull &= _photo.isNull();
+
+    return isNull;
+}
+
+bool Person::isValid() const
+{
+    return _identityIsValid;
+}
+
+Person& Person::operator=(const Person& other)
+{
+    _name = other._name;
+    _firstname = other._firstname;
+    _company = other._company;
+    _firstDayIntervention = other._firstDayIntervention;
+    _lastDayIntervention = other._lastDayIntervention;
+    _photo = other._photo;
+    _nameIsValid = other._nameIsValid;
+    _firstnameIsValid = other._firstnameIsValid;
+    _identityIsValid = other._identityIsValid;
+
+    return *this;
+}
+
+bool Person::isAValidPhoto(const QString& photo)
+{
+    QFile photoFile(photo);
+
+    if(! photoFile.exists())
+        return false;
+
+    QPixmap photoPixmap(photoFile.fileName());
+
+    if(photoPixmap.isNull())
+        return false;
+
+    return true;
+}
+
+void Person::refreshIdentity()
+{
+    _identityIsValid = _nameIsValid && _firstnameIsValid;
+}
+
+QDebug& operator<<(QDebug debug, const Person& person)
+{
+    if(person.isNull())
+        return debug.nospace() << "Person(\"\")";
+
+    QString dateFormat = "YYYY-MM-DD";
+    QString firstDayString, lastDayString;
+    firstDayString = person.firstDayIntervention().toString(dateFormat);
+    lastDayString = person.lastDayIntervention().toString(dateFormat);
+
+    debug.nospace() << "Person(";
+    debug.nospace() << person.name() << ",";
+    debug.nospace() << person.firstname() << ",";
+    debug.nospace() << person.company() << ",";
+    debug.nospace() << firstDayString << ",";
+    debug.nospace() << firstDayString << ",";
+    debug.nospace() << person.photo() << ")";
+
+    return debug.nospace();
+}
