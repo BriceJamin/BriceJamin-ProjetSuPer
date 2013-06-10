@@ -90,6 +90,14 @@ delimiter //
 CREATE TRIGGER personne_before_insert BEFORE INSERT ON personne
 FOR EACH ROW
 BEGIN
+	IF NEW.nom = '' THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.nom <> '') failed.';
+	END IF;
+	IF NEW.prenom = '' THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.prenom <> '') failed.';
+	END IF;
         IF NEW.dateDebut > NEW.dateFin THEN
 		SIGNAL SQLSTATE '23000'
 		   SET MESSAGE_TEXT = 'Error: check constraint (personne.dateDebut <= personne.dateFin) failed.';
@@ -99,6 +107,14 @@ END;
 CREATE TRIGGER personne_before_update BEFORE UPDATE ON personne
 FOR EACH ROW
 BEGIN
+	IF NEW.nom = '' THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.nom <> '') failed.';
+	END IF;
+        IF NEW.prenom = '' THEN
+		SIGNAL SQLSTATE '23000'
+		   SET MESSAGE_TEXT = 'Error: check constraint (personne.prenom <> '') failed.';
+        END IF;
         IF NEW.dateDebut > NEW.dateFin THEN
 		SIGNAL SQLSTATE '23000'
 		   SET MESSAGE_TEXT = 'Error: check constraint (personne.dateDebut <= personne.dateFin) failed.';
