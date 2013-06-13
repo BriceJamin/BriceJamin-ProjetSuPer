@@ -17,7 +17,7 @@ public:
     PersonDialog(QWidget *parent = 0);
     ~PersonDialog();
 
-    Person toPerson();
+    Person person;
 
     static Person getNewPersonInput();
 
@@ -32,7 +32,7 @@ private:
     Ui::PersonDialog *ui;
     QFile _photoFile;
     static QDir _previousDir;
-    Bdd bdd;
+    //Bdd bdd;
 
 private slots:
     void on_photoPathPushButton_clicked();

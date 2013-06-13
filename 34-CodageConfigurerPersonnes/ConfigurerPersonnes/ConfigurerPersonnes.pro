@@ -6,8 +6,13 @@ TARGET = ConfigurerPersonnes
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    person.cpp
+    person.cpp \
+    persondialog1.cpp \
+    personinputdialog.cpp
 HEADERS += mainwindow.h \
-    person.h
-FORMS += mainwindow.ui
+    person.h \
+    persondialog1.h \
+    personinputdialog.h
+FORMS += mainwindow.ui \
+    persondialog1.ui
 RESOURCES += 
